@@ -1,0 +1,30 @@
+﻿@page "/counter"
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<BxButton Content="Click me" OnClick="@IncrementCount"/>
+<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.SECONDARY"/>
+<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.TERTIARY"/>
+<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.DANGER"/>
+<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.DANGER_TERTIARY"/>
+<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.DANGER_GHOST"/>
+<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.GHOST"/>
+
+<BxButton Content="Click me" OnClick="@IncrementCount" Size="BxButtonSize.SMALL"/>
+<BxButton Content="Click me" OnClick="@IncrementCount" Size="BxButtonSize.EXTRA_LARGE"/>
+<BxButton Content="Click me" OnClick="@IncrementCount" Size="BxButtonSize.FIELD"/>
+
+<BxButton Skeleton Content="Click me" OnClick="@IncrementCount"/>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}

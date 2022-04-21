@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonBlazor", "CarbonBlazor\CarbonBlazor.csproj", "{EA53CBF9-C00F-4422-92B2-8572D103C20E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonBlazor.Demo", "CarbonBlazor.Demo\CarbonBlazor.Demo.csproj", "{7DC95978-48F9-455C-B309-C1F9DCF1EFAF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA53CBF9-C00F-4422-92B2-8572D103C20E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA53CBF9-C00F-4422-92B2-8572D103C20E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA53CBF9-C00F-4422-92B2-8572D103C20E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA53CBF9-C00F-4422-92B2-8572D103C20E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DC95978-48F9-455C-B309-C1F9DCF1EFAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DC95978-48F9-455C-B309-C1F9DCF1EFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DC95978-48F9-455C-B309-C1F9DCF1EFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DC95978-48F9-455C-B309-C1F9DCF1EFAF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {79985B1D-8D0C-4A04-BB08-75CB6CD763CD}
+	EndGlobalSection
+EndGlobal
