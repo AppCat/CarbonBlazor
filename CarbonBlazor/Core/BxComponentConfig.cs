@@ -97,6 +97,31 @@ namespace CarbonBlazor
         }
 
         /// <summary>
+        /// 组件配置
+        /// </summary>
+        public BxComponentConfig(IBxComponentConfig? config, string fixedClass, string id)
+        {
+            if (config != null)
+            {
+                Style = config.Style;
+                Attributes = config.Attributes;
+                Class = config.Class;
+            }
+
+            AddClass(fixedClass);
+            AddId(id);
+        }
+
+        /// <summary>
+        /// 组件配置
+        /// </summary>
+        public BxComponentConfig(string fixedClass, string id)
+        {
+            AddClass(fixedClass);
+            AddId(id);
+        }
+
+        /// <summary>
         /// Id
         /// </summary>
         /// <param name="id"></param>

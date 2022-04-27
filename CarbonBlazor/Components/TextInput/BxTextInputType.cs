@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 namespace CarbonBlazor.Components
 {
     /// <summary>
-    /// 渲染目标
+    /// TextInputType 
     /// </summary>
-    public enum BxColumFragmentGoal
+    public enum BxTextInputType
     {
         /// <summary>
-        /// 头
+        /// 文本
         /// </summary>
-        Header,
+        Text,
         /// <summary>
-        /// 身
+        /// 密码
         /// </summary>
-        Body
+        Password
     }
 }

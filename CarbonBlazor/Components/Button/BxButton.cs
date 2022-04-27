@@ -10,11 +10,29 @@ using System.Threading.Tasks;
 namespace CarbonBlazor.Components
 {
     /// <summary>
-    /// 按钮用于初始化一个操作，在背景或前景的体验。  
-    /// Buttons are used to initialize an action, either in the background or foreground of an experience.
+    /// 这是一个用于 Button 的 Blazor 组件。  
+    /// This is a Blazor component for the Button.
     /// </summary>
-    public partial class BxButton : BxPropertieContentComponentBase<BxButton>
+    public partial class BxButton : BxContentComponentBase
     {
+        /// <summary>
+        /// 设置映射
+        /// </summary>
+        protected override void OnSetMapper()
+        {
+            var fixedClass = $"bx--btn";
+            ClassMapper
+                .Clear()
+                .Add(fixedClass)
+                .AddEnum(Size, () => $"{fixedClass}--{Size}")
+                .AddEnum(Kind, () => $"{fixedClass}--{Kind}")
+                .If($"bx--btn--disabled", () => Disabled)
+                .If($"bx--btn--icon-only", () => HasIconOnly)
+                .If($"bx--btn--expressive", () => IsExpressive)
+                .If($"bx--skeleton", () => Skeleton)
+                ;
+        }
+
         /// <summary>
         /// 内容渲染
         /// </summary>
@@ -22,21 +40,58 @@ namespace CarbonBlazor.Components
         internal override RenderFragment ContentFragment() => __builder =>
         {
             var sequence = 0;
-            //var cssScope = "vb-button";
-
-            if (Skeleton)
+            if (!string.IsNullOrWhiteSpace(Href))
             {
-                __builder.OpenElement(sequence++, "bx-btn-skeleton");
+                __builder.OpenElement(sequence++, "a");
             }
             else
             {
-                __builder.OpenElement(sequence++, "bx-btn");
-                __builder.AddEvent(ref sequence, "onclick", HandleOnClickAsync, OnClickStopPropagation);
+                __builder.OpenElement(sequence++, "button");
             }
 
-            __builder.AddComponent(ref sequence, this); 
+            if (!Skeleton)
+            {
+                __builder.AddEvent(ref sequence, "onclick", HandleOnClickAsync, OnClickStopPropagation);
 
-            __builder.EitherOrAddContent(ref sequence, ChildContent, Content, () => ChildContent != null);
+            }
+
+            __builder.AddComponent(ref sequence, this);
+            __builder.AddAttribute(sequence++, "type", Type?.ToString() ?? "button");
+            __builder.IfAddAttribute(ref sequence, "disabled", () => Loading);
+            __builder.IfAddAttribute(ref sequence, "role", Role, () => !string.IsNullOrWhiteSpace(Role));
+
+            if (ChildContent != null)
+            {
+                if (Loading)
+                {
+                    __builder.OpenElement(sequence++, "span");
+                    __builder.AddAttribute(sequence++, "style", "opacity: 0;");
+                    __builder.AddContent(sequence++, ChildContent);
+                    __builder.CloseElement();
+                }
+                else
+                {
+                    __builder.AddContent(sequence++, ChildContent);
+                }
+            }
+            else
+            {
+                if (Loading)
+                {
+                    __builder.AddContent(sequence++, new MarkupString($"<span style='opacity: 0;'>{Content}</span>"));
+                }
+                else
+                {
+                    __builder.AddContent(sequence++, Content);
+                }
+            }
+
+            if (Loading)
+            {
+                __builder.AddContent(sequence++, new MarkupString("<div data-loading class='bx--loading bx--loading--small' style='position: absolute;'><svg class='bx--loading__svg' viewBox='-75 -75 150 150'><title>Loading</title><circle class='bx--loading__background' cx='0' cy='0' r='26.8125' /><circle class='bx--loading__stroke' cx='0' cy='0' r='26.8125' /></svg></div>"));
+            }
+
+            //__builder.EitherOrAddContent(ref sequence, ChildContent, Content, () => ChildContent != null);
 
             __builder.CloseComponent();
         };

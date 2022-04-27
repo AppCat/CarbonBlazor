@@ -1,0 +1,71 @@
+﻿@page "/DataTable"
+@using CarbonBlazor.Demo.Models
+
+<PageTitle>Weather forecast</PageTitle>
+
+<BxDataTable TModel=Person DataSource=Persons.Take(10)>
+    <BxColumn @bind-Field="context.Id" />
+    <BxColumn @bind-Field="context.Name" />
+    <BxColumn @bind-Field="context.Age" />
+    <BxColumn @bind-Field="context.Sex" />
+</BxDataTable>
+
+<hr />
+<BxDataTableContainer Title="Table title" Description="Optional Helper Text">
+    <BxTableToolbar>
+        <ToolbarContent>
+            <button class="bx--btn bx--btn--sm bx--btn--primary">
+                Primary Button
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--btn__icon" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M17 15L17 7 15 7 15 15 7 15 7 17 15 17 15 25 17 25 17 17 25 17 25 15 17 15z"></path></svg>
+            </button>
+        </ToolbarContent>
+    </BxTableToolbar>
+    <BxDataTable TModel=Person DataSource="@(Persons.Skip(_pageSize * (_page - 1)).Take(_pageSize))" WithSelection>
+        <BxColumn @bind-Field="context.Id" />
+        <BxColumn @bind-Field="context.Name" />
+        <BxColumn @bind-Field="context.Age" />
+        <BxColumn @bind-Field="context.Sex" />
+    </BxDataTable>
+    <BxPagination @bind-Page="_page" @bind-PageSize="_pageSize" TotalItems="Persons?.Count" />
+</BxDataTableContainer>
+
+<hr />
+<BxDataTableContainer Title="Table title" Description="Optional Helper Text">
+    <ToolbarContentTemplate>
+        <BxButton>
+            Primary Button
+            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--btn__icon" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M17 15L17 7 15 7 15 15 7 15 7 17 15 17 15 25 17 25 17 17 25 17 25 15 17 15z"></path></svg>
+        </BxButton>
+    </ToolbarContentTemplate>
+    <BatchListTemplate>
+        <BxButton>
+            Delet Items
+        </BxButton>
+    </BatchListTemplate>
+    <ChildContent>
+        <BxDataTable TModel=Person DataSource="@(Persons.Skip(_pageSize * (_page - 1)).Take(_pageSize))" Size="BxSize.Sm" IdExpression=@(person => person.Id) IsCanSelected OnSelectedChange=@(datas => Console.WriteLine(datas.Count()))>
+            <BxColumn @bind-Field="context.Id" />
+            <BxColumn @bind-Field="context.Name" />
+            <BxColumn @bind-Field="context.Age" />
+            <BxColumn @bind-Field="context.Sex" />
+            <BxActionColumn TdConfig=@(new BxComponentConfig { Style = "padding-top: 2px; padding-bottom: 2px; text-align: right; width: 125px; " })>
+                <BxButton Content="操作" Size="BxButtonSize.Small" Kind="BxButtonKind.Secondary" Style="min-height: auto; max-height: 1.6rem;" HasIconOnly />
+                <BxButton Content="删除" Size="BxButtonSize.Small" Kind="BxButtonKind.Danger" Style="min-height: auto; max-height: 1.6rem;" HasIconOnly />
+            </BxActionColumn>
+        </BxDataTable>
+        <BxPagination @bind-Page="_page" @bind-PageSize="_pageSize" TotalItems="Persons?.Count" />
+    </ChildContent>
+</BxDataTableContainer>
+
+@code {
+    private int _page = 1;
+    private int _pageSize = 10;
+
+    IList<Person> Persons { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Persons = Enumerable.Range(0, 50).Select(_ => Person.RandomCreate()).ToList();
+    }
+}

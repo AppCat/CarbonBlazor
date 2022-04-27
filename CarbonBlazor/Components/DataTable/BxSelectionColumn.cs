@@ -9,10 +9,17 @@ using System.Threading.Tasks;
 namespace CarbonBlazor.Components
 {
     /// <summary>
-    /// 选择列
+    /// 这是一个用于 SelectionColumn 的 Blazor 组件。  
+    /// This is a Blazor component for the SelectionColumn.
     /// </summary>
     public class BxSelectionColumn : BxColumnBase
     {
+        /// <summary>
+        /// 行Id哈希
+        /// </summary>
+        [CascadingParameter(Name = "RowIdHash")]
+        public int? RowIdHash { get; set; }
+
         /// <summary>
         /// 内容渲染
         /// </summary>
@@ -21,36 +28,48 @@ namespace CarbonBlazor.Components
         {
             var sequence = 0;
 
-            var withSelection = false;
-
-            if (CascadingDataTableParameters != null)
-            {
-                withSelection = CascadingDataTableParameters.WithSelection;
-            }
-
-            if (FragmentGoal == BxColumFragmentGoal.Header)
+            if (Goal == BxColumGoal.Header)
             {
                 __builder.OpenElement(sequence++, "th");
                 __builder.AddAttribute(sequence++, "scope", "col");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(ThConfig).AddClass("bx--table-column-checkbox").AddId($"{Id}-th"));
+                __builder.AddConfig(ref sequence, new BxComponentConfig(ThConfig).AddClass($"bx--table-column-checkbox").AddId($"{Id}-th"));
                 __builder.OpenComponent<BxCheckbox>(sequence++);
+                __builder.AddAttribute(sequence++, nameof(BxCheckbox.Checked), Table?.IsSelectedAll() ?? false);
+                __builder.AddEvent<bool>(ref sequence, nameof(BxCheckbox.OnCheckedChange), this, check =>
+                {
+                    if (check)
+                    {
+                        Table?.SelectedAll();
+                    }
+                    else
+                    {
+                        Table?.DeselectAll();
+                    }
+                });
                 __builder.CloseComponent();
             }
-            else if (FragmentGoal == BxColumFragmentGoal.Body)
+            else if (Goal == BxColumGoal.Body)
             {
+                var rowIdHash = RowIdHash;
                 __builder.OpenElement(sequence++, "td");
-                __builder.AddComponent(ref sequence, this);
-                __builder.AddConfig(ref sequence, new BxComponentConfig(TdConfig).AddClass("bx--table-column-checkbox").AddId($"{Id}-td"));
+                __builder.AddConfig(ref sequence, new BxComponentConfig(TdConfig ?? this).AddClass($"bx--table-column-checkbox").AddId($"{Id}-td"));
                 __builder.OpenComponent<BxCheckbox>(sequence++);
+                __builder.AddAttribute(sequence++, nameof(BxCheckbox.Checked), Table?.IsSelected(rowIdHash) ?? false);
+                __builder.AddEvent<bool>(ref sequence, nameof(BxCheckbox.OnCheckedChange), this, check =>
+                {
+                    if (check)
+                    {
+                        Table?.SelectedColumn(rowIdHash);
+                    }
+                    else
+                    {
+                        Table?.DeselectColumn(rowIdHash);
+                    }
+                });
                 __builder.CloseComponent();
             }
 
             __builder.CloseComponent();
         };
-
-        /// <summary>
-        /// 模型哈希
-        /// </summary>
-        internal string? ModelHas { get; set; }
     }
 }

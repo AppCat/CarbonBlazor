@@ -22,8 +22,8 @@ namespace CarbonBlazor
         public string? Style { get; set; }
 
         /// <summary>
-        /// 显示部分特性
+        /// 特性
         /// </summary>
-        Dictionary<string, object> Attributes { get; set; }
+        Dictionary<string, object>? Attributes { get; set; }
     }
 }

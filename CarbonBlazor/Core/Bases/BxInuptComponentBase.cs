@@ -17,7 +17,7 @@ namespace CarbonBlazor
         /// <summary>
         /// Gets the <see cref="FieldIdentifier"/> for the bound value.
         /// </summary>
-        internal FieldIdentifier FieldIdentifier { get; set; }
+        internal FieldIdentifier FieldIdentifier { get; set; }       
 
         #region CascadingParameter
 

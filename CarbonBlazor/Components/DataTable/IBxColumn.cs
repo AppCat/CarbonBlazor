@@ -24,6 +24,6 @@ namespace CarbonBlazor.Components
         /// <summary>
         /// 渲染目标
         /// </summary>
-        BxColumFragmentGoal FragmentGoal { get; set; }
+        BxColumGoal Goal { get; set; }
     }
 }

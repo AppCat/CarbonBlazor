@@ -6,19 +6,23 @@
 
 <p role="status">Current count: @currentCount</p>
 
-<BxButton Content="Click me" OnClick="@IncrementCount"/>
-<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.SECONDARY"/>
-<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.TERTIARY"/>
-<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.DANGER"/>
-<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.DANGER_TERTIARY"/>
-<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.DANGER_GHOST"/>
-<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.GHOST"/>
+<BxButton Content="Click me" OnClick="@IncrementCount" @onfocus="@IncrementCount" />
+<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.Secondary" />
+<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.Tertiary" />
+<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.Danger" />
+<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.DangerTertiary" />
+<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.DangerGhost" />
+<BxButton Content="Click me" OnClick="@IncrementCount" Kind="BxButtonKind.Ghost" />
 
-<BxButton Content="Click me" OnClick="@IncrementCount" Size="BxButtonSize.SMALL"/>
-<BxButton Content="Click me" OnClick="@IncrementCount" Size="BxButtonSize.EXTRA_LARGE"/>
-<BxButton Content="Click me" OnClick="@IncrementCount" Size="BxButtonSize.FIELD"/>
+<BxButton Content="Click me" OnClick="@IncrementCount" Size="BxButtonSize.Small" />
+<BxButton Content="Click me" OnClick="@IncrementCount" Size="BxButtonSize.Xl" />
+<BxButton Content="Click me" OnClick="@IncrementCount" Size="BxButtonSize.Field"/>
+<BxButton OnClick="@IncrementCount" @onfocus="@IncrementCount" HasIconOnly>
+    Click me
+    <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--btn__icon" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M17 15L17 7 15 7 15 15 7 15 7 17 15 17 15 25 17 25 17 17 25 17 25 15 17 15z"></path></svg>
+</BxButton>
 
-<BxButton Skeleton Content="Click me" OnClick="@IncrementCount"/>
+<BxButton Skeleton Content="Click me" OnClick="@IncrementCount" />
 
 @code {
     private int currentCount = 0;

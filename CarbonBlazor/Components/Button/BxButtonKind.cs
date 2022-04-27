@@ -15,37 +15,32 @@ namespace CarbonBlazor.Components
         /// <summary>
         /// Primary button
         /// </summary>
-        [EnumClass("primary")]
-        PRIMARY,
+        Primary,
         /// <summary>
         /// Secondary button
         /// </summary>
-        [EnumClass("secondary")]
-        SECONDARY,
+        Secondary,
         /// <summary>
         /// Tertiary button
         /// </summary>
-        [EnumClass("tertiary")]
-        TERTIARY,
+        Tertiary,
         /// <summary>
         /// Danger button
         /// </summary>
-        [EnumClass("danger")]
-        DANGER,
+        Danger,
         /// <summary>
         /// Danger tertiary button
         /// </summary>
         [EnumClass("danger-tertiary")]
-        DANGER_TERTIARY,
+        DangerTertiary,
         /// <summary>
         /// Danger ghost button
         /// </summary>
         [EnumClass("danger-ghost")]
-        DANGER_GHOST,
+        DangerGhost,
         /// <summary>
         /// Ghost button
         /// </summary>
-        [EnumClass("ghost")]
-        GHOST
+        Ghost
     }
 }

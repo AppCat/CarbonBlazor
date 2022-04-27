@@ -1,17 +1,51 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
+@*<div class="page">
     <div class="sidebar">
-        <NavMenu />
+    <NavMenu />
     </div>
 
     <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+    <div class="top-row px-4">
+    <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+    </div>
 
-        <article class="content px-4">
+    <article class="content px-4">
+    @Body
+    </article>
+    </main>
+    </div>*@
+
+<div data-renderroot data-floating-menu-container class="container bx--g10 bx--layer-one">
+    <BxHeader HeaderName=" [Platform]" HeaderNamePrefix="IBM">
+        <GlobalBarTemplate>
+            <button aria-label="Search" class="bx--header__action" type="button">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                    <path d="M30 28.59L22.45 21A11 11 0 1 0 21 22.45L28.59 30zM5 14a9 9 0 1 1 9 9 9 9 0 0 1-9-9z"></path>
+                </svg>
+            </button>
+            <button aria-label="Notifications" class="bx--header__action" type="button">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
+                    <path d="M28.7 20.3L26 17.6V13a10.07 10.07 0 0 0-9-10V1h-2v2a10.15 10.15 0 0 0-9 10v4.6l-2.7 2.7a.91.91 0 0 0-.3.7v3a.94.94 0 0 0 1 1h7a5 5 0 0 0 10 0h7a.94.94 0 0 0 1-1v-3a.91.91 0 0 0-.3-.7zM16 28a3 3 0 0 1-3-3h6a3 3 0 0 1-3 3zm11-5H5v-1.6l2.7-2.7A.91.91 0 0 0 8 18v-5a8 8 0 0 1 16 0v5a.91.91 0 0 0 .3.7l2.7 2.7z"></path>
+                </svg>
+            </button>
+            <button aria-label="App Switcher" class="bx--header__action" type="button">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" style="will-change: transform;">
+                    <path d="M15.5 15.5H18V18h-2.5zm-6.75 0h2.5V18h-2.5zM2 15.5h2.5V18H2zm13.5-6.75H18v2.5h-2.5zm-6.75 0h2.5v2.5h-2.5zM2 8.75h2.5v2.5H2zM15.5 2H18v2.5h-2.5zM8.75 2h2.5v2.5h-2.5zM2 2h2.5v2.5H2z"></path>
+                </svg>
+            </button>
+        </GlobalBarTemplate>
+        <ChildContent>
+            <nav class="bx--side-nav__navigation bx--side-nav bx--side-nav--ux" aria-label="Side navigation">
+                <NavMenu />
+            </nav>
+        </ChildContent>
+    </BxHeader>
+
+    <main id="main-content" class="bx--content">
+        <div class="app-body">
             @Body
-        </article>
+        </div>
     </main>
 </div>
+

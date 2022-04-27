@@ -6,11 +6,137 @@
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<button class="bx--btn bx--btn--secondary bx--btn--icon-only bx--btn--sm">
+  <span class="bx--assistive-text">Add</span>
+  <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="animation:loading 5s infinite;" xmlns="http://www.w3.org/2000/svg" class="bx--btn__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M9 7L9 3 7 3 7 7 3 7 3 9 7 9 7 13 9 13 9 9 13 9 13 7z"></path></svg>
+</button>
 
-<fieldset class="bx--fieldset">
-    <BxCheckbox Label="1" />
-    <BxCheckbox Label="2" />
-    <BxCheckbox Label="3" />
-</fieldset>
+<BxNumberInput TValue="int" Invalid/>
+<BxNumberInput TValue="uint" Warn/>
+<BxNumberInput TValue="double"/>
+<BxNumberInput TValue="decimal"/>
 
+<div style="width: 1029px; height: 452.500px;">
+    <BxComboBox Placeholder="输入选择" OnSelectedOption='(option => Console.WriteLine($"点击 : {option.Key}"))' Direction="BxComboBoxDirection.Top">
+        <BxComboBoxOption Key="An example option that is really long to show what should be done to handle long text" />
+        <BxComboBoxOption Key="Option 1" />
+        <BxComboBoxOption Key="Option 2" />
+        <BxComboBoxOption Key="Option 3" />
+        <BxComboBoxOption Key="Option 4" />
+        <BxComboBoxOption Key="Option 5" Disabled />
+        <BxComboBoxOption Key="Option 6" />
+        <BxComboBoxOption Key="Option 7" />
+        <BxComboBoxOption Key="Option 8" />
+    </BxComboBox>
+
+    <BxComboBox Placeholder="输入选择" OnSelectedOption='(option => Console.WriteLine($"点击 : {option.Key}"))'>
+        <BxComboBoxOption Key="An example option that is really long to show what should be done to handle long text" />
+        <BxComboBoxOption Key="Option 1" />
+        <BxComboBoxOption Key="Option 2" />
+        <BxComboBoxOption Key="Option 3" />
+        <BxComboBoxOption Key="Option 4" />
+        <BxComboBoxOption Key="Option 5" Disabled />
+        <BxComboBoxOption Key="Option 6" />
+        <BxComboBoxOption Key="Option 7" />
+        <BxComboBoxOption Key="Option 8" />
+    </BxComboBox>
+
+    <dr />
+    <dr />
+    <dr />
+    <dr />
+
+    <BxTextInput TValue="string"/>
+
+    <dr />
+    <dr />
+    <dr />
+    <dr />
+
+    <BxTextInput TValue="string" Type="BxTextInputType.Password" />
+
+    <SurveyPrompt Title="How is Blazor working for you?" />
+
+    <fieldset class="bx--fieldset">
+        <BxCheckbox Label="1" @bind-Checked="@_checked" />
+        <BxCheckbox Label="2" @bind-Checked="@_checked" />
+        <BxCheckbox Label="3" @bind-Checked="@_checked" />
+    </fieldset>
+
+    <BxPagination @bind-Page="_page" @bind-PageSize="_pageSize" TotalItems="(5)" />
+
+    <dr />
+
+    <div class="bx--pagination" data-pagination="">
+        <div class="bx--pagination__left">
+            <label id="select-id-pagination-count-label" class="bx--pagination__text" for="select-id-pagination-count">
+                Items per page:
+            </label>
+            <div class="bx--select bx--select--inline bx--select__item-count">
+                <select class="bx--select-input" id="select-id-pagination-count" aria-label="Items per page" tabindex="0" data-items-per-page="">
+                    <option class="bx--select-option" value="10">
+                        1
+                    </option>
+                    <option class="bx--select-option" value="20">
+                        20
+                    </option>
+                    <option class="bx--select-option" value="30">
+                        30
+                    </option>
+                    <option class="bx--select-option" value="40">
+                        40
+                    </option>
+                    <option class="bx--select-option" value="50">
+                        50
+                    </option>
+                </select>
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--select__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path></svg>
+            </div>
+            <span class="bx--pagination__text">
+                <span data-displayed-item-range="">1 – 1</span> of
+                <span data-total-items="">
+                    5
+                </span> items
+            </span>
+        </div>
+        <div class="bx--pagination__right">
+            <div class="bx--select bx--select--inline bx--select__page-number">
+                <select class="bx--select-input" id="select-id-pagination-page" aria-label="page number, of 500 pages" tabindex="0" data-page-number-input="">
+                    <option class="bx--select-option" value="1">
+                        1
+                    </option>
+                    <option class="bx--select-option" value="2">
+                        2
+                    </option>
+                    <option class="bx--select-option" value="3">
+                        3
+                    </option>
+                    <option class="bx--select-option" value="4">
+                        4
+                    </option>
+                    <option class="bx--select-option" value="5">
+                        5
+                    </option>
+                </select>
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--select__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path></svg>
+            </div>
+            <label id="select-id-pagination-page-label" class="bx--pagination__text" for="select-id-pagination-page">
+                of 5 pages
+            </label>
+            <button class="bx--pagination__button bx--pagination__button--backward " tabindex="0" data-page-backward="" aria-label="previous page">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--pagination__nav-arrow" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M19 23L11 16 19 9 19 23z"></path></svg>
+            </button>
+            <button class="bx--pagination__button bx--pagination__button--forward " tabindex="0" data-page-forward="" aria-label="next page">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--pagination__nav-arrow" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M13 9L21 16 13 23 13 9z"></path></svg>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    private bool _checked;
+    private int _page;
+    private int _pageSize;
+
+}

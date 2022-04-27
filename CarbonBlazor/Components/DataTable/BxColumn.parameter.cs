@@ -19,19 +19,19 @@ namespace CarbonBlazor.Components
         /// 内容
         /// </summary>
         [Parameter]
-        public TField Field { get; set; }
+        public TField? Field { get; set; }
 
         /// <summary>
         /// 字符串格式
         /// </summary>
         [Parameter]
-        public string Format { get; set; }
+        public string? Format { get; set; }
         
         /// <summary>
         /// 字段表达式
         /// </summary>
         [Parameter]
-        public Expression<Func<TField>> FieldExpression { get; set; }
+        public Expression<Func<TField>>? FieldExpression { get; set; }
 
         /// <summary>
         /// 内容变化

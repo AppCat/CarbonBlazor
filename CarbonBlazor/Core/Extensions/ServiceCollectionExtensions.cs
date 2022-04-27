@@ -12,6 +12,18 @@ namespace CarbonBlazor.Extensions
     /// </summary>
     public static class ServiceCollectionExtensions
     {
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <returns></returns>
+        public static IServiceCollection AddCarbonBlazor(this IServiceCollection services)
+        {
+            // Service
+            services.AddSingleton<BxModalService>();
 
+            // JS
+
+            return services;
+        }
     }
 }

@@ -117,10 +117,39 @@ namespace CarbonBlazor
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            Id ??= $"cb-{Guid.NewGuid().ToString("N")}";
+            Id ??= $"bx-{Guid.NewGuid().ToString("N")}";
             ComponentContext = new BxComponentContext(this);
             OnSetMapper();
             FatherComponentContext?.AddSonComponent(this);
+        }
+
+        /// <summary>
+        /// 调用状态改变 / 通知渲染
+        /// </summary>
+        protected void InvokeStateHasChanged()
+        {
+            InvokeAsync(() =>
+            {
+                if (!IsDisposed)
+                {
+                    StateHasChanged();
+                }
+            });
+        }
+
+        /// <summary>
+        /// 调用状态改变异步 / 通知渲染
+        /// </summary>
+        /// <returns></returns>
+        protected async Task InvokeStateHasChangedAsync()
+        {
+            await InvokeAsync(() =>
+            {
+                if (!IsDisposed)
+                {
+                    StateHasChanged();
+                }
+            });
         }
 
         /// <summary>
@@ -143,5 +172,52 @@ namespace CarbonBlazor
             GC.SuppressFinalize(this);
             return ValueTask.CompletedTask;
         }
+
+
+        #region Static
+
+        /// <summary>
+        /// Document 点击
+        /// </summary>
+        protected static event Action<ClickElement[]>? OnDocumentClick;
+
+        /// <summary>
+        /// 处理 document 点击事件
+        /// </summary>
+        [JSInvokable]
+        public static void HandleDocumentClick(ClickElement[] path)
+        {
+            try
+            {
+                OnDocumentClick?.Invoke(path);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        /// <summary>
+        /// 窗口变化
+        /// </summary>
+        protected static event Action<ResizeEvent>? OnResize;
+
+        /// <summary>
+        /// 处理 窗口变化事件
+        /// </summary>
+        [JSInvokable]
+        public static void HandleWindowResizeChange(ResizeEvent @event)
+        {
+            try
+            {
+                OnResize?.Invoke(@event);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        #endregion
     }
 }

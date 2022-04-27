@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 namespace CarbonBlazor.Components
 {
     /// <summary>
-    /// 数据表列
-    /// Columns of a table
+    /// 这是一个用于 BxColumn 的 Blazor 组件。  
+    /// This is a Blazor component for the BxColumn.
     /// </summary>
     public partial class BxColumn<TField> : BxColumnBase
     {
@@ -22,30 +22,12 @@ namespace CarbonBlazor.Components
         /// <summary>
         /// 显示名称
         /// </summary>
-        public string DisplayName => _propertyReflector?.DisplayName;
+        public string DisplayName => _propertyReflector?.DisplayName ?? string.Empty;
 
         /// <summary>
         /// 属性名称
         /// </summary>
-        public string FieldName => _propertyReflector?.PropertyName;
-
-        #region SDLC
-
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            if (FieldExpression != null && FragmentGoal == BxColumFragmentGoal.Header)
-            {
-                _propertyReflector = PropertyReflector.Create(FieldExpression);
-            }
-        }
-
-        #endregion
-
-        #region RenderFragment
+        public string FieldName => _propertyReflector?.PropertyName ?? string.Empty;
 
         /// <summary>
         /// 内容渲染
@@ -55,23 +37,41 @@ namespace CarbonBlazor.Components
         {
             var sequence = 0;
 
-            if(FragmentGoal == BxColumFragmentGoal.Header)
+            if (Goal == BxColumGoal.Header)
             {
                 __builder.OpenElement(sequence++, "th");
                 __builder.AddAttribute(sequence++, "scope", "col");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(ThConfig).AddId($"{Id}-th"));
+
+                __builder.OpenElement(sequence++, "span");
+                __builder.AddAttribute(sequence++, "class", $"bx--table-header-label");
                 __builder.EitherOrAddContent(ref sequence, TitleTemplate, (Title ?? DisplayName ?? FieldName ?? string.Empty), () => TitleTemplate != null);
+                __builder.CloseComponent();
+
             }
-            else if (FragmentGoal == BxColumFragmentGoal.Body)
+            else if (Goal == BxColumGoal.Body)
             {
                 __builder.OpenElement(sequence++, "td");
-                __builder.AddComponent(ref sequence, this);
-                __builder.AddConfig(ref sequence, new BxComponentConfig(TdConfig).AddId($"{Id}-td"));
+                __builder.AddConfig(ref sequence, new BxComponentConfig(TdConfig ?? this).AddId($"{Id}-td"));
                 __builder.EitherOrAddContent(ref sequence, ChildContent, (string.IsNullOrEmpty(Format) ? (Field?.ToString() ?? string.Empty) : Formatter<TField>.Format(Field, Format)), () => ChildContent != null);
             }
 
             __builder.CloseComponent();
         };
+
+        #region SDLC
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            if (FieldExpression != null && Goal == BxColumGoal.Header)
+            {
+                _propertyReflector = PropertyReflector.Create(FieldExpression);
+            }
+        }
 
         #endregion
     }

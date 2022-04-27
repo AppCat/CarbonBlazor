@@ -1,31 +1,103 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@*<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">CarbonBlazor.Demo</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <a class="navbar-brand" href="">CarbonBlazor.Demo</a>
+    <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+    <span class="navbar-toggler-icon"></span>
+    </button>
     </div>
-</div>
+    </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
+    <div class="nav-item px-3">
+    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+    <span class="oi oi-home" aria-hidden="true"></span> Home
+    </NavLink>
+    </div>
+    <div class="nav-item px-3">
+    <NavLink class="nav-link" href="counter">
+    <span class="oi oi-plus" aria-hidden="true"></span> Counter
+    </NavLink>
+    </div>
+    <div class="nav-item px-3">
+    <NavLink class="nav-link" href="fetchdata">
+    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+    </NavLink>
+    </div>
+    <div class="nav-item px-3">
+    <NavLink class="nav-link" href="select">
+    <span class="oi oi-list-rich" aria-hidden="true"></span> Select
+    </NavLink>
+    </div>
     </nav>
-</div>
+    </div>*@
+
+<ul class="bx--side-nav__items">
+    <li class="bx--side-nav__item">
+        <NavLink href="" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current" Match="NavLinkMatch.All">
+            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
+            <span class="bx--side-nav__link-text">
+                Home
+            </span>
+        </NavLink>
+    </li>
+    <li class="bx--side-nav__item">
+        <NavLink href="datatable" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
+            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
+            <span class="bx--side-nav__link-text">
+                DataTable
+            </span>
+        </NavLink>
+    </li>
+    <li class="bx--side-nav__item">
+        <NavLink href="comboBox" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
+            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
+            <span class="bx--side-nav__link-text">
+                ComboBox
+            </span>
+        </NavLink>
+    </li>
+    <li class="bx--side-nav__item">
+        <NavLink href="dropdown" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
+            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
+            <span class="bx--side-nav__link-text">
+                Dropdown
+            </span>
+        </NavLink>
+    </li>
+    <li class="bx--side-nav__item">
+        <NavLink href="modal" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
+            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
+            <span class="bx--side-nav__link-text">
+                Modal
+            </span>
+        </NavLink>
+    </li>
+    <li class="bx--side-nav__item">
+        <NavLink href="button" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
+            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
+            <span class="bx--side-nav__link-text">
+                Button
+            </span>
+        </NavLink>
+    </li>
+       <li class="bx--side-nav__item">
+        <NavLink href="dashBoard" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
+            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
+            <span class="bx--side-nav__link-text">
+                DashBoard
+            </span>
+        </NavLink>
+    </li>
+           <li class="bx--side-nav__item">
+        <NavLink href="form" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
+            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
+            <span class="bx--side-nav__link-text">
+                Form
+            </span>
+        </NavLink>
+    </li>
+</ul>
 
 @code {
     private bool collapseNavMenu = true;

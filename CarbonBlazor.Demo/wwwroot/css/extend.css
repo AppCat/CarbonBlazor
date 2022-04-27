@@ -1,0 +1,65 @@
+﻿.bx--stack-horizontal {
+    display: inline-grid;
+    -webkit-column-gap: var(--cds-stack-gap,0);
+    -moz-column-gap: var(--cds-stack-gap,0);
+    column-gap: var(--cds-stack-gap,0);
+    grid-auto-flow: column
+}
+
+.bx--stack-vertical {
+    display: grid;
+    grid-auto-flow: row;
+    row-gap: var(--cds-stack-gap,0)
+}
+
+.bx--stack-scale-1 {
+    --cds-stack-gap: 0.125rem
+}
+
+.bx--stack-scale-2 {
+    --cds-stack-gap: 0.25rem
+}
+
+.bx--stack-scale-3 {
+    --cds-stack-gap: 0.5rem
+}
+
+.bx--stack-scale-4 {
+    --cds-stack-gap: 0.75rem
+}
+
+.bx--stack-scale-5 {
+    --cds-stack-gap: 1rem
+}
+
+.bx--stack-scale-6 {
+    --cds-stack-gap: 1.5rem
+}
+
+.bx--stack-scale-7 {
+    --cds-stack-gap: 2rem
+}
+
+.bx--stack-scale-8 {
+    --cds-stack-gap: 2.5rem
+}
+
+.bx--stack-scale-9 {
+    --cds-stack-gap: 3rem
+}
+
+.bx--stack-scale-10 {
+    --cds-stack-gap: 4rem
+}
+
+.bx--stack-scale-11 {
+    --cds-stack-gap: 5rem
+}
+
+.bx--stack-scale-12 {
+    --cds-stack-gap: 6rem
+}
+
+.bx--stack-scale-13 {
+    --cds-stack-gap: 10rem
+}

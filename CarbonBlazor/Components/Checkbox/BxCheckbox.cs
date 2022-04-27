@@ -19,7 +19,7 @@ namespace CarbonBlazor.Components
         /// </summary>
         protected override void OnSetMapper()
         {
-            var fixedClass = "bx--form-item bx--checkbox-wrapper";
+            var fixedClass = $"bx--form-item bx--checkbox-wrapper";
             ClassMapper
                 .Clear()
                 .Add(fixedClass)
@@ -41,20 +41,23 @@ namespace CarbonBlazor.Components
             __builder.OpenElement(sequence++, "input");
             __builder.AddConfig(ref sequence, new BxComponentConfig(InputConfig)
                 .AddId($"{Id}-input")
-                .AddClass("bx--checkbox"));
+                .AddClass($"bx--checkbox"));
             __builder.IfAddAttribute(ref sequence, "readonly", true, () => ReadOnly);
             __builder.AddAttribute(sequence++, "value", Checked);
             __builder.AddAttribute(sequence++, "type", "checkbox");
+            __builder.AddAttribute(sequence++, "aria-checked", Checked);
+            __builder.IfAddAttribute(ref sequence, "checked", () => Checked);
+            __builder.IfAddAttribute(ref sequence, "disabled", () => Disabled);
             __builder.AddEvent(ref sequence, "onchange", HandleOnChangeAsync);
             __builder.CloseElement();
 
             // label
             __builder.OpenElement(sequence++, "label");
-            __builder.AddConfig(ref sequence, new BxComponentConfig(LableConfig)
+            __builder.AddConfig(ref sequence, new BxComponentConfig(LabelConfig)
                 .AddId($"{Id}-label")
-                .AddClass("bx--checkbox-label"));
+                .AddClass($"bx--checkbox-label"));
             __builder.AddAttribute(sequence++, "for", $"{Id}-input");
-            __builder.IfAddContent(ref sequence, Label, () => !string.IsNullOrEmpty(Label));
+            __builder.IfAddContent(ref sequence, LabelText, () => !string.IsNullOrEmpty(LabelText));
             __builder.CloseElement();
 
             __builder.CloseComponent();

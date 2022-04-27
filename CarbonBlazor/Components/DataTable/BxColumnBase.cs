@@ -17,13 +17,13 @@ namespace CarbonBlazor.Components
         /// 渲染目标
         /// </summary>
         [CascadingParameter]
-        public BxColumFragmentGoal FragmentGoal { get; set; }
+        public BxColumGoal Goal { get; set; }
 
         /// <summary>
         /// 数据表联级参数
         /// </summary>
         [CascadingParameter]
-        public ICascadingDataTableParameters? CascadingDataTableParameters { get; set; }
+        public IBxTable? Table { get; set; }
 
         /// <summary>
         /// 列序号

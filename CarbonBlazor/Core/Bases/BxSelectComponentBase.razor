@@ -1,0 +1,11 @@
+﻿@namespace CarbonBlazor
+@inherits BxFormItemComponentBase<TKey>
+@implements IBxSelect<TOption, TKey>
+@typeparam TOption
+@typeparam TKey
+
+<CascadingValue Value="ComponentContext" IsFixed="true" Name="FatherComponentContext">
+    <CascadingValue TValue="IBxSelect<TOption, TKey>" Value="this" IsFixed="true" Name="FatherSelect">
+        @ContentFragment()
+    </CascadingValue>
+</CascadingValue>

@@ -113,6 +113,34 @@ namespace CarbonBlazor
         }
 
         /// <summary>
+        /// 添加枚举
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <param name="mix"></param>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public ClassMapper AddEnum<TEnum>(EnumMix<TEnum>? mix, string @class)
+            where TEnum : Enum
+        {
+            _map.Add(() => @class, () => mix != null);
+            return this;
+        }
+
+        /// <summary>
+        /// 添加枚举
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <param name="mix"></param>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public ClassMapper AddEnum<TEnum>(EnumMix<TEnum>? mix, Func<string> @class)
+            where TEnum : Enum
+        {
+            _map.Add(@class, () => mix != null);
+            return this;
+        }
+
+        /// <summary>
         /// 如果添加
         /// </summary>
         /// <param name="name"></param>

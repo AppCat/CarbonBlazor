@@ -15,6 +15,33 @@ namespace CarbonBlazor.Extensions
     public static class RenderTreeBuilderExtensions
     {
         /// <summary>
+        /// 使用元素
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="sequence"></param>
+        /// <param name="elementName"></param>
+        /// <param name="component"></param>
+        /// <param name="fragments"></param>
+        /// <returns></returns>
+        public static RenderTreeBuilder UseElement(this RenderTreeBuilder builder, ref int sequence, string elementName, BxComponentBase component, params RenderFragment[] fragments)
+        {
+            builder.OpenElement(sequence++, elementName);
+            AddComponent(builder, ref sequence, component);
+
+            if(fragments?.Any() ?? false)
+            {
+                foreach(var fragment in fragments)
+                {
+                    builder.AddContent(sequence++, fragment);
+                }
+            }
+
+            builder.CloseElement();
+
+            return builder;
+        }
+
+        /// <summary>
         /// 添加组件
         /// </summary>
         /// <param name="builder"></param>
@@ -108,6 +135,21 @@ namespace CarbonBlazor.Extensions
                 builder.IfAddAttribute(ref sequence, "id", config.Id, () => !string.IsNullOrWhiteSpace(config.Id));
                 builder.IfAddAttribute(ref sequence, "attributes", config.Attributes, () => config.Attributes != null && config.Attributes.Any());
             }
+            return builder;
+        }
+
+        /// <summary>
+        /// 添加 Aria
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="sequence"></param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static RenderTreeBuilder AddAria(this RenderTreeBuilder builder, ref int sequence, string name, object? value = null)
+        {
+            builder.IfAddAttribute(ref sequence, $"aria-{name}", value, () => value != null);
+
             return builder;
         }
 
@@ -232,6 +274,24 @@ namespace CarbonBlazor.Extensions
             if (func?.Invoke() ?? false)
             {
                 builder.AddAttribute(sequence++, name, value);
+            }
+
+            return builder;
+        }
+
+        /// <summary>
+        /// 判断是否添加
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="sequence"></param>
+        /// <param name="name"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static RenderTreeBuilder IfAddAttribute(this RenderTreeBuilder builder, ref int sequence, string name, Func<bool> func)
+        {
+            if (func?.Invoke() ?? false)
+            {
+                builder.AddAttribute(sequence++, name);
             }
 
             return builder;

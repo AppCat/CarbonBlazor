@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace CarbonBlazor.Components
     /// 数据表参数部分
     /// Data table parameter partial
     /// </summary>
-    public partial class BxDataTable<TModel> : ICascadingDataTableParameters
+    public partial class BxDataTable<TModel>
     {
         /// <summary>
         /// 单元格过滤器
@@ -42,7 +43,7 @@ namespace CarbonBlazor.Components
         /// The table size.
         /// </summary>
         [Parameter]
-        public EnumMix<BxDataTableSize>? Size { get; set; }
+        public EnumMix<BxSize>? Size { get; set; }
 
         /// <summary>
         /// 加斑马条纹
@@ -66,32 +67,55 @@ namespace CarbonBlazor.Components
         public bool StickyHeader { get; set; }
 
         /// <summary>
-        /// 可选择
+        /// 指定表是否可以按其头进行排序
+        /// Specify whether the table should be able to be sorted by its headers
         /// </summary>
         [Parameter]
-        public bool WithSelection { get; set; }
-    }
+        public bool IsSortable { get; set; }
 
-    /// <summary>
-    /// 数据表尺寸
-    /// The table size.
-    /// </summary>
-    public enum BxDataTableSize
-    {
         /// <summary>
-        /// 紧凑的
-        /// Compact size.
+        /// 指定是否可以通过表的id来选择表, ideexpression在使用时不能为空
+        /// Specify whether the table should be able to be selectedby its id, IdExpression cannot be empty when used
         /// </summary>
-        Compact,
+        [Parameter]
+        public bool IsCanSelected { get; set; }
+
         /// <summary>
-        /// 短
-        /// Short size.
+        /// Id表达式
         /// </summary>
-        Short,
+        [Parameter]
+        public Expression<Func<TModel, object>>? IdExpression { get; set; }
+
+        #region Event
+
         /// <summary>
-        /// 常规的
-        /// Regular size.
+        /// 选中事件
         /// </summary>
-        Tall
+        [Parameter]
+        public EventCallback<IEnumerable<TModel>> OnSelectedChange { get; set; }
+
+        #endregion
+
+        #region Config
+
+        /// <summary>
+        /// Th 配置
+        /// </summary>
+        [Parameter]
+        public IBxComponentConfig? TbodyConfig { get; set; }
+
+        /// <summary>
+        /// Td 配置
+        /// </summary>
+        [Parameter]
+        public IBxComponentConfig? TheadConfig { get; set; }
+
+        /// <summary>
+        /// Td 配置
+        /// </summary>
+        [Parameter]
+        public IBxComponentConfig? TrConfig { get; set; }
+
+        #endregion
     }
 }

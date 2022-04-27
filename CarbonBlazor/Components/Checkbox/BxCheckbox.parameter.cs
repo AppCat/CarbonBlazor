@@ -17,7 +17,7 @@ namespace CarbonBlazor.Components
         /// 标签
         /// </summary>
         [Parameter]
-        public string? Label { get; set; }
+        public string? LabelText { get; set; }
 
         /// <summary>
         /// 检查
@@ -38,10 +38,10 @@ namespace CarbonBlazor.Components
         public EventCallback<bool> OnCheckedChange { get; set; }
 
         /// <summary>
-        /// Lable 配置
+        /// Label 配置
         /// </summary>
         [Parameter]
-        public IBxComponentConfig? LableConfig { get; set; }
+        public IBxComponentConfig? LabelConfig { get; set; }
 
         /// <summary>
         /// Input 配置

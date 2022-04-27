@@ -4,17 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarbonBlazor.Components
+namespace CarbonBlazor
 {
     /// <summary>
-    /// 数据表联级参数
+    /// 外部通知状态变化
     /// </summary>
-    public interface ICascadingDataTableParameters
+    public interface IExternalNotifyStateHasChanged
     {
         /// <summary>
-        /// 可选择
-        /// With selection
+        /// 通知变化
         /// </summary>
-        bool WithSelection { get; }
+        void NotifyStateHasChanged();
     }
 }

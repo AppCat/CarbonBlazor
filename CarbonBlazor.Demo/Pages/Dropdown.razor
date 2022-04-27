@@ -1,0 +1,61 @@
+﻿@page "/dropdown"
+
+<div class="component-variation">
+    <h2 class="component-variation__name">Dropdown</h2>
+    <div class="component-example">
+        <div class="svg--sprite" aria-hidden="true"></div>
+        <div class="component-example__live">
+            <div class="component-example__live--rendered dropdown">
+                <div>
+                    <BxDropdown Placeholder="输入选择" OnSelectedOption='(option => Console.WriteLine($"点击 : {option.Key}"))' LabelText="Combo box label" HelperText="Optional helper text here">
+                        <BxDropdownOption Key="An example option that is really long to show what should be done to handle long text" />
+                        <BxDropdownOption Key="Option 1" />
+                        <BxDropdownOption Key="Option 2" />
+                        <BxDropdownOption Key="Option 3" />
+                        <BxDropdownOption Key="Option 4" />
+                        <BxDropdownOption Key="Option 5" Disabled />
+                        <BxDropdownOption Key="Option 6" />
+                        <BxDropdownOption Key="Option 7" />
+                        <BxDropdownOption Key="Option 8" />
+                    </BxDropdown>
+
+                    <BxDropdown Placeholder="输入选择" OnSelectedOption='(option => Console.WriteLine($"点击 : {option.Key}"))' LabelText="Combo box label" HelperText="Optional helper text here" Invalid InvalidText="This is not a validation message">
+                        <BxDropdownOption Key="An example option that is really long to show what should be done to handle long text" />
+                        <BxDropdownOption Key="Option 1" />
+                        <BxDropdownOption Key="Option 2" />
+                        <BxDropdownOption Key="Option 3" />
+                        <BxDropdownOption Key="Option 4" />
+                        <BxDropdownOption Key="Option 5" Disabled />
+                        <BxDropdownOption Key="Option 6" />
+                        <BxDropdownOption Key="Option 7" />
+                        <BxDropdownOption Key="Option 8" />
+                    </BxDropdown>
+
+                    <BxDropdown Placeholder="输入选择" OnSelectedOption='(option => Console.WriteLine($"点击 : {option.Key}"))' LabelText="Combo box label" HelperText="Optional helper text here" Invalid InvalidText="This is not a validation message">
+                        <BxDropdownOption Key="An example option that is really long to show what should be done to handle long text" />
+                        <BxDropdownOption Key="Option 1" />
+                        <BxDropdownOption Key="Option 2" />
+                        <BxDropdownOption Key="Option 3" />
+                        <BxDropdownOption Key="Option 4" />
+                        <BxDropdownOption Key="Option 5" Disabled />
+                        <BxDropdownOption Key="Option 6" />
+                        <BxDropdownOption Key="Option 7" />
+                        <BxDropdownOption Key="Option 8" />
+                    </BxDropdown>
+
+                    <BxDropdown Placeholder="输入选择" Inline OnSelectedOption='(option => Console.WriteLine($"点击 : {option.Key}"))' LabelText="Combo box label" HelperText="Optional helper text here" Invalid InvalidText="This is not a validation message">
+                        <BxDropdownOption Key="An example option that is really long to show what should be done to handle long text" />
+                        <BxDropdownOption Key="Option 1" />
+                        <BxDropdownOption Key="Option 2" />
+                        <BxDropdownOption Key="Option 3" />
+                        <BxDropdownOption Key="Option 4" />
+                        <BxDropdownOption Key="Option 5" Disabled />
+                        <BxDropdownOption Key="Option 6" />
+                        <BxDropdownOption Key="Option 7" />
+                        <BxDropdownOption Key="Option 8" />
+                    </BxDropdown>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
