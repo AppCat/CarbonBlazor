@@ -21,19 +21,46 @@ namespace CarbonBlazor.Extensions
         /// <param name="sequence"></param>
         /// <param name="elementName"></param>
         /// <param name="component"></param>
-        /// <param name="fragments"></param>
+        /// <param name="continue"></param>
+        /// <param name="fragment"></param>
         /// <returns></returns>
-        public static RenderTreeBuilder UseElement(this RenderTreeBuilder builder, ref int sequence, string elementName, BxComponentBase component, params RenderFragment[] fragments)
+        public static RenderTreeBuilder UseElement(this RenderTreeBuilder builder, ref int sequence, string elementName, BxComponentBase component, Action<RenderTreeBuilder>? @continue, RenderFragment? fragment)
         {
             builder.OpenElement(sequence++, elementName);
             AddComponent(builder, ref sequence, component);
 
-            if(fragments?.Any() ?? false)
+            if(@continue != null)
             {
-                foreach(var fragment in fragments)
-                {
-                    builder.AddContent(sequence++, fragment);
-                }
+                @continue.Invoke(builder);
+            }
+
+            if (fragment != null)
+            {
+                builder.AddContent(sequence++, fragment);
+            }
+
+            builder.CloseElement();
+
+            return builder;
+        }
+
+        /// <summary>
+        /// 使用元素
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="sequence"></param>
+        /// <param name="elementName"></param>
+        /// <param name="component"></param>
+        /// <param name="fragment"></param>
+        /// <returns></returns>
+        public static RenderTreeBuilder UseElement(this RenderTreeBuilder builder, ref int sequence, string elementName, BxComponentBase component, RenderFragment? fragment)
+        {
+            builder.OpenElement(sequence++, elementName);
+            AddComponent(builder, ref sequence, component);
+
+            if (fragment != null)
+            {
+                builder.AddContent(sequence++, fragment);
             }
 
             builder.CloseElement();
@@ -458,7 +485,7 @@ namespace CarbonBlazor.Extensions
         public static RenderTreeBuilder AddCascadingValue<TValue>(this RenderTreeBuilder builder, 
             ref int sequence,
             TValue value,
-            RenderFragment renderFragment,
+            RenderFragment? renderFragment,
             string? name = null, 
             bool? isFixed = null)
         {
@@ -466,7 +493,12 @@ namespace CarbonBlazor.Extensions
             builder.AddAttribute(sequence++, nameof(CascadingValue<TValue>.Value), value);
             builder.IfAddAttribute(ref sequence, nameof(CascadingValue<TValue>.IsFixed), true, () => isFixed != null && isFixed == true);
             builder.IfAddAttribute(ref sequence, nameof(CascadingValue<TValue>.Name), name, () => !string.IsNullOrWhiteSpace(name));
-            builder.AddAttribute(sequence++, nameof(CascadingValue<TValue>.ChildContent), renderFragment);
+
+            if(renderFragment != null)
+            {
+                builder.AddAttribute(sequence++, nameof(CascadingValue<TValue>.ChildContent), renderFragment);
+            }
+
             builder.CloseComponent();
 
             return builder;

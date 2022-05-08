@@ -52,7 +52,6 @@ namespace CarbonBlazor.Components
             if (!Skeleton)
             {
                 __builder.AddEvent(ref sequence, "onclick", HandleOnClickAsync, OnClickStopPropagation);
-
             }
 
             __builder.AddComponent(ref sequence, this);

@@ -84,22 +84,26 @@ namespace CarbonBlazor
 
         #endregion
 
+        #region Handle
+
         /// <summary>
         /// 处理点击
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        protected async Task HandleOnClickAsync(MouseEventArgs args)
+        protected virtual async Task HandleOnClickAsync(MouseEventArgs args)
         {
             if (Disabled)
                 return;
 
             await OnClick.InvokeAsync(args);
-            if(FatherSelect != null)
+            if (FatherSelect != null)
             {
                 await FatherSelect.SelectedOptionAsync(this as TOption, true);
             }
         }
+
+        #endregion
 
         #region SDLC
 

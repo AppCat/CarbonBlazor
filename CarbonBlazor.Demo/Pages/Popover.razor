@@ -1,0 +1,9 @@
+﻿@page "/Popover"
+
+<BxPopover Open="@open" Title="Available storage" Details="This server has 150 GB of block storage remaining." Align="BxPopoverAlign.Right" HighContrast>
+    <BxButton Content="点击打开/关闭 Popover" OnClick="@(() => open = !open)"/>
+</BxPopover>
+
+@code{
+    bool open = false;
+}

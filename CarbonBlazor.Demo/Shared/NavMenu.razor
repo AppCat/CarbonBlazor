@@ -41,66 +41,22 @@
             </span>
         </NavLink>
     </li>
-    <li class="bx--side-nav__item">
-        <NavLink href="datatable" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
-            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
-            <span class="bx--side-nav__link-text">
-                DataTable
-            </span>
-        </NavLink>
-    </li>
-    <li class="bx--side-nav__item">
-        <NavLink href="comboBox" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
-            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
-            <span class="bx--side-nav__link-text">
-                ComboBox
-            </span>
-        </NavLink>
-    </li>
-    <li class="bx--side-nav__item">
-        <NavLink href="dropdown" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
-            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
-            <span class="bx--side-nav__link-text">
-                Dropdown
-            </span>
-        </NavLink>
-    </li>
-    <li class="bx--side-nav__item">
-        <NavLink href="modal" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
-            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
-            <span class="bx--side-nav__link-text">
-                Modal
-            </span>
-        </NavLink>
-    </li>
-    <li class="bx--side-nav__item">
-        <NavLink href="button" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
-            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
-            <span class="bx--side-nav__link-text">
-                Button
-            </span>
-        </NavLink>
-    </li>
-       <li class="bx--side-nav__item">
-        <NavLink href="dashBoard" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
-            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
-            <span class="bx--side-nav__link-text">
-                DashBoard
-            </span>
-        </NavLink>
-    </li>
-           <li class="bx--side-nav__item">
-        <NavLink href="form" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
-            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
-            <span class="bx--side-nav__link-text">
-                Form
-            </span>
-        </NavLink>
-    </li>
+    @foreach (var pagePath in pagePaths)
+    {
+        <li class="bx--side-nav__item">
+            <NavLink href="@pagePath" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
+                <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
+                <span class="bx--side-nav__link-text">
+                    @pagePath
+                </span>
+            </NavLink>
+        </li>
+    }
 </ul>
 
 @code {
     private bool collapseNavMenu = true;
+    private string[] pagePaths = new[] { "DataTable", "ComboBox", "Dropdown", "Modal", "Button", "DashBoard", "Form", "ProgressBar", "Popover", "Notifications", "Tag", "ContentSwitcher", "Tabs" };
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 

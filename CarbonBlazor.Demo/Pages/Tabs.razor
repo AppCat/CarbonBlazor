@@ -1,0 +1,77 @@
+﻿@page "/Tabs"
+
+<BxTabs DefaultSelectedKey="1">
+    <BxTab Key="1" Value="Tab Label 1">
+        Tab Label 1
+    </BxTab>
+    <BxTab Key="2" Value="Tab Label 2">
+        Tab Label 2
+        <BxButton Content="Example button" />
+    </BxTab>
+    <BxTab Key="3" Value="Tab Label 3" Disabled>
+        Tab Label 3
+    </BxTab>
+    <BxTab Key="4" Value="Tab Label 4 with a very long long title">
+        Tab Label 4
+    </BxTab>
+    <BxTab Key="5" Value="Tab Label 5">
+        Tab Label 5
+    </BxTab>
+</BxTabs>
+
+<br />
+
+<BxTabs DefaultSelectedKey="1" Contained>
+    <BxTab Key="1" Value="Tab Label 1">
+        Tab Label 1
+    </BxTab>
+    <BxTab Key="2" Value="Tab Label 2">
+        Tab Label 2
+        <BxButton Content="Example button" />
+    </BxTab>
+    <BxTab Key="3" Value="Tab Label 3" Disabled>
+        Tab Label 3
+    </BxTab>
+    <BxTab Key="4" Value="Tab Label 4 with a very long long title">
+        Tab Label 4
+    </BxTab>
+    <BxTab Key="5" Value="Tab Label 5">
+        Tab Label 5
+    </BxTab>
+</BxTabs>
+
+<br />
+
+<BxTabs DefaultSelectedKey="1" Skeleton>
+    <BxTab Key="1" Value="Tab Label 1">
+        Tab Label 1
+    </BxTab>
+    <BxTab Key="2" Value="Tab Label 2">
+        Tab Label 2
+        <BxButton Content="Example button" />
+    </BxTab>
+    <BxTab Key="3" Value="Tab Label 3" Disabled>
+        Tab Label 3
+    </BxTab>
+    <BxTab Key="4" Value="Tab Label 4 with a very long long title">
+        Tab Label 4
+    </BxTab>
+    <BxTab Key="5" Value="Tab Label 5">
+        Tab Label 5
+    </BxTab>
+</BxTabs>
+
+<br />
+
+
+<div style="max-width: 500px;">
+    <BxTabs DefaultSelectedKey="1">
+        @for (var i = 0; i < 50; i++)
+        {
+            <BxTab Key="@(i.ToString())" Value="@($"Tab Label {i}")">
+                @($"Tab Label {i}")
+            </BxTab>
+        }
+        
+    </BxTabs>
+</div>
