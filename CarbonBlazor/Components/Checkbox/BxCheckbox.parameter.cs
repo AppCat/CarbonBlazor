@@ -14,12 +14,6 @@ namespace CarbonBlazor.Components
     public partial class BxCheckbox
     {
         /// <summary>
-        /// 标签
-        /// </summary>
-        [Parameter]
-        public string? LabelText { get; set; }
-
-        /// <summary>
         /// 检查
         /// </summary>
         [Parameter]
@@ -36,12 +30,6 @@ namespace CarbonBlazor.Components
         /// </summary>
         [Parameter]
         public EventCallback<bool> OnCheckedChange { get; set; }
-
-        /// <summary>
-        /// Label 配置
-        /// </summary>
-        [Parameter]
-        public IBxComponentConfig? LabelConfig { get; set; }
 
         /// <summary>
         /// Input 配置

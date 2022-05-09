@@ -81,13 +81,13 @@ namespace CarbonBlazor.Components
 
                     __builder.CloseElement();
 
-                    if (Type.Value == BxTextInputType.Password)
+                    if (Type.Value == BxTextInputType.Password) 
                     {
                         // Start ButtonForward
                         __builder.OpenElement(sequence++, "button");
                         __builder.AddEvent(ref sequence, "onclick", HandleOnClickPasswordAsync, true);
                         __builder.AddConfig(ref sequence, new BxComponentConfig()
-                            .AddClass($"bx--text-input--password__visibility__toggle bx--tooltip__trigger bx--tooltip--a11y bx--tooltip--bottom bx--tooltip--align-center")
+                            .AddClass($"bx--btn bx--text-input--password__visibility__toggle bx--tooltip__trigger bx--tooltip--a11y bx--tooltip--bottom bx--tooltip--align-center")
                             .AddId($"{Id}-button--password"));
                         __builder.AddContent(sequence++, new MarkupString($"<span class='bx--assistive-text'>{(ShowPassword ? "Show password" : "Hide password")}</span>"));
 

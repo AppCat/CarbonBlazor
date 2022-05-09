@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using CarbonBlazor.Extensions;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace CarbonBlazor
     /// <summary>
     /// 可选地支持的任何输入控件的基类
     /// </summary>
-    public abstract class BxInuptComponentBase<TValue> : BxComponentBase, IControlValueAccessor
+    public abstract partial class BxInuptComponentBase<TValue> : BxComponentBase, IControlValueAccessor
     {
         /// <summary>
         /// Gets the <see cref="FieldIdentifier"/> for the bound value.
@@ -124,5 +125,23 @@ namespace CarbonBlazor
                 }
             }
         }
+
+        /// <summary>
+        /// 标签渲染
+        /// </summary>
+        /// <returns></returns>
+        protected virtual RenderFragment LabelFragment() => __builder =>
+        {
+            if (LabelTemplate == null && string.IsNullOrEmpty(LabelText))
+                return;
+
+            var sequence = 0;
+
+            __builder.OpenElement(sequence++, "label");
+            __builder.AddConfig(ref sequence, new BxComponentConfig(LabelTextConfig, $"bx--label", $"{Id}-label"));
+            __builder.AddAttribute(sequence++, "for", $"{Id}-input");
+            __builder.EitherOrAddContent(ref sequence, LabelTemplate, HideLabel ? string.Empty : LabelText, () => LabelTemplate != null);
+            __builder.CloseElement();
+        };
     }
 }

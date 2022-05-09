@@ -12,33 +12,7 @@ namespace CarbonBlazor
     /// </summary>
     public partial class BxFormItemComponentBase<TValue>
     {
-        /// <summary>
-        /// 光
-        /// The light for the select.
-        /// </summary>
-        [Parameter]
-        public bool Light { get; set; }
 
-        /// <summary>
-        /// 标签文本
-        /// The label for the select.
-        /// </summary>
-        [Parameter]
-        public string? LabelText { get; set; }
-
-        /// <summary>
-        /// 标签 模板。
-        /// The label is template for the select.
-        /// </summary>
-        [Parameter]
-        public RenderFragment? LabelTemplate { get; set; }
-
-        /// <summary>
-        /// 指定标签是否应该隐藏  
-        /// Specify whether the label should be hidden, or not
-        /// </summary>
-        [Parameter]
-        public bool HideLabel { get; set; }
 
         /// <summary>
         /// 提供与控件标签一起使用的文本以获得额外帮助
@@ -118,13 +92,6 @@ namespace CarbonBlazor
         /// </summary>
         [Parameter]
         public IBxComponentConfig? HelperConfig { get; set; }
-
-        /// <summary>
-        /// 标签 配置
-        /// The label is config for the select.
-        /// </summary>
-        [Parameter]
-        public IBxComponentConfig? LabelConfig { get; set; }
 
         /// <summary>
         /// input 配置

@@ -39,30 +39,34 @@ namespace CarbonBlazor.Components
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "div");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(ControlsConfig).AddClass($"bx--number__controls").AddId($"{Id}-number__controls"));
+                __builder.AddConfig(ref sequence, new BxComponentConfig(ControlsConfig).AddClass($"bx--number__controls").AddId($"{Id}-number-controls"));
+                {
+                    __builder.OpenElement(sequence++, "button");
+                    __builder.AddConfig(ref sequence, new BxComponentConfig(ControlBtnConfig).AddClass($"bx--number__control-btn down-icon").AddId($"{Id}-number-controls-btn"));
+                    __builder.AddAttribute(sequence++, "tabindex", "-1");
+                    __builder.AddAttribute(sequence++, "type", "button");
+                    __builder.IfAddAttribute(ref sequence, "title", DecrementTitle, () => !string.IsNullOrEmpty(DecrementTitle));
+                    __builder.IfAddAttribute(ref sequence, "aria-label", DecrementTitle, () => !string.IsNullOrEmpty(DecrementTitle));
 
-                __builder.OpenElement(sequence++, "button");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(ControlBtnConfig).AddClass($"bx--number__control-btn up-icon").AddId($"{Id}-number__controls"));
-                __builder.AddAttribute(sequence++, "tabindex", "-1");
-                __builder.AddAttribute(sequence++, "type", "button");
-                __builder.IfAddAttribute(ref sequence, "title", DecrementTitle, () => !string.IsNullOrEmpty(DecrementTitle));
-                __builder.IfAddAttribute(ref sequence, "aria-label", DecrementTitle, () => !string.IsNullOrEmpty(DecrementTitle));
+                    __builder.AddContent(sequence++, new MarkupString("<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' width='16' height='16' viewBox='0 0 32 32' aria-hidden='true' class='down-icon'><path d='M8 15H24V17H8z'></path></svg>"));
 
-                __builder.AddContent(sequence++, new MarkupString("<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' width='16' height='16' viewBox='0 0 32 32' aria-hidden='true' class='down-icon'><path d='M8 15H24V17H8z'></path></svg>"));
+                    __builder.CloseElement();
 
-                __builder.CloseElement();
+                    __builder.AddContent(sequence++, new MarkupString("<div class='bx--number__rule-divider'></div>"));
 
-                __builder.OpenElement(sequence++, "button");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(ControlBtnConfig).AddClass($"bx--number__control-btn up-icon").AddId($"{Id}-number__controls"));
-                __builder.AddAttribute(sequence++, "tabindex", "-1");
-                __builder.AddAttribute(sequence++, "type", "button");
-                __builder.IfAddAttribute(ref sequence, "title", IncrementTitle, () => !string.IsNullOrEmpty(IncrementTitle));
-                __builder.IfAddAttribute(ref sequence, "aria-label", IncrementTitle, () => !string.IsNullOrEmpty(IncrementTitle));
+                    __builder.OpenElement(sequence++, "button");
+                    __builder.AddConfig(ref sequence, new BxComponentConfig(ControlBtnConfig).AddClass($"bx--number__control-btn up-icon").AddId($"{Id}-number-controls-btn"));
+                    __builder.AddAttribute(sequence++, "tabindex", "-1");
+                    __builder.AddAttribute(sequence++, "type", "button");
+                    __builder.IfAddAttribute(ref sequence, "title", IncrementTitle, () => !string.IsNullOrEmpty(IncrementTitle));
+                    __builder.IfAddAttribute(ref sequence, "aria-label", IncrementTitle, () => !string.IsNullOrEmpty(IncrementTitle));
 
-                __builder.AddContent(sequence++, new MarkupString("<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' width='16' height='16' viewBox='0 0 32 32' aria-hidden='true' class='up-icon'><path d='M17 15L17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z'></path></svg>"));
+                    __builder.AddContent(sequence++, new MarkupString("<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' width='16' height='16' viewBox='0 0 32 32' aria-hidden='true' class='up-icon'><path d='M17 15L17 8 15 8 15 15 8 15 8 17 15 17 15 24 17 24 17 17 24 17 24 15z'></path></svg>"));
 
-                __builder.CloseElement();
+                    __builder.CloseElement();
 
+                    __builder.AddContent(sequence++, new MarkupString("<div class='bx--number__rule-divider'></div>"));
+                }
                 __builder.CloseElement();
             };
 
@@ -77,10 +81,13 @@ namespace CarbonBlazor.Components
 
                __builder.AddAttribute(sequence++, "type", "number");
                __builder.AddAttribute(sequence++, "value", Value);
+               __builder.AddAttribute(sequence++, "pattern", "[0-9]*");
                __builder.IfAddAttribute(ref sequence, "readonly", true, () => ReadOnly);
                //__builder.IfAddAttribute(ref sequence, "value", InputValue, () => !string.IsNullOrWhiteSpace(InputValue));
                __builder.IfAddAttribute(ref sequence, "disabled", () => Disabled);
                __builder.IfAddAttribute(ref sequence, "data-invalid", Invalid, () => Invalid);
+               __builder.IfAddAttribute(ref sequence, "aria-invalid", Invalid, () => Invalid);
+               __builder.IfAddAttribute(ref sequence, "aria-describedby", $"{Id}-requirement", () => Invalid);
                __builder.IfAddAttribute(ref sequence, "max", Max, () => Max != null);
                __builder.IfAddAttribute(ref sequence, "min", Min, () => Min != null);
                __builder.IfAddAttribute(ref sequence, "step", Step, () => Step != null);

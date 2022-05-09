@@ -53,7 +53,7 @@ namespace CarbonBlazor.Components
 
             // label
             __builder.OpenElement(sequence++, "label");
-            __builder.AddConfig(ref sequence, new BxComponentConfig(LabelConfig)
+            __builder.AddConfig(ref sequence, new BxComponentConfig(LabelTextConfig)
                 .AddId($"{Id}-label")
                 .AddClass($"bx--checkbox-label"));
             __builder.AddAttribute(sequence++, "for", $"{Id}-input");

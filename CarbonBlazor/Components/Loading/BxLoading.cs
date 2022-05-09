@@ -39,12 +39,16 @@ namespace CarbonBlazor.Components
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "div");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(LoadingConfig).AddClass($"bx--loading")
+                __builder.AddConfig(ref sequence, new BxComponentConfig(LoadingConfig)
+                    .AddClass($"bx--loading")
                     .AddId($"{Id}-loading")
-                    .AddIfClass($"bx--loading--small", () => Small));
+                    .AddIfClass($"bx--loading--small", () => Small)
+                    .AddIfClass($"bx--loading--stop", () => Stop));
                 __builder.AddAttribute(sequence++, "data-loading");
 
-                __builder.AddContent(sequence++, new MarkupString("<svg class='bx--loading__svg' viewBox='-75 -75 150 150'><title>Loading</title><circle class='bx--loading__stroke' cx='0' cy='0' r='37.5' /></svg>"));
+
+                //__builder.AddContent(sequence++, new MarkupString($"<svg class='bx--loading__svg' viewBox='-75 -75 150 150'><title>{Description}</title><circle class='bx--loading__stroke' cx='0' cy='0' r='37.5' /></svg>"));
+                __builder.AddContent(sequence++, new MarkupString($"<svg class='bx--loading__svg' viewBox='0 0 100 100'><title>{Description}</title><circle class='bx--loading__stroke' r='44' cy='50%' cx='50%'></circle></svg>"));
 
                 __builder.CloseComponent();
             };

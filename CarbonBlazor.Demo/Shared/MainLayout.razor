@@ -16,8 +16,8 @@
     </main>
     </div>*@
 
-<div data-renderroot data-floating-menu-container class="container bx--g10 bx--layer-one">
-    <BxHeader HeaderName=" [Platform]" HeaderNamePrefix="IBM">
+<div data-renderroot data-floating-menu-container class="container">
+    <BxHeader HeaderName=" [Platform]" HeaderNamePrefix="IBM" Class="bx--g100">
         <GlobalBarTemplate>
             <BxButton Class="bx--header__action" HasIconOnly>
                 <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true" style="will-change: transform;">
@@ -36,14 +36,14 @@
             </BxButton>
         </GlobalBarTemplate>
         <ChildContent>
-            <nav class="bx--side-nav__navigation bx--side-nav bx--side-nav--ux" aria-label="Side navigation">
+            <nav class="bx--white bx--side-nav__navigation bx--side-nav bx--side-nav--ux" aria-label="Side navigation">
                 <NavMenu />
             </nav>
         </ChildContent>
     </BxHeader>
 
-    <main id="main-content" class="bx--content">
-        <div class="app-body">
+    <main id="main-content" class="bx--content bx--g10" style="background: #f4f4f4;">
+        <div class="app-body bx--g10">
             @Body
         </div>
     </main>

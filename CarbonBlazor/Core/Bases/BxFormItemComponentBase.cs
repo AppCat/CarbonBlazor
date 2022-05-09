@@ -11,26 +11,8 @@ namespace CarbonBlazor
     /// <summary>
     /// form-item 组件基础
     /// </summary>
-    public abstract partial class BxFormItemComponentBase<TValue> : BxInuptComponentBase<TValue> 
+    public abstract partial class BxFormItemComponentBase<TValue> : BxInuptComponentBase<TValue>
     {
-        /// <summary>
-        /// 标签渲染
-        /// </summary>
-        /// <returns></returns>
-        protected virtual RenderFragment LabelFragment() => __builder =>
-        {
-            if (LabelTemplate == null && string.IsNullOrEmpty(LabelText))
-                return;
-
-            var sequence = 0;
-
-            __builder.OpenElement(sequence++, "label");
-            __builder.AddConfig(ref sequence, new BxComponentConfig(LabelConfig).AddClass($"bx--label").AddId($"{Id}-label"));
-            __builder.AddAttribute(sequence++, "for", $"{Id}-input");
-            __builder.EitherOrAddContent(ref sequence, LabelTemplate, HideLabel ? string.Empty : LabelText, () => LabelTemplate != null);
-            __builder.CloseElement();
-        };
-
         /// <summary>
         /// 标签渲染
         /// </summary>
@@ -43,7 +25,7 @@ namespace CarbonBlazor
             var sequence = 0;
 
             __builder.OpenElement(sequence++, "div");
-            __builder.AddConfig(ref sequence, new BxComponentConfig(HelperConfig).AddClass($"bx--form__helper-text").AddId($"{Id}-helper"));
+            __builder.AddConfig(ref sequence, new BxComponentConfig(HelperConfig, $"bx--form__helper-text", $"{Id}-helper"));
             __builder.EitherOrAddContent(ref sequence, HelperTemplate, HelperText, () => HelperTemplate != null);
             __builder.CloseElement();
         };
@@ -63,7 +45,7 @@ namespace CarbonBlazor
             var sequence = 0;
 
             __builder.OpenElement(sequence++, "div");
-            __builder.AddConfig(ref sequence, new BxComponentConfig(RequirementConfig).AddClass($"bx--form-requirement").AddId($"{Id}-requirement"));
+            __builder.AddConfig(ref sequence, new BxComponentConfig(RequirementConfig, $"bx--form-requirement", $"{Id}-requirement"));
 
             if (Invalid)
             {

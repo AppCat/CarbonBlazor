@@ -85,7 +85,7 @@ namespace CarbonBlazor.Components
 
             var sequence = 0;
 
-            __builder.OpenElement(sequence++, "div");
+            __builder.OpenElement(sequence++, "header");
             __builder.AddComponent(ref sequence, this);
             __builder.AddAria(ref sequence, "label", AriaLabel);
 
