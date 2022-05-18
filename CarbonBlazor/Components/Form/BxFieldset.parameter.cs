@@ -21,7 +21,7 @@ namespace CarbonBlazor.Components
 
         /// <summary>
         /// label 配置
-        /// label is config for the comboBox.
+        /// label is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? LabelConfig { get; set; }

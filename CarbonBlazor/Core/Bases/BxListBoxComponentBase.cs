@@ -219,7 +219,7 @@ namespace CarbonBlazor
 
         /// <summary>
         /// box__menu 配置
-        /// The box__menu is config for the comboBox.
+        /// The box__menu is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? BoxMenuConfig { get; set; }

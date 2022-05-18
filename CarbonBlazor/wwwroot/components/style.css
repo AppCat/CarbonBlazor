@@ -14233,10 +14233,10 @@ button.bx--dropdown-text {
 }
 
 .bx--overflow-menu-options[data-floating-menu-direction=top]::after {
-    bottom: -.5rem;
+    bottom: -.45rem;
     left: 0;
     width: 2.5rem;
-    height: .5rem
+    height: .45rem
 }
 
 .bx--overflow-menu-options[data-floating-menu-direction=left]::after {
@@ -19634,7 +19634,7 @@ a.bx--header__menu-item {
     font-size: var(--bx-heading-compact-01-font-size,0.875rem);
     font-weight: var(--bx-heading-compact-01-font-weight,600);
     line-height: var(--bx-heading-compact-01-line-height,1.28572);
-    letter-spacing: var(--bx-heading-compact-01-letter-spacing,0.16px); 
+    letter-spacing: var(--bx-heading-compact-01-letter-spacing,0.16px);
     outline: 2px solid transparent;
     outline-offset: -2px;
     display: flex;
@@ -24940,3 +24940,88 @@ div .bx--tile--selectable:not(:last-child) {
     letter-spacing: var(--bx-body-01-letter-spacing,0.16px);
     color: var(--bx-text-secondary,#525252)
 }
+
+
+/*custom*/
+
+/*card start (be from watson-iot-card) */
+
+.cb--card {
+    background: white;
+    box-sizing: border-box;
+    outline: solid 0.125rem transparent;
+    height: var(--card-default-height);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.cb--card--header {
+    flex: 0 0 3rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    font-weight: bold;
+    padding: 0 0 0 1rem;
+}
+
+.cb--card--title {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 0;
+    margin-top: 0.5rem;
+    padding-right: 1rem;
+    width: 100%;
+}
+
+.cb--card--subtitle--text {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.33333;
+    letter-spacing: 0.32px;
+    color: #525252;
+    font-weight: normal;
+    width: 100%;
+    max-height: 1.34em;
+    max-width: calc(100% - 2rem);
+}
+
+.cb--card--title, .cb--card--subtitle--text {
+    overflow: hidden;
+    max-height: calc(1.375em * (1 + 0.5));
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+    min-width: 3rem;
+}
+
+.cb--card--header .cb--card--toolbar {
+    margin: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.cb--card--content {
+    flex: 1;
+    padding: 1rem;
+    position: relative;
+    height: var(--card-content-height);
+    overflow-x: visible;
+    overflow-y: visible;
+}
+
+.cb--card--footer {
+    align-items: center;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    height: 2.5rem;
+    overflow: hidden;
+    padding: 0 1rem;
+}
+
+/*card end*/

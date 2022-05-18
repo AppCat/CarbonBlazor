@@ -15,7 +15,7 @@ namespace CarbonBlazor.Components
     {
         /// <summary>
         /// dropdown 配置
-        /// The dropdown is config for the comboBox.
+        /// The dropdown is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? DropdownConfig { get; set; }
@@ -29,21 +29,21 @@ namespace CarbonBlazor.Components
 
         /// <summary>
         /// button 配置
-        /// The button is config for the comboBox.
+        /// The button is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? ButtonConfig { get; set; }
 
         /// <summary>
         /// text 配置
-        /// The text is config for the comboBox.
+        /// The text is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? TextConfig { get; set; }
 
         /// <summary>
         /// icon 配置
-        /// The icon is config for the comboBox.
+        /// The icon is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? IconConfig { get; set; }

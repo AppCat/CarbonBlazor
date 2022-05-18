@@ -114,7 +114,8 @@ namespace CarbonBlazor.Components
                 return;
 
             IsOpen = true;
-            await OnIsOpenChanged.InvokeAsync(IsOpen);
+            await OnOpen.InvokeAsync();
+            await IsOpenChanged.InvokeAsync(IsOpen);
             await InvokeStateHasChangedAsync();
         }
 
@@ -128,7 +129,8 @@ namespace CarbonBlazor.Components
                 return;
 
             IsOpen = false;
-            await OnIsOpenChanged.InvokeAsync(IsOpen);
+            await OnClose.InvokeAsync();
+            await IsOpenChanged.InvokeAsync(IsOpen);
             await InvokeStateHasChangedAsync();
         }
     }

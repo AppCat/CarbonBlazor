@@ -15,7 +15,7 @@ namespace CarbonBlazor
         /// <summary>
         /// 显示消息事件
         /// </summary>
-        internal Func<IBxModalConfig, Task>? OnShowModal { get; set; }        
+        internal Func<IBxModalConfig, Task>? OnShowModal { get; set; }       
 
         /// <summary>
         /// 显示模态

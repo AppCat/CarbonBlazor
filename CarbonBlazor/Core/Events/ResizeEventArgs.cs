@@ -9,7 +9,7 @@ namespace CarbonBlazor
     /// <summary>
     /// 窗口变化事件传递参数
     /// </summary>
-    public class ResizeEvent
+    public class ResizeEventArgs
     {
         /// <summary>
         /// 客户端宽度

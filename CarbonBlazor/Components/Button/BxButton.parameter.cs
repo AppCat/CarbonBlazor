@@ -35,7 +35,7 @@ namespace CarbonBlazor.Components
 
         /// <summary>
         /// href链接。 如果存在，此按钮将呈现为<a>。
-        /// Link href. If present, this button is rendered as <a>.
+        /// Link href. If present, this button is rendered as a.
         /// </summary>
         [Parameter]
         public string? Href { get; set; }
@@ -100,5 +100,19 @@ namespace CarbonBlazor.Components
         /// </summary>
         [Parameter]
         public bool? OnClickStopPropagation { get; set; } = true;
+
+        /// <summary>
+        /// onmousedown 事件的事件处理程序。
+        /// The event handler for the onmousedown event.
+        /// </summary>
+        [Parameter]
+        public EventCallback<MouseEventArgs> OnMouseDown { get; set; }
+
+        /// <summary>
+        /// onmouseup 事件的事件处理程序。
+        /// The event handler for the onmouseup event.
+        /// </summary>
+        [Parameter]
+        public EventCallback<MouseEventArgs> OnMouseUp { get; set; }
     }
 }

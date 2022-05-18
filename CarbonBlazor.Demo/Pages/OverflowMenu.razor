@@ -1,0 +1,63 @@
+﻿@page "/OverflowMenu"
+
+<BxOverflowMenu OnOpen="@(() => Console.WriteLine("打开"))" OnClose="@(() => Console.WriteLine("关闭"))">
+    <BxOverflowMenuOption Text="Stop app" OnClick="@(() => Console.WriteLine("Stop app"))" />
+    <BxOverflowMenuOption Text="Restart app" OnClick="@(() => Console.WriteLine("Restart app"))" />
+    <BxOverflowMenuOption Text="Rename app" OnClick="@(() => Console.WriteLine("Rename app"))" />
+    <BxOverflowMenuOption IsDelete HasDivider Text="Edit routes and access" OnClick="@(() => Console.WriteLine("Edit routes and access"))" />
+</BxOverflowMenu>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<BxOverflowMenu OnOpen="@(() => Console.WriteLine("打开"))" OnClose="@(() => Console.WriteLine("关闭"))" Flipped>
+    <BxOverflowMenuOption Text="Stop app" OnClick="@(() => Console.WriteLine("Stop app"))" />
+    <BxOverflowMenuOption Text="Restart app" OnClick="@(() => Console.WriteLine("Restart app"))" />
+    <BxOverflowMenuOption Text="Rename app" OnClick="@(() => Console.WriteLine("Rename app"))" />
+    <BxOverflowMenuOption IsDelete HasDivider Text="Edit routes and access" OnClick="@(() => Console.WriteLine("Edit routes and access"))" />
+</BxOverflowMenu>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<BxOverflowMenu OnOpen="@(() => Console.WriteLine("打开"))" OnClose="@(() => Console.WriteLine("关闭"))" Direction="BxOverflowMenuDirection.Top">
+    <BxOverflowMenuOption Text="Stop app" OnClick="@(() => Console.WriteLine("Stop app"))" />
+    <BxOverflowMenuOption Text="Restart app" OnClick="@(() => Console.WriteLine("Restart app"))" />
+    <BxOverflowMenuOption Text="Rename app" OnClick="@(() => Console.WriteLine("Rename app"))" />
+    <BxOverflowMenuOption IsDelete HasDivider Text="Edit routes and access" OnClick="@(() => Console.WriteLine("Edit routes and access"))" />
+</BxOverflowMenu>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<BxOverflowMenu OnOpen="@(() => Console.WriteLine("打开"))" OnClose="@(() => Console.WriteLine("关闭"))" Flipped Direction="BxOverflowMenuDirection.Top">
+    <BxOverflowMenuOption Text="Stop app" OnClick="@(() => Console.WriteLine("Stop app"))" />
+    <BxOverflowMenuOption Text="Restart app" OnClick="@(() => Console.WriteLine("Restart app"))" />
+    <BxOverflowMenuOption Text="Rename app" OnClick="@(() => Console.WriteLine("Rename app"))" />
+    <BxOverflowMenuOption IsDelete HasDivider Text="Edit routes and access" OnClick="@(() => Console.WriteLine("Edit routes and access"))" />
+</BxOverflowMenu>
+<br />
+
+<BxButton OnClick="@(() => _isOpen = !_isOpen)">
+    @if (_isOpen)
+    {
+        @("Close")
+    }
+    else
+    {
+        @("Open")
+    }
+</BxButton>
+
+@code {
+    private bool _isOpen;
+}

@@ -38,14 +38,14 @@ namespace CarbonBlazor.Components
 
         /// <summary>
         /// header__menu-title 配置
-        /// The header__menu-title is config for the comboBox.
+        /// The header__menu-title is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? MenuTitleConfig { get; set; }
 
         /// <summary>
         /// header__menu 配置
-        /// The header__menu is config for the comboBox.
+        /// The header__menu is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? MenuConfig { get; set; }

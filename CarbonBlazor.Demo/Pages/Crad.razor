@@ -1,0 +1,32 @@
+﻿@page "/Crad"
+
+
+
+<div class="bx--grid">
+    <div class="bx--row">
+        @for (var i = 0; i < 8; i++)
+        {
+            var x = i;
+            <div class="bx--col-md-4 bx--col-lg-4 bx--col-xlg-4">
+                <BxCrad Title="卡标题" Subtitle="2022-05-14 13：10 至 2022-05-14 13：30" Style="--card-default-height: 250px;">
+                    <ToolbarTemplate>
+                        <BxButton HasIconOnly Style="color: var(--bx-text-primary);" Kind="BxButtonKind.Ghost">
+                            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--btn__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M9 7L9 3 7 3 7 7 3 7 3 9 7 9 7 13 9 13 9 9 13 9 13 7z"></path></svg>
+                        </BxButton>
+                    </ToolbarTemplate>
+                    <ContentTemplate>
+                        <p>Groups similar events that are related to each other through specific or related components of a service.</p>
+                    </ContentTemplate>
+                    <FooterTemplate>
+                        @if ((x % 2) == 0)
+                        {
+                            <BxButton Kind="BxButtonKind.Ghost" Size="BxButtonSize.Sm">
+                                测试
+                            </BxButton>
+                        }
+                    </FooterTemplate>
+                </BxCrad>
+            </div>
+        }
+    </div>
+</div>

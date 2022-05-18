@@ -27,7 +27,7 @@ namespace CarbonBlazor.Components
                 .If("bx--popover--caret", () => Caret)
                 .If("bx--popover--drop-shadow", () => DropShadow)
                 .If("bx--popover--high-contrast", () => HighContrast)
-                .If("bx--popover--open", () => Open)
+                .If("bx--popover--open", () => IsOpen)
                 ;
         }
 

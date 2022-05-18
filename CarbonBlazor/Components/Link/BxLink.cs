@@ -35,9 +35,13 @@ namespace CarbonBlazor.Components
         {
             var sequence = 0;
 
-            __builder.UseElement(ref sequence, "a", this, __builder =>
+            __builder.UseElement(ref sequence, "a", this,
+            __builder =>
             {
                 __builder.AddAttribute(sequence++, "href", Href ?? ("javascript:;"));
+            },
+            __builder =>
+            {
                 __builder.AddContent(sequence++, ChildContent);
             });
         };

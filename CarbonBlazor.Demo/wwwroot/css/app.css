@@ -7,4 +7,127 @@
 @media (max-width: 1055px) {
     .app-body {
         margin-left: 0px;
+    }
 }
+
+
+/*.body {
+    background-color: #f4f4f4;
+    height: 100vh;
+    padding: 2rem 0;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    height: 100%;
+}
+
+.card {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    display: flex;
+    min-height: 10.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem 1rem 1rem 1.5rem;
+    flex-direction: column;
+}
+
+    .card:hover {*/
+        /*cursor: pointer;*/
+    /*}
+
+.card__header {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.card__description {
+    font-size: 12px;
+}
+
+.card__content {
+    max-width: 90%;
+}
+
+    .card__content > * {
+        margin-bottom: 0.5rem;
+    }
+
+.card__icon {
+    margin-bottom: 1rem;
+    height: 1rem;
+    width: 1rem;
+}
+
+.card__border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;*/
+    /* background-color: #0353e9; */
+/*}*/
+
+
+.body {
+    background-color: #f4f4f4;
+    height: 100vh;
+    padding: 2rem 0;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.card {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    display: flex;
+    min-height: 10.5rem;
+    margin-bottom: 1rem;
+    padding: 1rem 1rem 1rem 1.5rem;
+    flex-direction: column;
+}
+
+    .card:hover {
+        cursor: pointer;
+    }
+
+.card__header {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.card__description {
+    font-size: 12px;
+}
+
+.card__content {
+    max-width: 90%;
+}
+
+    .card__content > * {
+        margin-bottom: 0.5rem;
+    }
+
+.card__icon {
+    margin-bottom: 1rem;
+    height: 1rem;
+    width: 1rem;
+}
+
+.card__border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0.25rem;
+    background-color: #0353e9;
+    overflow: hidden;
+}
+

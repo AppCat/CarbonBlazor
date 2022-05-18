@@ -1,12 +1,78 @@
 ﻿@page "/dashBoard"
+@using CarbonBlazor.Demo.Models
 
-<BxGrid>
-    <BxRow Style="background-color: red; height: 50px;">
+<BxGrid Style="margin: 0px; padding: 0px;">
+    <BxRow>
+        <BxCol Md="1">
 
+        </BxCol>
+        <BxCol Md="4">
+            <BxGrid Style="margin: 0px; padding: 0px;">
+                <BxRow Style="height: 300px; margin-bottom: 16px;">
+                    <BxCrad Title="Humidity" Style="--card-default-height: 142px;">
+                        <ToolbarTemplate>
+                            <BxButton HasIconOnly Style="color: var(--bx-text-primary);" Kind="BxButtonKind.Ghost">
+                                <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--btn__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M9 7L9 3 7 3 7 7 3 7 3 9 7 9 7 13 9 13 9 9 13 9 13 7z"></path></svg>
+                            </BxButton>
+                        </ToolbarTemplate>
+                        <ContentTemplate>
+                            <p>Content</p>
+                            <h3>60 <span>%</span></h3>
+                        </ContentTemplate>
+                    </BxCrad>
+                </BxRow>
+                <BxRow>
+                    <BxDataTable TModel=Person DataSource=Persons.Take(10)>
+                        <BxColumn @bind-Field="context.Id" />
+                        <BxColumn @bind-Field="context.Name" />
+                        <BxColumn @bind-Field="context.Age" />
+                        <BxColumn @bind-Field="context.Sex" />
+                    </BxDataTable>
+                </BxRow>
+            </BxGrid>
+        </BxCol>
+        <BxCol Md="3" style="height: 500px;">
+            <BxGrid Style="margin: 0px; padding: 0px;">
+                <BxRow>
+                    @for (var i = 0; i < 8; i++)
+                    {
+                        var x = i;
+                        <BxCol Md="8" Max="8">
+                            <BxCrad Title="卡标题" Subtitle="2022-05-14 13：10 至 2022-05-14 13：30" Style="--card-default-height: 300px;">
+                                <ToolbarTemplate>
+                                    <BxButton HasIconOnly Style="color: var(--bx-text-primary);" Kind="BxButtonKind.Ghost">
+                                        <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--btn__icon" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M9 7L9 3 7 3 7 7 3 7 3 9 7 9 7 13 9 13 9 9 13 9 13 7z"></path></svg>
+                                    </BxButton>
+                                </ToolbarTemplate>
+                                <ContentTemplate>
+                                    <p>Groups similar events that are related to each other through specific or related components of a service.</p>
+                                </ContentTemplate>
+                                <FooterTemplate>
+                                    @if ((x % 2) == 0)
+                                    {
+                                        <BxButton Kind="BxButtonKind.Ghost" Size="BxButtonSize.Sm">
+                                            测试
+                                        </BxButton>
+                                    }
+                                </FooterTemplate>
+                            </BxCrad>
+                        </BxCol>
+                    }
+                </BxRow>
+            </BxGrid>
+        </BxCol>
     </BxRow>
-    <BxRow Style="background-color: pink; height: 50px;">
-        <BxCol Lg="2" Md="0" Style="background-color: indianred;"></BxCol>
-        <BxCol Lg="6" Md="6" Style="background-color: yellow;"></BxCol>
-        <BxCol Lg="4" Md="2" Style="background-color: beige;"></BxCol>
-    </BxRow>
-</BxGrid> 
+</BxGrid>
+
+@code {
+    private int _page = 1;
+    private int _pageSize = 10;
+
+    IList<Person> Persons { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Persons = Enumerable.Range(0, 50).Select(_ => Person.RandomCreate()).ToList();
+    }
+}

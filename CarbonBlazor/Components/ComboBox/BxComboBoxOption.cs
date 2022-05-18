@@ -10,7 +10,7 @@ namespace CarbonBlazor.Components
 {
     /// <summary>
     /// 这是一个用于 ComboBoxOption 的 Blazor 组件。  
-    /// This is a Blazor component for the ComboBoxOption.
+    /// This is a Blazor component Option.
     /// </summary>
     public partial class BxComboBoxOption : BxListBoxItemComponentBase<BxComboBox, BxComboBoxOption>
     {

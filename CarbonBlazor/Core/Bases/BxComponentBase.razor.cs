@@ -89,6 +89,16 @@ namespace CarbonBlazor
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> Attributes { get; set; } = new Dictionary<string, object>();
 
+        #region JS
+
+        /// <summary>
+        /// 元素帮助
+        /// </summary>
+        [Inject]
+        protected ElementHelpJS? ElementHelp { get; set; }
+
+        #endregion
+
         #endregion
 
         /// <summary>
@@ -200,13 +210,13 @@ namespace CarbonBlazor
         /// <summary>
         /// 窗口变化
         /// </summary>
-        protected static event Action<ResizeEvent>? OnResize;
+        protected static event Action<ResizeEventArgs>? OnResize;
 
         /// <summary>
         /// 处理 窗口变化事件
         /// </summary>
         [JSInvokable]
-        public static void HandleWindowResizeChange(ResizeEvent @event)
+        public static void HandleWindowResizeChange(ResizeEventArgs @event)
         {
             try
             {

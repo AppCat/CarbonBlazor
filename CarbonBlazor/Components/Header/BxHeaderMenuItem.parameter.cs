@@ -31,14 +31,14 @@ namespace CarbonBlazor.Components
 
         /// <summary>
         /// header__menu-item 配置
-        /// The header__menu-item is config for the comboBox.
+        /// The header__menu-item is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? MenuItemConfig { get; set; }
 
         /// <summary>
         /// text-truncate--end 配置
-        /// The text-truncate--end is config for the comboBox.
+        /// The text-truncate--end is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? TextConfig { get; set; }

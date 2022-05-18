@@ -80,42 +80,42 @@ namespace CarbonBlazor.Components
 
         /// <summary>
         /// header__name 配置
-        /// The header__name is config for the comboBox.
+        /// The header__name is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? NameConfig { get; set; }
 
         /// <summary>
         /// header__name--prefix 配置
-        /// The header__name--prefix is config for the comboBox.
+        /// The header__name--prefix is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? NamePrefixConfig { get; set; }
 
         /// <summary>
         /// header__nav 配置
-        /// The header__nav is config for the comboBox.
+        /// The header__nav is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? NavigationConfig { get; set; }
 
         /// <summary>
         /// header__menu-bar 配置
-        /// The header__menu-bar is config for the comboBox.
+        /// The header__menu-bar is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? NavigationMenuConfig { get; set; }
 
         /// <summary>
         /// header__global 配置
-        /// The header__global is config for the comboBox.
+        /// The header__global is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? GlobalBarConfig { get; set; }
 
         /// <summary>
         /// side-nav__navigation 配置
-        /// The side-nav__navigation is config for the comboBox.
+        /// The side-nav__navigation is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? SideNavConfig { get; set; }

@@ -34,6 +34,8 @@ namespace CarbonBlazor.Components
         [Parameter]
         public bool IsOpen { get; set; }
 
+        #region Event
+
         /// <summary>
         /// 点击事件
         /// </summary>
@@ -41,10 +43,28 @@ namespace CarbonBlazor.Components
         public EventCallback<MouseEventArgs> OnHeadingClick { get; set; }
 
         /// <summary>
-        /// 打开
+        /// 打开变化用于 bind
         /// </summary>
         [Parameter]
-        public EventCallback<bool> OnIsOpenChanged { get; set; }
+        public EventCallback<bool> IsOpenChanged { get; set; }
+
+        /// <summary>
+        /// 函数在菜单关闭时调用
+        /// Function called when menu is closed
+        /// </summary>
+        [Parameter]
+        public EventCallback OnClose { get; set; }
+
+        /// <summary>
+        /// 当菜单打开时调用的函数
+        /// Function called when menu is opened
+        /// </summary>
+        [Parameter]
+        public EventCallback OnOpen { get; set; }
+
+        #endregion
+
+        #region Config
 
         /// <summary>
         /// accordion__heading 配置
@@ -66,5 +86,7 @@ namespace CarbonBlazor.Components
         /// </summary>
         [Parameter]
         public IBxComponentConfig? ContentConfig { get; set; }
+
+        #endregion
     }
 }

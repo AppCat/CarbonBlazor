@@ -28,28 +28,28 @@ namespace CarbonBlazor.Components
 
         /// <summary>
         /// combo-box 配置
-        /// The combo-box is config for the comboBox.
+        /// The combo-box is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? ComboBoxConfig { get; set; }
 
         /// <summary>
         /// list-box 配置
-        /// The list-box is config for the comboBox.
+        /// The list-box is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? ListBoxConfig { get; set; }
 
         /// <summary>
         /// menu-icon 配置
-        /// The menu-icon is config for the comboBox.
+        /// The menu-icon is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? MenuIconConfig { get; set; }
 
         /// <summary>
         /// box__selection 配置
-        /// The box__selection is config for the comboBox.
+        /// The box__selection is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? SelectionConfig { get; set; }

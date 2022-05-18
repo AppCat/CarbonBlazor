@@ -39,7 +39,7 @@ namespace CarbonBlazor.Components
         /// Specify whether the component is currently open or closed.
         /// </summary>
         [Parameter]
-        public bool Open { get; set; }
+        public bool IsOpen { get; set; }
 
         /// <summary>
         /// 指定弹窗如何与触发器元素对齐

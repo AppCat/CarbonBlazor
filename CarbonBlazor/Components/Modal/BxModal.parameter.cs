@@ -149,49 +149,49 @@ namespace CarbonBlazor.Components
 
         /// <summary>
         /// modal-container 配置
-        /// The modal-container is config for the comboBox.
+        /// The modal-container is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? ContainerConfig { get; set; }
 
         /// <summary>
         /// modal-header 配置
-        /// The modal-header is config for the comboBox.
+        /// The modal-header is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? HeaderConfig { get; set; }
 
         /// <summary>
         /// modal-header__label 配置
-        /// The modal-header__label is config for the comboBox.
+        /// The modal-header__label is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? HeaderLabelConfig { get; set; }
 
         /// <summary>
         /// modal-header__heading 配置
-        /// The modal-header__heading is config for the comboBox.
+        /// The modal-header__heading is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? HeaderHeadingConfig { get; set; }
 
         /// <summary>
         /// modal-close 配置
-        /// The modal-close is config for the comboBox.
+        /// The modal-close is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? CloseConfig { get; set; }
 
         /// <summary>
         /// modal-content 配置
-        /// The modal-content is config for the comboBox.
+        /// The modal-content is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? ContentConfig { get; set; }
 
         /// <summary>
         /// modal-footer 配置
-        /// The modal-footer is config for the comboBox.
+        /// The modal-footer is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? FooterConfig { get; set; }

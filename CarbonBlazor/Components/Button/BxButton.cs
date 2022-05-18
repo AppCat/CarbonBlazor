@@ -52,11 +52,13 @@ namespace CarbonBlazor.Components
             if (!Skeleton)
             {
                 __builder.AddEvent(ref sequence, "onclick", HandleOnClickAsync, OnClickStopPropagation);
+                __builder.AddEvent(ref sequence, "onmousedown", OnMouseDown);
+                __builder.AddEvent(ref sequence, "onmouseup", OnMouseUp);
             }
 
             __builder.AddComponent(ref sequence, this);
             __builder.AddAttribute(sequence++, "type", Type?.ToString() ?? "button");
-            __builder.IfAddAttribute(ref sequence, "disabled", () => Loading);
+            __builder.IfAddAttribute(ref sequence, "disabled", () => Loading || Disabled);
             __builder.IfAddAttribute(ref sequence, "role", Role, () => !string.IsNullOrWhiteSpace(Role));
 
             if (ChildContent != null)
@@ -89,8 +91,6 @@ namespace CarbonBlazor.Components
             {
                 __builder.AddContent(sequence++, new MarkupString("<div data-loading class='bx--loading bx--loading--small' style='position: absolute;'><svg class='bx--loading__svg' viewBox='-75 -75 150 150'><title>Loading</title><circle class='bx--loading__background' cx='0' cy='0' r='26.8125' /><circle class='bx--loading__stroke' cx='0' cy='0' r='26.8125' /></svg></div>"));
             }
-
-            //__builder.EitherOrAddContent(ref sequence, ChildContent, Content, () => ChildContent != null);
 
             __builder.CloseComponent();
         };

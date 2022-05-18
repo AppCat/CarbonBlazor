@@ -88,7 +88,7 @@ namespace CarbonBlazor
 
         /// <summary>
         /// menu-item__option 配置
-        /// The menu-item__option is config for the comboBox.
+        /// The menu-item__option is config .
         /// </summary>
         [Parameter]
         public IBxComponentConfig? MenuItemOptionConfig { get; set; }
