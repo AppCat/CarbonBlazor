@@ -97,13 +97,16 @@ namespace CarbonBlazor.Components
                     }
                     __builder.CloseElement();
 
-                    __builder.OpenElement(sequence++, "div");
-                    __builder.AddConfig(ref sequence, new BxComponentConfig(ToolbarContentConfig, "bx--toolbar-content", $"{Id}-table-header"));
-                    __builder.AddAria(ref sequence, "hidden", $"{!IsShowBatch}");
+                    if(ToolbarContentTemplate != null)
                     {
-                        __builder.AddContent(sequence++, ToolbarContentTemplate);
+                        __builder.OpenElement(sequence++, "div");
+                        __builder.AddConfig(ref sequence, new BxComponentConfig(ToolbarContentConfig, "bx--toolbar-content", $"{Id}-table-header"));
+                        __builder.AddAria(ref sequence, "hidden", $"{!IsShowBatch}");
+                        {
+                            __builder.AddContent(sequence++, ToolbarContentTemplate);
+                        }
+                        __builder.CloseElement();
                     }
-                    __builder.CloseElement();
                 }
                 __builder.CloseElement();
             };

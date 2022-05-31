@@ -70,6 +70,15 @@ namespace CarbonBlazor.Components
         public string? Details { get; set; }
 
         /// <summary>
+        /// 是否聚焦打开
+        /// is Focus Open the popover.
+        /// </summary>
+        [Parameter]
+        public bool IsFocusOpen { get; set; }
+
+        #region Config
+
+        /// <summary>
         /// popover 配置
         /// The popover is config for the ProgressBar.
         /// </summary>
@@ -96,5 +105,7 @@ namespace CarbonBlazor.Components
         /// </summary>
         [Parameter]
         public IBxComponentConfig? DetailsConfig { get; set; }
+
+        #endregion
     }
 }

@@ -17,7 +17,7 @@
         <BxButton Kind="BxButtonKind.Primary" Content="Submit"/>
         </BxStack>*@
     <BxStack Scale="7">
-        <BxButton Content="提交" OnClick="@(() => {Console.WriteLine(form?.Validate()); Console.WriteLine(JsonConvert.SerializeObject(form.Model)); })" />
+        <BxButton Type="BxButtonType.Submit" Content="提交" OnClick="@(() => {Console.WriteLine(form?.Validate()); Console.WriteLine(JsonConvert.SerializeObject(form.Model)); })" />
     </BxStack>
 </BxForm>
 

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-	  <Version>0.0.5.1-alpha</Version>
+	  <Version>0.0.7-alpha</Version>
 	  <Authors>BanXian; AppCat</Authors>
 	  <PackageTags>Carbon;CarbonDesignSystem;Carbon For Blazor;Blazor;UI;ACUI;Blazor UI;</PackageTags>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

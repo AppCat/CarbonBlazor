@@ -2,10 +2,8 @@
 // 获取元素属性
 export function getElementPropertyById(id, propertys) {
     var element = document.getElementById(id);
-    console.log(element);
     if (element != null) {
         if (propertys.length == 1) {
-            console.log(element[propertys[0]]);  
             return element[propertys[0]];
         }
         else if (propertys.length == 2) {

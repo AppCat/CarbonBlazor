@@ -1,5 +1,6 @@
 ﻿using CarbonBlazor.Extensions;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,11 @@ namespace CarbonBlazor.Components
     /// </summary>
     public partial class BxHeader : BxContentComponentBase
     {
+        /// <summary>
+        /// 是否打开 Menu
+        /// </summary>
+        protected bool IsOpenMenu = false;
+
         /// <summary>
         /// 设置映射
         /// </summary>
@@ -33,6 +39,28 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         internal override RenderFragment ContentFragment() => __builder =>
         {
+            RenderFragment menu_toggle = __builder =>
+            {
+                var sequence = 0;
+
+                __builder.OpenElement(sequence++, "button");
+                __builder.AddAttribute(sequence++, "type", "button");
+                __builder.AddAttribute(sequence++, "title", "Open menu");
+                __builder.AddConfig(ref sequence, new BxComponentConfig($"bx--header__action bx--header__menu-trigger bx--header__menu-toggle bx--header__menu-toggle__hidden", $"{Id}-menu-trigger").AddIfClass("bx--header__action--active", () => IsOpenMenu));
+                __builder.AddEvent(ref sequence, "onclick", HandleOnClickAsync);
+                {
+                    if (IsOpenMenu)
+                    {
+                        __builder.AddContent(sequence++, new MarkupString("<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' width='20' height='20' viewBox='0 0 32 32' aria-hidden='true'><path d='M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z'></path></svg>"));
+                    }
+                    else
+                    {
+                        __builder.AddContent(sequence++, new MarkupString("<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' width='20' height='20' viewBox='0 0 20 20' aria-hidden='true'><path d='M2 14.8H18V16H2zM2 11.2H18V12.399999999999999H2zM2 7.6H18V8.799999999999999H2zM2 4H18V5.2H2z'></path></svg>"));
+                    }
+                }
+                __builder.CloseElement();
+            };
+
             RenderFragment header__name = __builder =>
             {
                 var sequence = 0;
@@ -70,7 +98,6 @@ namespace CarbonBlazor.Components
                 __builder.CloseElement();
             };
 
-
             RenderFragment global = __builder =>
             {
                 var sequence = 0;
@@ -83,19 +110,51 @@ namespace CarbonBlazor.Components
                 __builder.CloseElement();
             };
 
+            RenderFragment sidenav = __builder =>
+            {
+                var sequence = 0;
+
+                __builder.OpenElement(sequence++, "nav");
+                __builder.AddAttribute(sequence++, "aria-label", "Side navigation");
+                __builder.AddConfig(ref sequence, new BxComponentConfig(SideNavConfig, $"bx--side-nav__navigation bx--side-nav bx--side-nav--ux", $"{Id}-side-nav")
+                    .AddIfClass("bx--side-nav--expanded", () => IsOpenMenu));
+                {
+                    __builder.AddContent(sequence++, SideNavTemplate);
+                }
+                __builder.CloseElement();
+            };
+
             var sequence = 0;
 
             __builder.OpenElement(sequence++, "header");
             __builder.AddComponent(ref sequence, this);
             __builder.AddAria(ref sequence, "label", AriaLabel);
-
+            
+            __builder.AddContent(sequence++, menu_toggle);
             __builder.AddContent(sequence++, header__name);
             __builder.AddContent(sequence++, nav);
             __builder.AddContent(sequence++, global);
+            if (IsOpenMenu)
+            {
+                __builder.AddContent(sequence++, new MarkupString("<div class='bx--side-nav__overlay bx--side-nav__overlay-active'></div>"));
+            }
+            __builder.AddContent(sequence++, sidenav);
             __builder.AddContent(sequence++, ChildContent);
 
             __builder.CloseComponent();
 
         };
+
+        /// <summary>
+        /// 处理 OnClick
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        protected virtual Task HandleOnClickAsync(MouseEventArgs args)
+        {
+            IsOpenMenu = !IsOpenMenu;
+
+            return Task.CompletedTask;
+        }
     }
 }

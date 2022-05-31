@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonBlazor", "CarbonBlazo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonBlazor.Demo", "CarbonBlazor.Demo\CarbonBlazor.Demo.csproj", "{7DC95978-48F9-455C-B309-C1F9DCF1EFAF}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonBlazor.IconTool", "CarbonBlazor.IconTool\CarbonBlazor.IconTool.csproj", "{9B57221F-3B40-48A6-AEC3-085ECAF55431}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7DC95978-48F9-455C-B309-C1F9DCF1EFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DC95978-48F9-455C-B309-C1F9DCF1EFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DC95978-48F9-455C-B309-C1F9DCF1EFAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B57221F-3B40-48A6-AEC3-085ECAF55431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B57221F-3B40-48A6-AEC3-085ECAF55431}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B57221F-3B40-48A6-AEC3-085ECAF55431}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B57221F-3B40-48A6-AEC3-085ECAF55431}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

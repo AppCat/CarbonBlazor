@@ -87,17 +87,7 @@ namespace CarbonBlazor.Extensions
 
                 if(component.Attributes != null && component.Attributes.Any())
                 {
-                    foreach (var attribute in component.Attributes)
-                    {
-                        if(attribute.Value == null)
-                        {
-                            builder.AddAttribute(sequence++, attribute.Key);
-                        }
-                        else
-                        {
-                            builder.AddAttribute(sequence++, attribute.Key, attribute.Value);
-                        }
-                    }
+                    builder.AddMultipleAttributes(sequence++, component.Attributes);
                 }
             }
 

@@ -176,7 +176,7 @@ namespace CarbonBlazor
         /// 释放
         /// </summary>
         /// <returns></returns>
-        public ValueTask DisposeAsync()
+        public virtual ValueTask DisposeAsync()
         {
             Dispose(true);
             GC.SuppressFinalize(this);

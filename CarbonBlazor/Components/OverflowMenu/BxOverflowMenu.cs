@@ -167,7 +167,22 @@ namespace CarbonBlazor.Components
         }
 
         /// <summary>
-        /// 位置
+        /// 关闭
+        /// menu is closed
+        /// </summary>
+        /// <returns></returns>
+        protected virtual async Task CloseAsync()
+        {
+            if (!IsOpen)
+                return;
+
+            IsOpen = false;
+            await OnClose.InvokeAsync();
+            await InvokeStateHasChangedAsync();
+        }
+
+        /// <summary>
+        /// 位置计算
         /// </summary>
         /// <returns></returns>
         protected async Task PositionAsync()
@@ -203,21 +218,6 @@ namespace CarbonBlazor.Components
                     Top = offsetTop - (childElementCount * 40);
                 }
             }
-        }
-
-        /// <summary>
-        /// 关闭
-        /// menu is closed
-        /// </summary>
-        /// <returns></returns>
-        protected virtual async Task CloseAsync()
-        {
-            if (!IsOpen)
-                return;
-
-            IsOpen = false;
-            await OnClose.InvokeAsync();
-            await InvokeStateHasChangedAsync();
         }
 
         /// <summary>

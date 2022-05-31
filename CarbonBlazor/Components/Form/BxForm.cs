@@ -181,19 +181,35 @@ namespace CarbonBlazor.Components
                         TypeCode.Decimal
                     };
 
-                    Console.WriteLine($"开始: {typeCode}");
-
                     if (numberCodes.Contains(typeCode))
                     {
-                        __builder.OpenComponent<BxNumberInput<decimal>>(sequence++);
+                        //if (isNullable)
+                        //{
+                        //    __builder.OpenComponent<BxNumberInput<decimal?>>(sequence++);
+                        //}
+                        //else
+                        //{
+                        //    __builder.OpenComponent<BxNumberInput<decimal>>(sequence++);
+                        //}
+
                         __builder.AddAttribute(sequence++, nameof(BxNumberInput<decimal>.ReadOnly), readOnly);
                         __builder.AddAttribute(sequence++, nameof(BxNumberInput<decimal>.LabelText), name);
-                        __builder.AddAttribute(sequence++, nameof(BxNumberInput<decimal>.Value), Convert.ChangeType(value, typeof(decimal)));
+                        __builder.AddAttribute(sequence++, nameof(BxNumberInput<decimal>.Value), value != null ? Convert.ChangeType(value, typeof(decimal)) : null);
+
                         if (property.CanWrite && !readOnly)
                         {
-                            __builder.AddEvent<decimal>(ref sequence, nameof(BxNumberInput<decimal>.ValueChanged), this, value => property.SetValue(Model, Convert.ChangeType(value, typeCode)));
+                            if (isNullable)
+                            {
+                                //__builder.AddEvent<decimal>(ref sequence, nameof(BxNumberInput<Nullable<decimal>>.ValueChanged), this, value => property.SetValue(Model, Convert.ChangeType(value, typeCode)));
+                            }
+                            else
+                            {
+                                __builder.AddEvent<decimal>(ref sequence, nameof(BxNumberInput<decimal>.ValueChanged), this, value => property.SetValue(Model, Convert.ChangeType(value, typeCode)));
+                            }
                         }
-                        __builder.CloseComponent();
+
+
+                        //__builder.CloseComponent();
                     }
                     else if (typeCode == TypeCode.String)
                     {
@@ -231,7 +247,6 @@ namespace CarbonBlazor.Components
                         }
                         __builder.CloseComponent();
                     }
-                    Console.WriteLine($"结束: {typeCode}");
                 }
             };
 
@@ -330,8 +345,18 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         private async Task HandleOnInvalidSubmit(EditContext editContext)
         {
+            foreach (var messages in editContext.GetValidationMessages())
+            {
+                Console.WriteLine(messages);
+            }
             await OnFailed.InvokeAsync(editContext);
         }
+
+        #endregion
+
+        #region SDLC
+
+
 
         #endregion
     }

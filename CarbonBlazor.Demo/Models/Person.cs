@@ -1,6 +1,7 @@
 ﻿using Huān.Randoms;
 using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace CarbonBlazor.Demo.Models
 {
@@ -18,14 +19,18 @@ namespace CarbonBlazor.Demo.Models
         /// <summary>
         /// 名称
         /// </summary>
+        [Required]
         [DisplayName("名称")]
-        public string Name { get; set; }
+        [StringLength(10, MinimumLength = 4)]
+        public string? Name { get; set; }
 
         /// <summary>
         /// 年龄
         /// </summary>
+        [Required]
+        [Range(1, 200)]
         [DisplayName("年龄")]
-        public int Age { get; set; }
+        public int? Age { get; set; }
 
         /// <summary>
         /// 性别
@@ -36,7 +41,7 @@ namespace CarbonBlazor.Demo.Models
         /// 是否为少先队员
         /// </summary>
         [DisplayName("是否为少先队员")]
-        public bool IsYoungPioneer { get; set; }
+        public bool? IsYoungPioneer { get; set; }
 
         /// <summary>
         /// 随机创建
