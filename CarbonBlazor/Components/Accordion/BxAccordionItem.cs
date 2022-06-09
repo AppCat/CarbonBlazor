@@ -22,6 +22,16 @@ namespace CarbonBlazor.Components
         public bool Skeleton { get; set; }
 
         /// <summary>
+        /// 打开
+        /// </summary>
+        private bool _open { get; set; }
+
+        /// <summary>
+        /// 状态变化
+        /// </summary>
+        private bool _stateHasChanged = true;
+
+        /// <summary>
         /// 设置映射
         /// </summary>
         protected override void OnSetMapper()
@@ -31,7 +41,7 @@ namespace CarbonBlazor.Components
                 .Clear()
                 .Add(fixedClass)
                 .If("bx--accordion__item--disabled", () => Disabled)
-                .If("bx--accordion__item--active", () => IsOpen)
+                .If("bx--accordion__item--active", () => Open)
                 ;
         }
 
@@ -61,7 +71,7 @@ namespace CarbonBlazor.Components
                 {
                     __builder.AddAttribute(sequence++, "disabled");
                 }
-                __builder.AddAria(ref sequence, "expanded", IsOpen);
+                __builder.AddAria(ref sequence, "expanded", Open);
                 __builder.AddAria(ref sequence, "controls", contentId);
                 __builder.AddEvent(ref sequence, "onclick", HandleOnClickAsync);
                 {
@@ -92,7 +102,9 @@ namespace CarbonBlazor.Components
             if (Disabled)
                 return;
 
-            if (!IsOpen)
+            _stateHasChanged = false;
+
+            if (!Open)
             {
                 await OpenAsync();
             }
@@ -110,13 +122,16 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         public async Task OpenAsync()
         {
-            if (IsOpen)
+            if (_open)
                 return;
 
-            IsOpen = true;
+            _open = true;
+            Open = _open;
             await OnOpen.InvokeAsync();
-            await IsOpenChanged.InvokeAsync(IsOpen);
-            await InvokeStateHasChangedAsync();
+            await OnOpenChange.InvokeAsync(Open);
+            await OpenChanged.InvokeAsync(Open);
+            await InvokeStateHasChangedAsync(_stateHasChanged);
+            _stateHasChanged = true;
         }
 
         /// <summary>
@@ -125,13 +140,48 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         public async Task CloseAsync()
         {
-            if (!IsOpen)
+            if (!_open)
                 return;
 
-            IsOpen = false;
+            _open = false;
+            Open = _open;
             await OnClose.InvokeAsync();
-            await IsOpenChanged.InvokeAsync(IsOpen);
-            await InvokeStateHasChangedAsync();
+            await OnOpenChange.InvokeAsync(Open);
+            await OpenChanged.InvokeAsync(Open);
+            await InvokeStateHasChangedAsync(_stateHasChanged);
+            _stateHasChanged = true;
         }
+
+        #region SDLC
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            _open = Open;
+        }
+
+        /// <summary>
+        /// 设置参数
+        /// </summary>
+        /// <returns></returns>
+        protected override async Task OnParametersSetAsync()
+        {
+            if (_open != Open)
+            {
+                if (Open)
+                {
+                    await OpenAsync();
+                }
+                else
+                {
+                    await CloseAsync();
+                }
+            }
+        }
+
+        #endregion
     }
 }

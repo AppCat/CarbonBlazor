@@ -41,7 +41,7 @@ namespace CarbonBlazor.Demo.Models
         /// 是否为少先队员
         /// </summary>
         [DisplayName("是否为少先队员")]
-        public bool? IsYoungPioneer { get; set; }
+        public bool IsYoungPioneer { get; set; }
 
         /// <summary>
         /// 随机创建

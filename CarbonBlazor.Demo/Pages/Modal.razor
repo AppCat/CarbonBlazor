@@ -8,8 +8,7 @@
             <div class="component-example__live--rendered modal">
 
                 <div>
-                    <button class="bx--btn bx--btn--primary" type="button" data-modal-target="#modal-ed454ftfa4q1" @onclick="@(() => { Console.WriteLine(_visible);  _visible = true; })">Show modal1</button>
-                    <BxModal Heading="Modal heading" Label="Optional label" Id="modal-ed454ftfa4q1" @bind-Visible="@_visible" Loading>
+                    <BxModal @ref="_modal" Heading="Modal heading" Label="Optional label" Id="modal-ed454ftfa4q1" @bind-Visible="@_visible" OnVisibleChange="HandleVisibleChange">
                         <ContentTemplate>
                             <p>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean id accumsan augue. Phasellus consequat augue
@@ -24,8 +23,10 @@
                             <BxButton Kind="BxButtonKind.Danger" Content="Primary button" />
                         </FooterTemplate>
                     </BxModal>
-                    <button class="bx--btn bx--btn--primary" type="button" data-modal-target="#modal-ed454ftfa4q1" @onclick="@HandleShowModalAsync">Show modal2</button>
-                    <BxLongPressButton Kind="BxButtonKind.Secondary" OnClick="@HandleShowModalAsync" Content="Show modal3"/>
+                    <BxButton OnClick="(() => _visible = !_visible)" Content="@_content" />
+                    <BxButton OnClick="@(() => _modal?.ShowAsync())" Content="@_content" />
+                    <BxButton OnClick="@(() => HandleShowModalAsync())" Content="Show Modal By Service" />
+                    @*<BxLongPressButton Kind="BxButtonKind.Secondary" OnClick="@(() => HandleShowModalAsync(true))" Content="@_content" />*@
                 </div>
 
             </div>
@@ -34,7 +35,9 @@
 </div>
 
 @code {
-    private bool _visible;
+    bool _visible;
+    string _content => _visible ? "Close Modal" : "Show Modal";
+    BxModal _modal;
 
     /// <summary>
     /// 模态服务
@@ -42,14 +45,14 @@
     [Inject]
     protected BxModalService ModalService { get; set; }
 
-    private async Task HandleShowModalAsync()
+    private async Task HandleShowModalAsync(bool outside = false)
     {
         var config = new BxModalConfig()
-            {
-                Heading = "是否删除",
-                ContentTemplate = Content(),
-                Actions = new BxModalActionConfig[]
-                    {
+        {
+            Heading = "是否删除",
+            ContentTemplate = Content(),
+            Actions = new BxModalActionConfig[]
+                {
                 new BxModalActionConfig
                 {
                     Text = "Cancel",
@@ -60,28 +63,34 @@
                     Text = "Delete",
                     Kind = BxButtonKind.Danger,
                     OnClick = (async model => { await Task.Delay(500000); return true; })
+                }
                 },
-                    }
-            };
-
+            PreventCloseOnClickOutside = outside
+        };
         await ModalService.ShowModalAsync(config);
+        StateHasChanged();
     }
 
     private RenderFragment<object> Content() => cxt => __builder =>
-       {
-       var sequence = 0;
+    {
+        var sequence = 0;
 
-       for (var i = 0; i < 20; i++)
-       {
-           __builder.OpenElement(sequence++, "div");
+        for (var i = 0; i < 20; i++)
+        {
+            __builder.OpenElement(sequence++, "div");
 
-           __builder.AddContent(sequence++, @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean id accumsan augue. Phasellus consequat augue
-            vitae
-            tellus tincidunt posuere. Curabitur justo urna, consectetur vel elit iaculis, ultrices condimentum risus. Nulla
-            facilisi.
-            Etiam venenatis molestie tellus. Quisque consectetur non risus eu rutrum. ");
+            __builder.AddContent(sequence++, @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean id accumsan augue. Phasellus consequat augue
+        vitae
+        tellus tincidunt posuere. Curabitur justo urna, consectetur vel elit iaculis, ultrices condimentum risus. Nulla
+        facilisi.
+        Etiam venenatis molestie tellus. Quisque consectetur non risus eu rutrum. ");
 
-           __builder.CloseElement();
-       }
-       };
+            __builder.CloseElement();
+        }
+    };
+
+    private async Task HandleVisibleChange(bool visible)
+    {
+        Console.WriteLine(visible);
+    }
 }

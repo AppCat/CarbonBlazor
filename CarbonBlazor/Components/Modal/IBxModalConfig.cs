@@ -66,7 +66,7 @@ namespace CarbonBlazor.Components
         string? Content { get; }
 
         /// <summary>
-        /// 提供模式的内容。 Or ChildContent
+        /// 提供模态的内容。 Or ChildContent
         /// Provide the contents of your Modal Or ChildContent
         /// </summary>
         RenderFragment<object>? ContentTemplate { get; }

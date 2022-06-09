@@ -17,6 +17,16 @@ namespace CarbonBlazor.Components
     public partial class BxOverflowMenu : BxContentComponentBase
     {
         /// <summary>
+        /// 打开
+        /// </summary>
+        private bool _open { get; set; }
+
+        /// <summary>
+        /// 状态变化
+        /// </summary>
+        private bool _stateHasChanged = true;
+
+        /// <summary>
         /// 左
         /// </summary>
         protected decimal Left { get; set; }
@@ -25,11 +35,6 @@ namespace CarbonBlazor.Components
         /// 顶
         /// </summary>
         protected decimal Top { get; set; }
-
-        /// <summary>
-        /// 是否打开
-        /// </summary>
-        protected bool IsOpen { get; set; }
 
         /// <summary>
         /// 选择元素
@@ -46,7 +51,7 @@ namespace CarbonBlazor.Components
                 .Clear()
                 .Add(fixedClass)
                 .AddEnum(Size, () => $"{fixedClass}--{Size}")
-                .If("bx--overflow-menu--open", () => IsOpen)
+                .If("bx--overflow-menu--open", () => Open)
                 .If("bx--toolbar-action", () => FatherComponentContext?.FatherComponent is BxTableToolbar)
                 ;
         }
@@ -60,11 +65,11 @@ namespace CarbonBlazor.Components
             var sequence = 0;
 
             __builder.UseElement(ref sequence, "button", this,
-            __builder =>
+            (Action<Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder>?)(__builder =>
             {
                 __builder.AddAttribute(sequence++, "type", "button");
                 __builder.AddAria(ref sequence, "haspopup", true);
-                __builder.AddAria(ref sequence, "expanded", IsOpen);
+                __builder.AddAria(ref sequence, "expanded", (object)this.Open);
                 __builder.AddEvent(ref sequence, "onclick", HandleOnClickAsync);
                 __builder.AddEvent(ref sequence, "onfocus", HandleOnFocusAsync);
                 __builder.AddEvent(ref sequence, "onkeydown", HandleOnKeyDownAsync);
@@ -75,9 +80,9 @@ namespace CarbonBlazor.Components
                 //    MenuOptions.Clear();
                 //    __builder.AddCascadingValue<List<BxOverflowMenuOption>>(ref sequence, MenuOptions, ChildContent);
                 //});
-            }, null);
+            }), null);
 
-            if (IsOpen)
+            if (Open)
             {
 
             }
@@ -87,7 +92,7 @@ namespace CarbonBlazor.Components
                 __builder.AddContent(sequence++, new MarkupString("<span tabindex='0' role='link' class='bx--visually-hidden'>Focus sentinel</span>"));
                 __builder.OpenElement(sequence++, "ul");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(OptionsConfig, "bx--overflow-menu-options", $"{Id}-options")
-                    .AddIfClass("bx--overflow-menu-options--open", () => IsOpen)
+                    .AddIfClass("bx--overflow-menu-options--open", () => Open)
                     .AddIfClass("bx--overflow-menu--flip", () => Flipped)
                     .AddIfClass($"bx--overflow-menu-options--{Size}", () => Size != null)
                     .AddStyle("top", $"{Top}px")
@@ -116,7 +121,7 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         protected virtual async Task HandleOnClickAsync(MouseEventArgs args)
         {
-            if (IsOpen)
+            if (Open)
             {
                 await CloseAsync();
             }
@@ -125,7 +130,7 @@ namespace CarbonBlazor.Components
                 await OpenAsync();
             }
 
-            await OnOnClick.InvokeAsync(args);
+            await OnClick.InvokeAsync(args);
         }
 
 
@@ -157,13 +162,17 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         protected virtual async Task OpenAsync()
         {
-            if (IsOpen)
+            if (_open)
                 return;
 
-            IsOpen = true;
+            _open = true;
+            Open = _open;
             await PositionAsync();
+            await OnOpenChange.InvokeAsync(Open);
+            await OpenChanged.InvokeAsync(Open);
             await OnOpen.InvokeAsync();
-            await InvokeStateHasChangedAsync();
+            await InvokeStateHasChangedAsync(_stateHasChanged);
+            _stateHasChanged = true;
         }
 
         /// <summary>
@@ -173,12 +182,16 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         protected virtual async Task CloseAsync()
         {
-            if (!IsOpen)
+            if (!_open)
                 return;
 
-            IsOpen = false;
+            _open = false;
+            Open = _open;
+            await OnOpenChange.InvokeAsync(Open);
+            await OpenChanged.InvokeAsync(Open);
             await OnClose.InvokeAsync();
-            await InvokeStateHasChangedAsync();
+            await InvokeStateHasChangedAsync(_stateHasChanged);
+            _stateHasChanged = true;
         }
 
         /// <summary>
@@ -187,15 +200,15 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         protected async Task PositionAsync()
         {
-            if (ElementHelp != null && IsOpen)
+            if (ElementHelp != null && Open)
             {
                 var wrapperWidth = 160;
-                var childElementCount = await ElementHelp.GetElementPropertyByIdAsync<decimal>($"{Id}-options", "childElementCount");
+                var childElementCount = await ElementHelp.FindElementPropertyByIdAsync<decimal>($"{Id}-options", "childElementCount");
 
-                var offsetLeft = await ElementHelp.GetElementPropertyByIdAsync<decimal>(Id, "offsetLeft");
-                var offsetTop = await ElementHelp.GetElementPropertyByIdAsync<decimal>(Id, "offsetTop");
-                var offsetHeight = await ElementHelp.GetElementPropertyByIdAsync<decimal>(Id, "offsetHeight");
-                var offsetWidth = await ElementHelp.GetElementPropertyByIdAsync<decimal>(Id, "offsetWidth");
+                var offsetLeft = await ElementHelp.FindElementPropertyByIdAsync<decimal>(Id, "offsetLeft");
+                var offsetTop = await ElementHelp.FindElementPropertyByIdAsync<decimal>(Id, "offsetTop");
+                var offsetHeight = await ElementHelp.FindElementPropertyByIdAsync<decimal>(Id, "offsetHeight");
+                var offsetWidth = await ElementHelp.FindElementPropertyByIdAsync<decimal>(Id, "offsetWidth");
 
                 if (Direction?.Value == BxOverflowMenuDirection.Bottom && Flipped)
                 {
@@ -224,7 +237,7 @@ namespace CarbonBlazor.Components
         /// 处理外部点击
         /// </summary>
         /// <param name="path"></param>
-        protected void HandleExternalClick(ClickElement[] path)
+        protected void HandleOnDocumentClick(ClickElement[] path)
         {
             if (path.Any(e => e.Id == $"{Id}-options" || e.Id == $"{Id}")) // 包含自己不隐藏
                 return;
@@ -235,9 +248,9 @@ namespace CarbonBlazor.Components
         /// 处理窗口变化
         /// </summary>
         /// <param name="args"></param>
-        protected async void HandleWindowResizeChange(ResizeEventArgs args)
+        protected async void HandleOnResize(ResizeEventArgs args)
         {
-            if (IsOpen)
+            if (Open)
             {
                 await PositionAsync();
                 await InvokeStateHasChangedAsync();
@@ -254,8 +267,9 @@ namespace CarbonBlazor.Components
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            OnDocumentClick += HandleExternalClick;
-            OnResize += HandleWindowResizeChange;
+            OnDocumentClick += HandleOnDocumentClick;
+            OnResize += HandleOnResize;
+            _open = Open;
         }
 
         /// <summary>
@@ -265,8 +279,8 @@ namespace CarbonBlazor.Components
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-            OnDocumentClick -= HandleExternalClick;
-            OnResize -= HandleWindowResizeChange;
+            OnDocumentClick -= HandleOnDocumentClick;
+            OnResize -= HandleOnResize;
         }
 
         /// <summary>
@@ -276,17 +290,36 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (IsOpen && !alreadyFocus)
+            if (Open && !alreadyFocus)
             {
                 await OptionsElement.FocusAsync();
                 alreadyFocus = true;
             }
-            else if (!IsOpen && alreadyFocus)
+            else if (!Open && alreadyFocus)
             {
                 alreadyFocus = false;
             }
 
             await base.OnAfterRenderAsync(firstRender);
+        }
+
+        /// <summary>
+        /// 设置参数
+        /// </summary>
+        /// <returns></returns>
+        protected override async Task OnParametersSetAsync()
+        {
+            if (_open != Open)
+            {
+                if (Open)
+                {
+                    await OpenAsync();
+                }
+                else
+                {
+                    await CloseAsync();
+                }
+            }
         }
 
         #endregion

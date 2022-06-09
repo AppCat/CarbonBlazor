@@ -18,7 +18,7 @@ namespace CarbonBlazor
         /// <summary>
         /// 元素
         /// </summary>
-        protected ElementReference Element { get; set; }
+        protected ElementReference Element { get; set; }        
 
         /// <summary>
         /// 设置

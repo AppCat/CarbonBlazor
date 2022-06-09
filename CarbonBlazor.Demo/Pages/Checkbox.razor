@@ -1,0 +1,20 @@
+﻿@page "/Checkbox"
+@using CarbonBlazor.Demo.Models
+
+
+<div class="bx--form-item bx--checkbox-wrapper">
+    <input type="checkbox" class="bx--checkbox" id="checkbox-label-1" @bind-value="_person.IsYoungPioneer">
+    <label for="checkbox-label-1" class="bx--checkbox-label">
+        <span class="bx--checkbox-label-text" dir="auto">Checkbox label</span>
+    </label>
+</div>
+
+<BxCheckbox @bind-Value="_person.IsYoungPioneer" LabelText="Checkbox label"/>
+
+<EditForm Model="_person">
+    <InputCheckbox @bind-Value="_person.IsYoungPioneer" />
+</EditForm>
+
+@code {
+    Person _person = new Person();
+}

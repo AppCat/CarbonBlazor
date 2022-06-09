@@ -54,7 +54,7 @@ namespace CarbonBlazor.Components
             if (!Skeleton)
             {
                 __builder.AddEvent(ref sequence, "onclick", HandleOnClickAsync, OnClickStopPropagation);
-                __builder.AddEvent(ref sequence, "onmouseout", HandleOnMouseupAsync, true, true);
+                __builder.AddEvent(ref sequence, "onmouseout", HandleOnMouseoutAsync, true, true);
                 __builder.AddEvent(ref sequence, "onmousedown", HandleOnMousedownAsync, OnMousedownStopPropagation, true);
                 __builder.AddEvent(ref sequence, "onmouseup", HandleOnMouseupAsync, OnMouseupStopPropagation, true);
             }

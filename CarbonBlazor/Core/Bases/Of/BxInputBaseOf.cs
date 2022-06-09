@@ -39,18 +39,21 @@ namespace CarbonBlazor
         /// <summary>
         /// Gets or sets a callback that updates the bound value.
         /// </summary>
-        [Parameter] public EventCallback<TValue> ValueChanged { get; set; }
+        [Parameter] 
+        public EventCallback<TValue> ValueChanged { get; set; }
 
         /// <summary>
         /// Gets or sets an expression that identifies the bound value.
         /// </summary>
-        [Parameter] public Expression<Func<TValue>>? ValueExpression { get; set; }
+        [Parameter] 
+        public Expression<Func<TValue>>? ValueExpression { get; set; }
 
         /// <summary>
         /// Gets or sets the display name for this field.
         /// <para>This value is used when generating error messages when the input value fails to parse correctly.</para>
         /// </summary>
-        [Parameter] public string? DisplayName { get; set; }
+        [Parameter] 
+        public string? DisplayName { get; set; }
 
         /// <summary>
         /// Gets the associated <see cref="Forms.EditContext"/>.

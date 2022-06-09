@@ -10,7 +10,7 @@ namespace CarbonBlazor
     /// <summary>
     /// 参数
     /// </summary>
-    public partial class BxInuptComponentBase<TValue>
+    public partial class BxLabelInuptComponentBase<TValue>
     {
         /// <summary>
         /// 光

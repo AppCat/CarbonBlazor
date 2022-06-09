@@ -26,6 +26,16 @@ namespace CarbonBlazor.Components
         protected bool IsFocus { get; set; }
 
         /// <summary>
+        /// 可见度
+        /// </summary>
+        private bool _visible { get; set; }
+
+        /// <summary>
+        /// 状态变化
+        /// </summary>
+        private bool _stateHasChanged = true;
+
+        /// <summary>
         /// 设置映射
         /// </summary>
         protected override void OnSetMapper()
@@ -235,7 +245,6 @@ namespace CarbonBlazor.Components
         /// 行为按钮渲染
         /// </summary>
         /// <param name="config"></param>
-        /// <param name="model"></param>
         /// <returns></returns>
         protected RenderFragment ActionButtonFragment(BxModalActionConfig config) => __builder =>
         {
@@ -273,6 +282,7 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         protected virtual async Task HandleOnClickCloseAsync(MouseEventArgs args)
         {
+            _stateHasChanged = false;
             await CloseAsync();
         }
 
@@ -285,6 +295,7 @@ namespace CarbonBlazor.Components
         {
             if (args != null && args.Key == "Escape")
             {
+                _stateHasChanged = false;
                 await CloseAsync();
             }
         }
@@ -307,14 +318,16 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         public async Task ShowAsync()
         {
-            if (Visible)
+            if (_visible)
                 return;
 
-            Visible = true;
+            _visible = true;
+            Visible = _visible;
             await VisibleChanged.InvokeAsync(Visible);
             await OnVisibleChange.InvokeAsync(Visible);
             IsFocus = true;
-            StateHasChanged();
+            await InvokeStateHasChangedAsync(_stateHasChanged);
+            _stateHasChanged = true;
         }
 
         /// <summary>
@@ -323,13 +336,15 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         public async Task CloseAsync()
         {
-            if (!Visible)
+            if (!_visible)
                 return;
 
-            Visible = false;
+            _visible = false;
+            Visible = _visible;
             await VisibleChanged.InvokeAsync(Visible);
             await OnVisibleChange.InvokeAsync(Visible);
-            StateHasChanged();
+            await InvokeStateHasChangedAsync(_stateHasChanged);
+            _stateHasChanged = true;
         }
 
         #region SDLC
@@ -341,6 +356,7 @@ namespace CarbonBlazor.Components
         {
             base.OnInitialized();
             OnDocumentClick += HandleExternalClick;
+            _visible = Visible;
         }
 
         /// <summary>
@@ -373,6 +389,26 @@ namespace CarbonBlazor.Components
             else
             {
                 await OnClose.InvokeAsync();
+            }
+        }
+
+        /// <summary>
+        /// 设置参数
+        /// </summary>
+        /// <returns></returns>
+        protected override async Task OnParametersSetAsync()
+        {
+            if (_visible != Visible)
+            {
+                _visible = Visible;
+                if (_visible)
+                {
+                    await ShowAsync();
+                }
+                else
+                {
+                    await CloseAsync();
+                }
             }
         }
 

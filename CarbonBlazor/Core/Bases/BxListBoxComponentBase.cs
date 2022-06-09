@@ -192,7 +192,7 @@ namespace CarbonBlazor
 
             Expanded = true;
             await OnExpandedChanged.InvokeAsync(Expanded);
-            StateHasChanged();
+            StateHasChanged();  
         }
 
         /// <summary>

@@ -1,0 +1,52 @@
+﻿@page "/Tile"
+
+<BxExpandableTile @bind-Expanded="_expandable">
+    <AboveContentTemplate>
+        <div style="height: 200px;">Above the fold content here</div>
+    </AboveContentTemplate>
+    <BelowContentTemplate>
+        <div style="height: 400px;">Below the fold content here</div>
+    </BelowContentTemplate>
+</BxExpandableTile>
+
+<br />
+
+<BxExpandableTile @bind-Expanded="_expandable" Interactive>
+    <AboveContentTemplate>
+        <div style="height: 200px;">
+            Above the fold content here
+            <BxButton Content="@content" OnClick="HandleExpandableAsync" />
+        </div>
+    </AboveContentTemplate>
+    <BelowContentTemplate>
+        <div style="height: 400px;">Below the fold content here</div>
+    </BelowContentTemplate>
+</BxExpandableTile>
+
+<br />
+
+<BxButton Content="@content" OnClick="HandleExpandableAsync" />
+
+<br/>
+
+<BxRadioTile>
+    Option 1
+</BxRadioTile>
+
+<br/>
+
+<BxSelectableTile>
+    Option 1
+</BxSelectableTile>
+
+@code {
+    bool _expandable;
+    string content => _expandable ? "关闭" : "打开";
+    string input;
+
+    Task HandleExpandableAsync()
+    {
+        _expandable = !_expandable;
+        return Task.CompletedTask;
+    }
+}

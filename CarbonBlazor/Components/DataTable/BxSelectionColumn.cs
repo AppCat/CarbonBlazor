@@ -34,8 +34,8 @@ namespace CarbonBlazor.Components
                 __builder.AddAttribute(sequence++, "scope", "col");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(ThConfig).AddClass($"bx--table-column-checkbox").AddId($"{Id}-th"));
                 __builder.OpenComponent<BxCheckbox>(sequence++);
-                __builder.AddAttribute(sequence++, nameof(BxCheckbox.Checked), Table?.IsSelectedAll() ?? false);
-                __builder.AddEvent<bool>(ref sequence, nameof(BxCheckbox.OnCheckedChange), this, check =>
+                __builder.AddAttribute(sequence++, nameof(BxCheckbox.Value), Table?.IsSelectedAll() ?? false);
+                __builder.AddEvent<bool>(ref sequence, nameof(BxCheckbox.ValueChanged), this, check =>
                 {
                     if (check)
                     {
@@ -54,8 +54,8 @@ namespace CarbonBlazor.Components
                 __builder.OpenElement(sequence++, "td");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(TdConfig ?? this).AddClass($"bx--table-column-checkbox").AddId($"{Id}-td"));
                 __builder.OpenComponent<BxCheckbox>(sequence++);
-                __builder.AddAttribute(sequence++, nameof(BxCheckbox.Checked), Table?.IsSelected(rowIdHash) ?? false);
-                __builder.AddEvent<bool>(ref sequence, nameof(BxCheckbox.OnCheckedChange), this, check =>
+                __builder.AddAttribute(sequence++, nameof(BxCheckbox.Value), Table?.IsSelected(rowIdHash) ?? false);
+                __builder.AddEvent<bool>(ref sequence, nameof(BxCheckbox.ValueChanged), this, check =>
                 {
                     if (check)
                     {

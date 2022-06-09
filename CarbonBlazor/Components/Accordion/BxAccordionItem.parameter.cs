@@ -32,7 +32,7 @@ namespace CarbonBlazor.Components
         /// 是否打开
         /// </summary>
         [Parameter]
-        public bool IsOpen { get; set; }
+        public bool Open { get; set; }
 
         #region Event
 
@@ -43,10 +43,16 @@ namespace CarbonBlazor.Components
         public EventCallback<MouseEventArgs> OnHeadingClick { get; set; }
 
         /// <summary>
+        /// 打开变化用于
+        /// </summary>
+        [Parameter]
+        public EventCallback<bool> OnOpenChange { get; set; }
+
+        /// <summary>
         /// 打开变化用于 bind
         /// </summary>
         [Parameter]
-        public EventCallback<bool> IsOpenChanged { get; set; }
+        public EventCallback<bool> OpenChanged { get; set; }
 
         /// <summary>
         /// 函数在菜单关闭时调用

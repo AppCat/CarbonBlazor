@@ -49,14 +49,32 @@ namespace CarbonBlazor.Components
         [Parameter]
         public IBxComponentConfig? OptionsConfig { get; set; }
 
+        /// <summary>
+        /// 是否打开
+        /// </summary>
+        [Parameter]
+        public bool Open { get; set; }
+
         #region Event
+
+        /// <summary>
+        /// 打开变化用于
+        /// </summary>
+        [Parameter]
+        public EventCallback<bool> OnOpenChange { get; set; }
+
+        /// <summary>
+        /// 打开变化用于 bind
+        /// </summary>
+        [Parameter]
+        public EventCallback<bool> OpenChanged { get; set; }
 
         /// <summary>
         /// 单击事件的事件处理程序。
         /// The event handler for the click event.
         /// </summary>
         [Parameter]
-        public EventCallback<MouseEventArgs> OnOnClick { get; set; }
+        public EventCallback<MouseEventArgs> OnClick { get; set; }
 
         /// <summary>
         /// 焦点事件的事件处理程序。

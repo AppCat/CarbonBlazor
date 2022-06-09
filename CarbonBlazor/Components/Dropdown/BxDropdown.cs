@@ -19,11 +19,12 @@ namespace CarbonBlazor.Components
         /// </summary>
         protected override void OnSetMapper()
         {
-            var fixedClass = $"bx--form-item";
+            var fixedClass = $"bx--dropdown__wrapper bx--list-box__wrapper";
 
             ClassMapper
                 .Clear()
                 .Add(fixedClass)
+                .If("bx--dropdown__wrapper--inline bx--list-box__wrapper--inline", () => Inline)
                 ;
         }
 
@@ -52,13 +53,17 @@ namespace CarbonBlazor.Components
 
                     __builder.OpenElement(sequence++, "span");
                     __builder.AddConfig(ref sequence, new BxComponentConfig(TextConfig).AddClass($"bx--list-box__label").AddId($"{Id}-text"));
-                    if (SelectedOption == null && string.IsNullOrEmpty(DefaultSelectedKey))
+                    if (SelectedOption == null && !string.IsNullOrEmpty(DefaultSelectedKey) && Options.TryGetValue(DefaultSelectedKey, out BxDropdownOption? option))
                     {
-                        __builder.AddContent(sequence++, Placeholder);
+                        __builder.AddContent(sequence++, option.Value);
+                    }
+                    else if (SelectedOption != null)
+                    {
+                        __builder.AddContent(sequence++, SelectedOption.Value);
                     }
                     else
                     {
-                        __builder.AddContent(sequence++, Value);
+                        __builder.AddContent(sequence++, Placeholder);
                     }
                     __builder.CloseElement();
 
@@ -94,6 +99,8 @@ namespace CarbonBlazor.Components
                     .AddIfClass($"bx--list-box--expanded", () => Expanded)
                     .AddIfClass($"bx--dropdown--disabled", () => Disabled)
                     .AddIfClass($"bx--dropdown--inline", () => Inline)
+                    .AddIfClass($"bx--list-box--{Size}", () => Size != null)
+                    .AddIfClass($"bx--dropdown--{Size}", () => Size != null)
                     //.AddIfClass($"bx--list-box--up", () => Direction?.Value == BxComboBoxDirection.Top)
                     .AddId($"{Id}-dropdown"));
                 __builder.AddAttribute(sequence++, "data-dropdown");
@@ -107,33 +114,39 @@ namespace CarbonBlazor.Components
                 __builder.CloseElement();
             };
 
-            RenderFragment dropdown__wrapper = __builder =>
-            {
-                var sequence = 0;
+            //RenderFragment dropdown__wrapper = __builder =>
+            //{
+            //    var sequence = 0;
 
-                __builder.OpenElement(sequence++, "div");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(InputWrapperConfig)
-                    .AddClass($"bx--dropdown__wrapper bx--list-box__wrapper")
-                    .AddIfClass($"bx--dropdown__wrapper--inline bx--list-box__wrapper--inline", () => Inline)
-                    .AddId($"{Id}-dropdown__wrapper"));
-                __builder.IfAddAttribute(ref sequence, "data-invalid", Invalid, () => Invalid);
-                {
-                    __builder.AddContent(sequence++, LabelFragment());
-                    __builder.AddContent(sequence++, dropdown);
-                    __builder.AddContent(sequence++, HelperFragment());
-                    __builder.AddContent(sequence++, RequirementFragment());
-                }
-                __builder.CloseElement();
-            };
+            //    __builder.OpenElement(sequence++, "div");
+            //    __builder.AddConfig(ref sequence, new BxComponentConfig(InputWrapperConfig, "bx--dropdown__wrapper bx--list-box__wrapper", )
+            //        .AddClass($"bx--dropdown__wrapper bx--list-box__wrapper")
+            //        .AddIfClass($"bx--dropdown__wrapper--inline bx--list-box__wrapper--inline", () => Inline)
+            //        .AddId($"{Id}-dropdown__wrapper"));
+            //    __builder.IfAddAttribute(ref sequence, "data-invalid", Invalid, () => Invalid);
+            //    {
+            //        __builder.AddContent(sequence++, LabelFragment());
+            //        __builder.AddContent(sequence++, dropdown);
+            //        __builder.AddContent(sequence++, HelperFragment());
+            //        __builder.AddContent(sequence++, RequirementFragment());
+            //    }
+            //    __builder.CloseElement();
+            //};
 
             var sequence = 0;
 
             __builder.OpenElement(sequence++, "div");
             __builder.AddComponent(ref sequence, this);
 
-            __builder.AddContent(sequence++, dropdown__wrapper);
+            //__builder.AddContent(sequence++, dropdown__wrapper);
+            __builder.AddContent(sequence++, LabelFragment());
+            __builder.AddContent(sequence++, dropdown);
+            __builder.AddContent(sequence++, HelperFragment());
+            __builder.AddContent(sequence++, RequirementFragment());
 
             __builder.CloseComponent();
+
+
         };
 
         /// <summary>

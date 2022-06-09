@@ -31,6 +31,7 @@ namespace CarbonBlazor.Components
         Md,
         Lg,
         Xl,
+        [EnumClass("2xl")]
         Xl2
     }
 }

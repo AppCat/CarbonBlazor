@@ -76,6 +76,12 @@ namespace CarbonBlazor.Components
         [Parameter]
         public string? NavigationAriaLabel { get; set; }
 
+        /// <summary>
+        /// 允许你通过点击覆盖来关闭SideNav
+        /// allow you to close the SideNav by clicking on the overlay
+        /// </summary>
+        public bool Closable { get; set; } = true;
+
         #region Config
 
         /// <summary>

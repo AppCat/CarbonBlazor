@@ -1,6 +1,6 @@
 ﻿
 // 获取元素属性
-export function getElementPropertyById(id, propertys) {
+export function findElementPropertyById(id, propertys) {
     var element = document.getElementById(id);
     if (element != null) {
         if (propertys.length == 1) {
@@ -19,8 +19,21 @@ export function getElementPropertyById(id, propertys) {
     return null;
 }
 
+// 设置样式
+export function setStyleByIdAsync(id, property, value) {
+    var element = document.getElementById(id);
+    if (element != null) {
+        var value = getComputedStyle(element, false)[property];
+        if (value == null) {
+            return "_null_";
+        }
+        return value;
+    }
+    return "_null_";
+}
+
 // 获取样式
-export function getComputedStyleById(id, property) {
+export function findComputedStyleById(id, property) {
     var element = document.getElementById(id);
     if (element != null) {
         var value = getComputedStyle(element, false)[property];
@@ -33,7 +46,7 @@ export function getComputedStyleById(id, property) {
 }
 
 // 获取多个样式
-export function getComputedStylesById(id, propertys) {
+export function findComputedStylesById(id, propertys) {
     var element = document.getElementById(id);
     if (element != null) {
         var values = [];

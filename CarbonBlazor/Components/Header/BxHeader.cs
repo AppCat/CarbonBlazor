@@ -124,6 +124,19 @@ namespace CarbonBlazor.Components
                 __builder.CloseElement();
             };
 
+            RenderFragment overlay = __builder =>
+            {
+                var sequence = 0;
+
+                __builder.OpenElement(sequence++, "div");
+                __builder.AddConfig(ref sequence, new BxComponentConfig($"bx--side-nav__overlay bx--side-nav__overlay-active", $"{Id}-side-nav-overlay"));
+                if (Closable)
+                {
+                    __builder.AddEvent(ref sequence, "onclick", HandleOnClickAsync);
+                }
+                __builder.CloseElement();
+            };
+
             var sequence = 0;
 
             __builder.OpenElement(sequence++, "header");
@@ -136,7 +149,7 @@ namespace CarbonBlazor.Components
             __builder.AddContent(sequence++, global);
             if (IsOpenMenu)
             {
-                __builder.AddContent(sequence++, new MarkupString("<div class='bx--side-nav__overlay bx--side-nav__overlay-active'></div>"));
+                __builder.AddContent(sequence++, overlay);
             }
             __builder.AddContent(sequence++, sidenav);
             __builder.AddContent(sequence++, ChildContent);

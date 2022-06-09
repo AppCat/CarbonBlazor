@@ -24,15 +24,15 @@ namespace CarbonBlazor
         }
 
         /// <summary>
-        /// 获取元素属性
+        /// 查找元素属性
         /// </summary>
         /// <param name="id"></param>
         /// <param name="propertys"></param>
         /// <returns></returns>
-        public async Task<TValue?> GetElementPropertyByIdAsync<TValue>(string id, params string[] propertys)
+        public async Task<TValue?> FindElementPropertyByIdAsync<TValue>(string id, params string[] propertys)
         {
             var module = await _moduleTask.Value;
-            var result = await module.InvokeAsync<object>("getElementPropertyById", id, propertys);
+            var result = await module.InvokeAsync<object>("findElementPropertyById", id, propertys);
             if (result == null)
             {
                 return default(TValue);
@@ -45,28 +45,41 @@ namespace CarbonBlazor
         }
 
         /// <summary>
-        /// 获取样式
+        /// 设置样式
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="property"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public async Task SetStyleByIdAsync(string id, string property, string value)
+        {
+            var module = await _moduleTask.Value;
+            await module.InvokeVoidAsync("setStyleByIdAsync", id, property, value);
+        }
+
+        /// <summary>
+        /// 查找样式
         /// </summary>
         /// <param name="id"></param>
         /// <param name="property"></param>
         /// <returns></returns>
-        public async Task<string?> GetComputedStyleByIdAsync(string id, string property)
+        public async Task<string?> FindComputedStyleByIdAsync(string id, string property)
         {
             var module = await _moduleTask.Value;
-            var result = await module.InvokeAsync<string>("getComputedStyleById", id, property);
+            var result = await module.InvokeAsync<string>("findComputedStyleById", id, property);
             return result == "_null_" ? null : result;
         }
 
         /// <summary>
-        /// 获取多个样式
+        /// 查找多个样式
         /// </summary>
         /// <param name="id"></param>
         /// <param name="propertys"></param>
         /// <returns></returns>
-        public async Task<string[]?> GetComputedStylesByIdAsync(string id, params string[] propertys)
+        public async Task<string[]?> FindComputedStylesByIdAsync(string id, params string[] propertys)
         {
             var module = await _moduleTask.Value;
-            var result = await module.InvokeAsync<string[]>("getComputedStylesById", id, propertys);
+            var result = await module.InvokeAsync<string[]>("findComputedStylesById", id, propertys);
             return result.Length != propertys.Length ? null : result;
         }
     }

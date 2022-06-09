@@ -1,0 +1,31 @@
+﻿
+<ul class="bx--side-nav__items">
+    <li class="bx--side-nav__item">
+        <NavLink href="" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current" Match="NavLinkMatch.All">
+            <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
+            <span class="bx--side-nav__link-text">
+                Home
+            </span>
+        </NavLink>
+    </li>
+    @foreach (var pagePath in pagePaths)
+    {
+        <li class="bx--side-nav__item">
+            <NavLink href="@pagePath" class="bx--side-nav__link" ActiveClass="bx--side-nav__link--current">
+                <div class="bx--side-nav__icon bx--side-nav__icon--small"></div>
+                <span class="bx--side-nav__link-text">
+                    @pagePath
+                </span>
+            </NavLink>
+        </li>
+    }
+</ul>
+
+
+@code {
+    private string[] pagePaths = new[]
+    { 
+        "Counter", 
+        "FetchData"
+    };
+}

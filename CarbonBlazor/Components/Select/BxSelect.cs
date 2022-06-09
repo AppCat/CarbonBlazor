@@ -54,7 +54,7 @@ namespace CarbonBlazor.Components
                     {
                         if (args != null && args.Value != null)
                         {
-                            var key = args.Value.ToString();
+                            var key = args.Value.ToString(); 
                             if (!string.IsNullOrEmpty(key) && Options.ContainsKey(key))
                             {
                                 await SelectedOptionAsync(Options[key], true);

@@ -70,7 +70,7 @@ namespace CarbonBlazor
         /// 过滤的选项键
         /// </summary>
         [Parameter]
-        public TKey[]? FilteredKeys
+        public virtual TKey[]? FilteredKeys
         {
             get => _filteredKeys; set
             {
@@ -87,13 +87,13 @@ namespace CarbonBlazor
         /// 筛选
         /// </summary>
         [Parameter]
-        public string? Filtrate { get; set; }
+        public virtual string? Filtrate { get; set; }
 
         /// <summary>
         /// 最大多选
         /// </summary>
         [Parameter]
-        public int? MaxMultiple { get; set; }
+        public virtual int? MaxMultiple { get; set; }
 
         /// <summary>
         /// 多选
@@ -101,7 +101,7 @@ namespace CarbonBlazor
         /// A selection dropdown can allow multiple selections
         /// </summary>
         [Parameter]
-        public bool Multiple { get; set; }
+        public virtual bool Multiple { get; set; }
 
         /// <summary>
         /// 子内容

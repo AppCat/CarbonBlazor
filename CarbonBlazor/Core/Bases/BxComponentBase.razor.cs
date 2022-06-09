@@ -135,31 +135,39 @@ namespace CarbonBlazor
 
         /// <summary>
         /// 调用状态改变 / 通知渲染
+        /// <param name="stateHasChanged"></param>
         /// </summary>
-        protected void InvokeStateHasChanged()
+        protected void InvokeStateHasChanged(bool stateHasChanged = true)
         {
-            InvokeAsync(() =>
+            if (stateHasChanged)
             {
-                if (!IsDisposed)
+                InvokeAsync(() =>
                 {
-                    StateHasChanged();
-                }
-            });
+                    if (!IsDisposed)
+                    {
+                        StateHasChanged();
+                    }
+                });
+            }
         }
 
         /// <summary>
         /// 调用状态改变异步 / 通知渲染
         /// </summary>
+        /// <param name="stateHasChanged"></param>
         /// <returns></returns>
-        protected async Task InvokeStateHasChangedAsync()
+        protected async Task InvokeStateHasChangedAsync(bool stateHasChanged = true)
         {
-            await InvokeAsync(() =>
+            if (stateHasChanged)
             {
-                if (!IsDisposed)
+                await InvokeAsync(() =>
                 {
-                    StateHasChanged();
-                }
-            });
+                    if (!IsDisposed)
+                    {
+                        StateHasChanged();
+                    }
+                });
+            }
         }
 
         /// <summary>

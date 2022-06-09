@@ -11,7 +11,7 @@ namespace CarbonBlazor
     /// <summary>
     /// form-item 组件基础
     /// </summary>
-    public abstract partial class BxFormItemComponentBase<TValue> : BxInuptComponentBase<TValue>
+    public abstract partial class BxFormItemComponentBase<TValue> : BxLabelInuptComponentBase<TValue>
     {
         /// <summary>
         /// 标签渲染

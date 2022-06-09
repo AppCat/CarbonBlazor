@@ -13,7 +13,7 @@ namespace CarbonBlazor.Components
     /// 这是一个用于 Toggle 的 Blazor 组件。  
     /// This is a Blazor component for the Toggle.
     /// </summary>
-    public partial class BxToggle : BxInuptComponentBase<bool>
+    public partial class BxToggle : BxLabelInuptComponentBase<bool>
     {
         /// <summary>
         /// 设置映射

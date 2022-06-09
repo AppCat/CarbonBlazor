@@ -18,7 +18,17 @@ namespace CarbonBlazor
         /// <summary>
         /// Gets the <see cref="FieldIdentifier"/> for the bound value.
         /// </summary>
-        internal FieldIdentifier FieldIdentifier { get; set; }       
+        internal FieldIdentifier FieldIdentifier { get; set; }
+
+        /// <summary>
+        /// 第一次值
+        /// </summary>
+        protected TValue? FirstValue { get; set; }
+
+        /// <summary>
+        /// 当前值
+        /// </summary>
+        //protected TValue? CurrentValue { get; set; }
 
         #region CascadingParameter
 
@@ -62,7 +72,7 @@ namespace CarbonBlazor
                     _value = value;
                     if (ValueChanged.HasDelegate)
                     {
-                        ValueChanged.InvokeAsync(_value).Wait();
+                        _ = ValueChanged.InvokeAsync(_value);
                     }
                     if (FieldIdentifier.FieldName != null && FieldIdentifier.Model != null && EditContext != null)
                     {
@@ -72,11 +82,6 @@ namespace CarbonBlazor
             }
         }
         private TValue? _value;
-
-        /// <summary>
-        /// 第一次值
-        /// </summary>
-        protected TValue? FirstValue { get; set; }
 
         /// <summary>
         /// Gets or sets a callback that updates the bound value.
@@ -125,23 +130,5 @@ namespace CarbonBlazor
                 }
             }
         }
-
-        /// <summary>
-        /// 标签渲染
-        /// </summary>
-        /// <returns></returns>
-        protected virtual RenderFragment LabelFragment() => __builder =>
-        {
-            if (LabelTemplate == null && string.IsNullOrEmpty(LabelText))
-                return;
-
-            var sequence = 0;
-
-            __builder.OpenElement(sequence++, "label");
-            __builder.AddConfig(ref sequence, new BxComponentConfig(LabelTextConfig, $"bx--label", $"{Id}-label"));
-            __builder.AddAttribute(sequence++, "for", $"{Id}-input");
-            __builder.EitherOrAddContent(ref sequence, LabelTemplate, HideLabel ? string.Empty : LabelText, () => LabelTemplate != null);
-            __builder.CloseElement();
-        };
     }
 }

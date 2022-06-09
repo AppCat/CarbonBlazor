@@ -14,24 +14,6 @@ namespace CarbonBlazor.Components
     public partial class BxCheckbox
     {
         /// <summary>
-        /// 检查
-        /// </summary>
-        [Parameter]
-        public bool Checked { get; set; }
-
-        /// <summary>
-        /// 变化事件
-        /// </summary>
-        [Parameter]
-        public virtual EventCallback<bool> CheckedChanged { get; set; }
-
-        /// <summary>
-        /// 变化事件
-        /// </summary>
-        [Parameter]
-        public EventCallback<bool> OnCheckedChange { get; set; }
-
-        /// <summary>
         /// Input 配置
         /// </summary>
         [Parameter]
