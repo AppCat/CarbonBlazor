@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonBlazor.Demo", "Carbon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonBlazor.IconTool", "CarbonBlazor.IconTool\CarbonBlazor.IconTool.csproj", "{9B57221F-3B40-48A6-AEC3-085ECAF55431}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonBlazor.Doc", "CarbonBlazor.Doc\CarbonBlazor.Doc.csproj", "{34BD0CC9-5931-42D6-80EA-F3C0775EBE1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonBlazor.Doc", "CarbonBlazor.Doc\CarbonBlazor.Doc.csproj", "{34BD0CC9-5931-42D6-80EA-F3C0775EBE1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -11,7 +11,7 @@ namespace CarbonBlazor
     /// <summary>
     /// 
     /// </summary>
-    public abstract partial class BxInputBaseOfx<TValue> : IBxInput<TValue>
+    public abstract partial class BxInputComponentBaseOf<TValue> : IBxInput<TValue>
     {
         /// <summary>
         /// 获取或设置输入的值。这应该与双向绑定一起使用。
@@ -33,5 +33,11 @@ namespace CarbonBlazor
         /// </summary>
         [Parameter]
         public Expression<Func<TValue?>>? ValueExpression { get; set; }
+
+        /// <summary>
+        /// 只读
+        /// </summary>
+        [Parameter]
+        public bool ReadOnly { get; set; }
     }
 }

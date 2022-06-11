@@ -1,0 +1,64 @@
+﻿@page "/checkbox"
+@using CarbonBlazor.Extensions
+@inherits DemoPageBase
+
+<div style="max-width: 1000px;">
+    <ComponentDemo Variants="variants" Knob="Knob" />
+</div>
+
+@code {
+    private Dictionary<string, (Type type, string value, RenderFragment? renderFragment)> variants;
+    bool _disabled;
+    bool _checked;
+    bool _hideLabel;
+
+    protected override void OnInitialized()
+    {
+        RenderFragment component(Dictionary<string, Func<object>>? attribute = null) => __builder =>
+        {
+            var sequence = 0;
+
+            __builder.OpenComponent(sequence++, typeof(BxCheckbox));
+            __builder.SetKey(Guid.NewGuid());
+            __builder.AddAttribute(sequence++, nameof(BxCheckbox.LabelText), "Checkbox label");
+            foreach (var item in attribute ?? new Dictionary<string, Func<object>>())
+            {
+                __builder.AddAttribute(sequence++, item.Key, item.Value.Invoke());
+            }
+            __builder.CloseComponent();
+        };
+
+        var share = new Dictionary<string, Func<object>>
+        {
+            { nameof(BxCheckbox.Disabled), () => _disabled },
+            { nameof(BxCheckbox.Checked), () => _checked },
+            { nameof(BxCheckbox.HideLabel), () => _hideLabel },
+        };
+
+        variants = new Dictionary<string, (Type type, string value, RenderFragment? renderFragment)>
+        {
+            { "checkbox", (typeof(BxCheckbox), "Checkbox", component(share) ) }
+        };
+
+        base.OnInitialized();
+    }
+
+    /// <summary>
+    /// Knob
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    protected Dictionary<string, RenderFragment> Knob(Type type)
+    {
+        return new Dictionary<string, RenderFragment>
+        {
+            { "Modifiers", (RenderFragment)(__builder =>
+            {
+                var sequence = 0;
+                __builder.AddContent(sequence++, CreateBoolKnob("checked", _checked, __value => _checked = __value));
+                __builder.AddContent(sequence++, CreateBoolKnob("disabled", _disabled, __value => _disabled = __value));
+                __builder.AddContent(sequence++, CreateBoolKnob("hideLabel", _hideLabel, __value => _hideLabel = __value));
+            }) },
+        };
+    }
+}

@@ -1,8 +1,10 @@
 ﻿using CarbonBlazor.Extensions;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +15,7 @@ namespace CarbonBlazor.Components
     /// 复选框
     /// Checkbox
     /// </summary>
-    public partial class BxCheckbox : BxLabelInuptComponentBase<bool>
+    public partial class BxCheckbox : BxLabelInuptComponentBaseOf<bool>
     {
         /// <summary>
         /// 设置映射
@@ -43,10 +45,17 @@ namespace CarbonBlazor.Components
                 __builder.OpenElement(sequence++, "input");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(InputConfig, "bx--checkbox", $"{Id}-input"));
                 __builder.IfAddAttribute(ref sequence, "readonly", true, () => ReadOnly);
-                __builder.AddAttribute(sequence++, "value", Value);
+                //__builder.AddAttribute(sequence++, "checked", CurrentValue);
+                __builder.AddAttribute(sequence++, "value", BindConverter.FormatValue(CurrentValue));
+                __builder.AddAttribute(sequence++, "checked", BindConverter.FormatValue(CurrentValue));
+                __builder.AddAttribute(sequence++, "onchange", EventCallback.Factory.CreateBinder<bool>(this, async __value => await SetValueAsync(__value), CurrentValue));
                 __builder.AddAttribute(sequence++, "type", "checkbox");
                 __builder.IfAddAttribute(ref sequence, "disabled", () => Disabled);
-                __builder.AddEvent(ref sequence, "onchange", HandleOnChangeAsync);
+
+                // Old
+                //__builder.AddAttribute(sequence++, "value", Value);
+                //__builder.AddEvent(ref sequence, "onchange", HandleOnChangeAsync);
+
                 __builder.CloseElement();
 
                 // label
@@ -56,7 +65,7 @@ namespace CarbonBlazor.Components
                 //__builder.AddEvent(ref sequence, "onclick", HandleOnClickAsync);
                 {
                     __builder.OpenElement(sequence++, "span");
-                    __builder.AddConfig(ref sequence, new BxComponentConfig("bx--checkbox-label-text", $"{Id}-label-text"));
+                    __builder.AddConfig(ref sequence, new BxComponentConfig("bx--checkbox-label-text", $"{Id}-label-text").AddIfClass("bx--visually-hidden", () => HideLabel));
                     __builder.IfAddContent(ref sequence, LabelText, () => !string.IsNullOrEmpty(LabelText));
                     __builder.CloseElement();
                 }
@@ -65,38 +74,73 @@ namespace CarbonBlazor.Components
         };
 
         /// <summary>
-        /// 处理 OnChange
+        /// 尝试解析
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="value"></param>
+        /// <param name="result"></param>
+        /// <param name="validationErrorMessage"></param>
         /// <returns></returns>
-        protected async Task HandleOnChangeAsync(ChangeEventArgs args)
+        protected override bool TryParseValueFromString(string? value, [NotNullWhen(false)] out bool result, [NotNullWhen(false)] out string? validationErrorMessage)
         {
-            if (args.Value is bool @checked)
+            validationErrorMessage = null;
+            result = false;
+            if (bool.TryParse(value, out bool _bool))
             {
-                await SetCheckedAsync(@checked);
+                result = _bool;
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
         /// <summary>
-        /// 处理 OnChange
+        /// 设置内容
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        protected async Task HandleOnClickAsync(MouseEventArgs args)
+        protected override async Task SetValueAsync(bool value)
         {
-            await SetCheckedAsync(!Value);
+            await base.SetValueAsync(value);
+            var hasChanged = !EqualityComparer<bool>.Default.Equals(CurrentValue, Checked);
+            if (hasChanged)
+            {
+                Checked = CurrentValue;
+                await CheckedChanged.InvokeAsync(Checked);
+            }
         }
 
         /// <summary>
-        /// 设置
+        /// 创建
         /// </summary>
-        /// <param name="checked"></param>
         /// <returns></returns>
-        protected async Task SetCheckedAsync(bool @checked)
+        protected override FieldIdentifier CreateFieldIdentifier()
         {
-            if (@checked == Value)
-                return;
-            Value = @checked;
+            if (CheckedExpression != null)
+            {
+                return FieldIdentifier.Create(CheckedExpression);
+            }
+            else
+            {
+                return base.CreateFieldIdentifier();
+            }
+        }
+
+        /// <summary>
+        /// 设置参数后
+        /// </summary>
+        protected override void OnParametersSet()
+        {
+            var hasChanged = !EqualityComparer<bool>.Default.Equals(Checked, CurrentValue);
+            if (hasChanged)
+            {
+                CurrentValue = Checked;
+            }
+            if (ValueChanged.HasDelegate)
+            {
+                base.OnParametersSet();
+            }
         }
     }
 }

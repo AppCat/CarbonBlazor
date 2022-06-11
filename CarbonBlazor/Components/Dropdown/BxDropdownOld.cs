@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +12,7 @@ namespace CarbonBlazor.Components
     /// 这是一个用于 Dropdown 的 Blazor 组件。  
     /// This is a Blazor component for the Dropdown.
     /// </summary>
-    public partial class BxDropdown : BxListBoxComponentBaseOf<BxDropdownOption, string>
+    public partial class BxDropdownOld : BxListBoxComponentBase<BxDropdownOptionOld>
     {
         /// <summary>
         /// 设置映射
@@ -45,7 +44,7 @@ namespace CarbonBlazor.Components
                 __builder.AddConfig(ref sequence, new BxComponentConfig(ButtonConfig, $"bx--list-box__field", $"{Id}-button"));
                 __builder.AddAttribute(sequence++, "type", "button");
                 __builder.AddAttribute(sequence++, "aria-haspopup", "true");
-                __builder.AddAttribute(sequence++, "aria-expanded", CurrentExpanded);
+                __builder.AddAttribute(sequence++, "aria-expanded", Expanded);
                 {
                     if (Invalid)
                     {
@@ -54,29 +53,27 @@ namespace CarbonBlazor.Components
 
                     __builder.OpenElement(sequence++, "span");
                     __builder.AddConfig(ref sequence, new BxComponentConfig(TextConfig, $"bx--list-box__label", $"{Id}-text"));
-
-                    if (string.IsNullOrEmpty(SelectedKey) && !string.IsNullOrEmpty(DefaultSelectedKey) && Options.TryGetValue(DefaultSelectedKey, out BxDropdownOption? option))
+                    if (SelectedOption == null && !string.IsNullOrEmpty(DefaultSelectedKey) && Options.TryGetValue(DefaultSelectedKey, out BxDropdownOptionOld? option))
                     {
                         __builder.AddContent(sequence++, option.Value);
                     }
-                    else if (!string.IsNullOrEmpty(SelectedKey) && Options.TryGetValue(SelectedKey, out BxDropdownOption? selectedOption))
+                    else if (SelectedOption != null)
                     {
-                        __builder.AddContent(sequence++, selectedOption.Value);
+                        __builder.AddContent(sequence++, SelectedOption.Value);
                     }
                     else
                     {
                         __builder.AddContent(sequence++, Placeholder);
                     }
-
                     __builder.CloseElement();
 
                     __builder.OpenElement(sequence++, "div");
                     __builder.AddEvent(ref sequence, "onclick", HandleOnClickMenuIconAsync, true, true);
                     __builder.AddConfig(ref sequence, new BxComponentConfig(IconConfig)
                         .AddClass($"bx--list-box__menu-icon")
-                        .AddIfClass($"bx--list-box__menu-icon--open", () => CurrentExpanded)
+                        .AddIfClass($"bx--list-box__menu-icon-open", () => Expanded)
                         .AddId($"{Id}-icon"));
-                    if (!CurrentExpanded)
+                    if (!Expanded)
                     {
                         __builder.AddContent(sequence++, new MarkupString($"<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' name='chevron--down' aria-label='Open menu' width='16' height='16' viewBox='0 0 16 16' role='img'><path d='M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z'></path><title>Open menu</title></svg>"));
                     }
@@ -97,8 +94,8 @@ namespace CarbonBlazor.Components
                 __builder.AddConfig(ref sequence, new BxComponentConfig(DropdownConfig, $"bx--dropdown bx--list-box", $"{Id}-dropdown")
                     .AddIfClass($"bx--dropdown--light", () => Light)
                     .AddIfClass($"bx--dropdown--invalid", () => Invalid)
-                    .AddIfClass($"bx--dropdown--open", () => CurrentExpanded)
-                    .AddIfClass($"bx--list-box--expanded", () => CurrentExpanded)
+                    .AddIfClass($"bx--dropdown--open", () => Expanded)
+                    .AddIfClass($"bx--list-box--expanded", () => Expanded)
                     .AddIfClass($"bx--dropdown--disabled", () => Disabled)
                     .AddIfClass($"bx--dropdown--inline", () => Inline)
                     .AddIfClass($"bx--list-box--{Size}", () => Size != null)
@@ -137,14 +134,18 @@ namespace CarbonBlazor.Components
 
             var sequence = 0;
 
-            __builder.UseElement(ref sequence, "div", this, __builder =>
-            {
-                var sequence = 0;
-                __builder.AddContent(sequence++, LabelFragment());
-                __builder.AddContent(sequence++, dropdown);
-                __builder.AddContent(sequence++, HelperFragment());
-                __builder.AddContent(sequence++, RequirementFragment());
-            });
+            __builder.OpenElement(sequence++, "div");
+            __builder.AddComponent(ref sequence, this);
+
+            //__builder.AddContent(sequence++, dropdown__wrapper);
+            __builder.AddContent(sequence++, LabelFragment());
+            __builder.AddContent(sequence++, dropdown);
+            __builder.AddContent(sequence++, HelperFragment());
+            __builder.AddContent(sequence++, RequirementFragment());
+
+            __builder.CloseComponent();
+
+
         };
 
         /// <summary>
@@ -153,7 +154,7 @@ namespace CarbonBlazor.Components
         /// <param name="path"></param>
         protected override void HandleExternalClick(ClickElement[] path)
         {
-            if (!CurrentExpanded)
+            if (!Expanded)
                 return;
             if (path.Any(e => e.Id == $"{Id}-dropdown")) // 包含自己不隐藏
                 return;
@@ -182,19 +183,5 @@ namespace CarbonBlazor.Components
         }
 
         #endregion
-
-        /// <summary>
-        /// 尝试解析
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="result"></param>
-        /// <param name="validationErrorMessage"></param>
-        /// <returns></returns>
-        protected override bool TryParseValueFromString(string? value, [NotNullWhen(false)] out string result, [NotNullWhen(false)] out string? validationErrorMessage)
-        {
-            result = value;
-            validationErrorMessage = null;
-            return true;
-        }
     }
 }

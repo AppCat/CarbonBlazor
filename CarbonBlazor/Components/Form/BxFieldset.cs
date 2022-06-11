@@ -38,15 +38,23 @@ namespace CarbonBlazor.Components
             __builder.OpenElement(sequence++, "div");
             __builder.AddComponent(ref sequence, this);
 
-            if(!string.IsNullOrEmpty(LabelText))
+            if (!string.IsNullOrEmpty(LegendText))
             {
                 __builder.OpenElement(sequence++, "legend");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(LabelConfig, "bx--label", $"{Id}-label"));
-                __builder.AddContent(sequence++, LabelText);
+                __builder.AddConfig(ref sequence, new BxComponentConfig(LegendConfig, "bx--label", $"{Id}-label"));
+                __builder.AddContent(sequence++, LegendText);
                 __builder.CloseElement();
             }
 
             __builder.AddContent(sequence++, ChildContent);
+
+            if (!string.IsNullOrEmpty(MessageText) || MessageTemplate != null)
+            {
+                __builder.OpenElement(sequence++, "div");
+                __builder.AddConfig(ref sequence, new BxComponentConfig(MessageConfig, "bx--form__requirements", $"{Id}-message"));
+                __builder.EitherOrAddContent(ref sequence, MessageTemplate, MessageText, () => MessageTemplate != null);
+                __builder.CloseElement();
+            }
 
             __builder.CloseComponent();
         };

@@ -24,6 +24,11 @@ namespace CarbonBlazor
         TKey Key { get; set; }
 
         /// <summary>
+        /// 内容
+        /// </summary>
+        string Value { get; set; }
+
+        /// <summary>
         /// 附加
         /// </summary>
         object Tag { get; set; }

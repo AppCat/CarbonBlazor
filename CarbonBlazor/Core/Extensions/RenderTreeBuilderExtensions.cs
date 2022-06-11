@@ -15,6 +15,25 @@ namespace CarbonBlazor.Extensions
     public static class RenderTreeBuilderExtensions
     {
         /// <summary>
+        /// 打开元素
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="sequence"></param>
+        /// <param name="elementName"></param>
+        /// <param name="class"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static RenderTreeBuilder OpenElement(this RenderTreeBuilder builder, ref int sequence, string elementName, string? @class = null, string? id = null)
+        {
+            builder.OpenElement(sequence++, elementName);
+
+            builder.IfAddAttribute(ref sequence, "class", @class, () => !string.IsNullOrWhiteSpace(@class));
+            builder.IfAddAttribute(ref sequence, "id", id, () => !string.IsNullOrWhiteSpace(id));
+
+            return builder;
+        }
+
+        /// <summary>
         /// 使用元素
         /// </summary>
         /// <param name="builder"></param>

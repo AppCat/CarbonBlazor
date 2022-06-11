@@ -47,139 +47,139 @@ namespace CarbonBlazor
             }
         };
 
-        /// <summary>
-        /// 键盘按下事件
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        protected virtual async Task HandleOnKeyupAsync(KeyboardEventArgs args)
-        {
-            if (args != null && args.Key == "Enter")
+            /// <summary>
+            /// 键盘按下事件
+            /// </summary>
+            /// <param name="args"></param>
+            /// <returns></returns>
+            protected virtual async Task HandleOnKeyupAsync(KeyboardEventArgs args)
             {
-                if (FocusOption != null)
+                if (args != null && args.Key == "Enter")
                 {
-                    await SelectedOptionAsync(FocusOption);
+                    if (FocusOption != null)
+                    {
+                        await SelectedOptionAsync(FocusOption);
+                        await HideAsync();
+                    }
+                }
+                else if (args?.Key == "Escape")
+                {
                     await HideAsync();
                 }
-            }
-            else if (args?.Key == "Escape")
-            {
-                await HideAsync();
-            }
-            else
-            {
-                await ShowAsync();
-                if (args?.Key == "ArrowUp" || args?.Key == "ArrowDown")
+                else
                 {
-                    var keys = Options.Keys.ToArray();
-                    if (keys.Any())
+                    await ShowAsync();
+                    if (args?.Key == "ArrowUp" || args?.Key == "ArrowDown")
                     {
-                        var oldKey = FocusOption?.Key;
-                        var focusKey = oldKey ?? keys.FirstOrDefault();
-                        var index = Array.IndexOf(keys, focusKey);
-                        if (args?.Key == "ArrowUp")
+                        var keys = Options.Keys.ToArray();
+                        if (keys.Any())
                         {
-                            index -= 1;
-                        }
-                        else if (args?.Key == "ArrowDown")
-                        {
-                            index += 1;
-                        }
-                        var focusIndex = (Math.Abs(index)) % keys.Length;
-                        focusKey = keys[focusIndex];
-                        if (Options.TryGetValue(focusKey, out var option))
-                        {
-                            FocusOption = option;
-                            NotifyOptionStateHasChanged(new[] { oldKey, option.Key });
+                            var oldKey = FocusOption?.Key;
+                            var focusKey = oldKey ?? keys.FirstOrDefault();
+                            var index = Array.IndexOf(keys, focusKey);
+                            if (args?.Key == "ArrowUp")
+                            {
+                                index -= 1;
+                            }
+                            else if (args?.Key == "ArrowDown")
+                            {
+                                index += 1;
+                            }
+                            var focusIndex = (Math.Abs(index)) % keys.Length;
+                            focusKey = keys[focusIndex];
+                            if (Options.TryGetValue(focusKey, out var option))
+                            {
+                                FocusOption = option;
+                                NotifyOptionStateHasChanged(new[] { oldKey, option.Key });
+                            }
                         }
                     }
                 }
             }
-        }
 
-        /// <summary>
-        /// 聚焦
-        /// </summary>
-        /// <returns></returns>
-        protected virtual async Task HandleOnFocusAsync()
-        {
-            ExpandedWay = "input";
-            await ShowAsync();
-        }
-
-        /// <summary>
-        /// 失去焦点
-        /// </summary>
-        /// <returns></returns>
-        protected virtual async Task HandleOnBlurAsync()
-        {
-            if (ExpandedWay == "input")
+            /// <summary>
+            /// 聚焦
+            /// </summary>
+            /// <returns></returns>
+            protected virtual async Task HandleOnFocusAsync()
             {
-                await HideAsync();
-            }
-        }
-
-        /// <summary>
-        /// 处理 OnClick
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        protected virtual async Task HandleOnClickMenuIconAsync(MouseEventArgs args)
-        {
-            ExpandedWay = "button";
-            if (Expanded)
-            {
-                await HideAsync();
-            }
-            else
-            {
+                ExpandedWay = "input";
                 await ShowAsync();
             }
-        }
 
-        /// <summary>
-        /// 处理 OnClick
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        protected virtual async Task HandleOnClickSelectionAsync(MouseEventArgs args)
-        {
-            SelectedOption = null;
-            Value = string.Empty;
-            await HideAsync();
-        }
-
-        /// <summary>
-        /// 选中项目
-        /// </summary>
-        /// <param name="option"></param>
-        /// <param name="isClick"></param>
-        /// <returns></returns>
-        public override async Task SelectedOptionAsync(TOption option, bool isClick = false)
-        {
-            if (option != null)
+            /// <summary>
+            /// 失去焦点
+            /// </summary>
+            /// <returns></returns>
+            protected virtual async Task HandleOnBlurAsync()
             {
-                Value = option.Key;
+                if (ExpandedWay == "input")
+                {
+                    await HideAsync();
+                }
             }
-            await base.SelectedOptionAsync(option, isClick);
 
-            if (SelectedOption == option)
+            /// <summary>
+            /// 处理 OnClick
+            /// </summary>
+            /// <param name="args"></param>
+            /// <returns></returns>
+            protected virtual async Task HandleOnClickMenuIconAsync(MouseEventArgs args)
             {
+                ExpandedWay = "button";
+                if (Expanded)
+                {
+                    await HideAsync();
+                }
+                else
+                {
+                    await ShowAsync();
+                }
+            }
+
+            /// <summary>
+            /// 处理 OnClick
+            /// </summary>
+            /// <param name="args"></param>
+            /// <returns></returns>
+            protected virtual async Task HandleOnClickSelectionAsync(MouseEventArgs args)
+            {
+                SelectedOption = null;
+                Value = string.Empty;
                 await HideAsync();
             }
-        }
 
-        /// <summary>
-        /// 处理外部点击
-        /// </summary>
-        protected virtual void HandleExternalClick(ClickElement[] path)
-        {
-            if (!Expanded)
-                return;
-            if (path.Any(e => e.Id == $"{Id}-combo-box")) // 包含自己不隐藏
-                return;
-            InvokeAsync(() => HideAsync());
-        }
+            /// <summary>
+            /// 选中项目
+            /// </summary>
+            /// <param name="option"></param>
+            /// <param name="isClick"></param>
+            /// <returns></returns>
+            public override async Task SelectedOptionAsync(TOption option, bool isClick = false)
+            {
+                if (option != null)
+                {
+                    Value = option.Key;
+                }
+                await base.SelectedOptionAsync(option, isClick);
+
+                if (SelectedOption == option)
+                {
+                    await HideAsync();
+                }
+            }
+
+            /// <summary>
+            /// 处理外部点击
+            /// </summary>
+            protected virtual void HandleExternalClick(ClickElement[] path)
+            {
+                if (!Expanded)
+                    return;
+                if (path.Any(e => e.Id == $"{Id}-combo-box")) // 包含自己不隐藏
+                    return;
+                InvokeAsync(() => HideAsync());
+            }
 
         /// <summary>
         /// 显示

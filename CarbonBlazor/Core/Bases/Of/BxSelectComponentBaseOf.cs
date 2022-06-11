@@ -1,7 +1,9 @@
 ﻿using CarbonBlazor.Extensions;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +13,7 @@ namespace CarbonBlazor
     /// <summary>
     /// 具有选择的组件 (Select ListBox)
     /// </summary>
-    public abstract partial class BxSelectComponentBaseOf<TOption, TKey> : BxComponentBase, IBxSelectOf<TOption, TKey>
+    public abstract partial class BxSelectComponentBaseOf<TOption, TKey> : BxFormItemComponentBaseOf<TKey>, IBxSelectOf<TOption, TKey>
         where TOption : class, IBxOptionOf<TKey>
         where TKey : notnull
     {
@@ -31,6 +33,11 @@ namespace CarbonBlazor
         protected virtual TKey? CurrentSelectedKey { get; set; }
 
         /// <summary>
+        /// 当前选中选项键
+        /// </summary>
+        protected virtual TKey[]? CurrentSelectedKeys { get; set; }
+
+        /// <summary>
         /// 第一次选中的选项键
         /// </summary>
         protected virtual TKey[]? FirstSelectedKeys { get; set; }
@@ -41,9 +48,25 @@ namespace CarbonBlazor
         protected virtual TKey? FirstSelectedKey { get; set; }
 
         /// <summary>
-        /// 渲染阶段
+        /// 是否渲染
         /// </summary>
-        public BxRenderPhase RenderPhase { get; protected set; }
+        public virtual bool IsRender { get; } = true;
+
+        /// <summary>
+        /// 渲染树
+        /// </summary>
+        /// <param name="__builder"></param>
+        protected override void BuildRenderTree(RenderTreeBuilder __builder)
+        {
+            var sequence = 0;
+
+            __builder.AddCascadingValue(ref sequence, ComponentContext, __builder =>
+            {
+                var sequence = 0;
+                __builder.AddCascadingValue<IBxSelectOf<TOption, TKey>>(ref sequence, this, ContentFragment(), "FatherSelect", true);
+
+            }, "FatherComponentContext", true);
+        }
 
         #region SDLC
 
@@ -57,6 +80,14 @@ namespace CarbonBlazor
             FirstSelectedKey = SelectedKey;
         }
 
+        /// <summary>
+        /// 设置参数后
+        /// </summary>
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+        }
+
         #endregion 
 
         /// <summary>
@@ -64,7 +95,7 @@ namespace CarbonBlazor
         /// </summary>
         /// <param name="option"></param>
         /// <returns></returns>
-        public bool EnrollOption(TOption option)
+        public virtual bool EnrollOption(TOption option)
         {
             if (option == null || option.Key == null)
                 return false;
@@ -95,7 +126,7 @@ namespace CarbonBlazor
         /// </summary>
         /// <param name="option"></param>
         /// <returns></returns>
-        public async Task FocusOptionAsync(TOption option)
+        public virtual async Task FocusOptionAsync(TOption option)
         {
             if (option == null || option.Key == null || option.Disabled || Disabled)
                 return;
@@ -119,51 +150,56 @@ namespace CarbonBlazor
         /// <param name="option"></param>
         /// <param name="isClick"></param>
         /// <returns></returns>
-        public async Task SelectedOptionAsync(TOption option, bool isClick = false)
+        public virtual async Task SelectedOptionAsync(TOption option, bool isClick = false)
         {
             if (option == null || option.Key == null || option.Disabled || Disabled)
                 return;
-            var selectedKeys = SelectedKeys ?? Array.Empty<TKey>();
+            var selectedKeys = CurrentSelectedKeys ?? Array.Empty<TKey>();
+            var keys = new TKey[selectedKeys.Length];
+            selectedKeys.CopyTo(keys, 0);
+
             var key = option.Key;
-            if (selectedKeys?.Contains(key) ?? false)
+            if (keys?.Contains(key) ?? false)
             {
-                var aks = selectedKeys.ToList();
-                aks.Remove(key);
-                selectedKeys = aks.ToArray();
+                if (SelectedCancel)
+                {
+                    var aks = keys.ToList();
+                    aks.Remove(key);
+                    keys = aks.ToArray();
+                }
             }
             else
             {
-                if (Multiple && selectedKeys != null)
+                if (Multiple && keys != null)
                 {
-                    if ((MaxMultiple ?? int.MaxValue) <= selectedKeys.Length)
+                    if ((MaxMultiple ?? int.MaxValue) <= keys.Length)
                     {
-                        var _aks = new TKey[selectedKeys.Length];
+                        var _aks = new TKey[keys.Length];
                         for (int i = 0; i < _aks.Length - 1; i++)
                         {
-                            _aks[i] = selectedKeys[i + 1];
+                            _aks[i] = keys[i + 1];
                         }
                         _aks[^1] = key;
-                        selectedKeys = _aks;
+                        keys = _aks;
                     }
                     else
                     {
-                        var _aks = new TKey[selectedKeys.Length + 1];
-                        for (int i = 0; i < selectedKeys.Length; i++)
+                        var _aks = new TKey[keys.Length + 1];
+                        for (int i = 0; i < keys.Length; i++)
                         {
-                            _aks[i] = selectedKeys[i];
+                            _aks[i] = keys[i];
                         }
                         _aks[^1] = key;
-                        selectedKeys = _aks;
+                        keys = _aks;
                     }
                 }
                 else
                 {
-                    selectedKeys = new TKey[] { key };
+                    keys = new TKey[] { key };
                 }
             }
 
-            await SetSelectedKeys(selectedKeys);
-            CurrentSelectedKey = key;
+            await SetSelectedKeys(keys);
             await OnSelectedOption.InvokeAsync(option);
             if (isClick)
             {
@@ -177,7 +213,7 @@ namespace CarbonBlazor
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public bool OptionIsInFiltered(TKey key)
+        public virtual bool OptionIsInFiltered(TKey key)
         {
             if (key == null)
                 return false;
@@ -197,7 +233,7 @@ namespace CarbonBlazor
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public bool OptionIsInFocus(TKey key)
+        public virtual bool OptionIsInFocus(TKey? key)
         {
             if (key == null || CurrentFocusKey == null)
                 return false;
@@ -210,12 +246,26 @@ namespace CarbonBlazor
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public bool OptionIsInSelected(TKey key)
+        public virtual bool OptionIsInSelected(TKey? key)
         {
-            if (key == null || SelectedKeys == null || !SelectedKeys.Any())
+            if (key == null)
                 return false;
 
-            return SelectedKeys?.Contains(key) ?? false;
+            //if (Multiple)
+            //{
+            //    if(CurrentSelectedKeys == null || !CurrentSelectedKeys.Any())
+            //        return false;
+            //    return CurrentSelectedKeys?.Contains(key) ?? false;
+            //}
+            //else
+            //{
+            //    return EqualityComparer<TKey>.Default.Equals(CurrentSelectedKey, key);
+            //}
+
+            if (CurrentSelectedKeys == null || !CurrentSelectedKeys.Any())
+                return false;
+
+            return CurrentSelectedKeys?.Contains(key) ?? false;
         }
 
         /// <summary>
@@ -264,9 +314,6 @@ namespace CarbonBlazor
         /// </summary>
         public virtual async Task Clear()
         {
-            if (SelectedKeys == null || SelectedKeys.Length <= 0)
-                return;
-            var notifyOptionKeys = SelectedKeys;
             await SetSelectedKeys(Array.Empty<TKey>());
         }
 
@@ -275,15 +322,37 @@ namespace CarbonBlazor
         /// </summary>
         /// <param name="selectedKeys"></param>
         /// <returns></returns>
-        protected virtual async Task SetSelectedKeys(TKey[] selectedKeys)
+        protected virtual async Task SetSelectedKeys(TKey[]? selectedKeys)
         {
-            SelectedKeys = selectedKeys ?? Array.Empty<TKey>();
-            StateHasChanged();
-            await SelectedKeysChanged.InvokeAsync(SelectedKeys);
-            await OnSelectedKeysChange.InvokeAsync(SelectedKeys);
+            selectedKeys ??= Array.Empty<TKey>();
+            var oldSelectedKeys = CurrentSelectedKeys;
 
-            await SelectedKeyChanged.InvokeAsync(SelectedKeys.LastOrDefault());
-            await OnSelectedKeyChange.InvokeAsync(SelectedKeys.LastOrDefault());
+            CurrentSelectedKeys = selectedKeys;
+            CurrentSelectedKey = CurrentSelectedKeys.FirstOrDefault();
+
+            var key = selectedKeys.LastOrDefault();
+            var hasChanged = !EqualityComparer<TKey>.Default.Equals(key, SelectedKey);
+            if (hasChanged)
+            {
+                SelectedKey = key;
+                await SelectedKeyChanged.InvokeAsync(SelectedKey);
+                await OnSelectedKeyChange.InvokeAsync(SelectedKey);
+            }
+
+            hasChanged = !EqualityComparer<TKey[]>.Default.Equals(selectedKeys, SelectedKeys);
+
+            if (hasChanged)
+            {
+                SelectedKeys = selectedKeys;
+                await SelectedKeysChanged.InvokeAsync(SelectedKeys);
+                await OnSelectedKeysChange.InvokeAsync(SelectedKeys);
+            }
+
+            await SetValueAsync(key);
+
+            NotifyOptionStateHasChanged(CurrentSelectedKeys, oldSelectedKeys);
+
+            await InvokeStateHasChangedAsync();
         }
 
         /// <summary>
@@ -292,7 +361,7 @@ namespace CarbonBlazor
         public void Reset()
         {
             SelectedKeys = FirstSelectedKeys;
-            StateHasChanged();
+            InvokeStateHasChanged();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace CarbonBlazor.Components
     /// 这是一个用于 DropdownOption 的 Blazor 组件。  
     /// This is a Blazor component for the DropdownOption.
     /// </summary>
-    public class BxDropdownOption : BxListBoxItemComponentBaseOf<BxDropdown, BxDropdownOption, string>
+    public class BxDropdownOptionOld : BxListBoxItemComponentBase<BxDropdownOld, BxDropdownOptionOld>
     {
 
     }

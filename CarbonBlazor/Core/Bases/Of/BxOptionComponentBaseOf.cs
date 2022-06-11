@@ -18,6 +18,9 @@ namespace CarbonBlazor
         where TOption : class, IBxOptionOf<TKey>
         where TKey : notnull
     {
+        private bool _hasInitializedParameters;
+        private Type? _nullableUnderlyingType;
+
         /// <summary>
         /// 选择
         /// </summary>
@@ -47,10 +50,16 @@ namespace CarbonBlazor
         public virtual TKey Key { get; set; }
 
         /// <summary>
+        /// 内容
+        /// </summary>
+        [Parameter]
+        public string? Value { get; set; }
+
+        /// <summary>
         /// 附加
         /// </summary>
         [Parameter]
-        public virtual object? Tag { get; set; }
+        public object? Tag { get; set; }
 
         #endregion
 
@@ -117,7 +126,7 @@ namespace CarbonBlazor
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
-            if(FatherSelect != null && FatherSelect.RenderPhase == BxRenderPhase.Initialize && this is TOption option)
+            if(FatherSelect != null && this is TOption option)
             {
                 FatherSelect?.EnrollOption(option);
             }
@@ -129,10 +138,36 @@ namespace CarbonBlazor
         /// <param name="__builder"></param>
         protected override void BuildRenderTree(RenderTreeBuilder __builder)
         {
-            if (FatherSelect != null && FatherSelect.RenderPhase == BxRenderPhase.Render)
+            if (FatherSelect != null && FatherSelect.IsRender)
             {
                 base.BuildRenderTree(__builder);
             }
+        }
+
+        /// <summary>
+        /// 设置参数
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public override Task SetParametersAsync(ParameterView parameters)
+        {
+            parameters.SetParameterProperties(this);
+
+            if (!_hasInitializedParameters)
+            {
+                // This is the first run
+                // Could put this logic in OnInit, but its nice to avoid forcing people who override OnInit to call base.OnInit()
+
+                if (Key == null)
+                {
+                    throw new InvalidOperationException(
+                        $"{GetType()} requires a value for the 'Key' ");
+                }
+                _nullableUnderlyingType = Nullable.GetUnderlyingType(typeof(TKey));
+                _hasInitializedParameters = true;
+            }
+
+            return base.SetParametersAsync(ParameterView.Empty);
         }
 
         #endregion

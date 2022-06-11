@@ -13,7 +13,7 @@ namespace CarbonBlazor
     /// <summary>
     /// 
     /// </summary>
-    public abstract partial class BxInputBaseOfx<TValue> : BxComponentBase
+    public abstract partial class BxInputComponentBaseOf<TValue> : BxComponentBase
     {
         private bool _hasInitializedParameters;
         private bool _previousParsingAttemptFailed;
@@ -23,7 +23,7 @@ namespace CarbonBlazor
         /// <summary>
         /// Constructs an instance of <see cref="InputBase{TValue}"/>.
         /// </summary>
-        protected BxInputBaseOfx()
+        protected BxInputComponentBaseOf()
         {
             _validationStateChangedHandler = OnValidateStateChanged;
         }
@@ -87,7 +87,7 @@ namespace CarbonBlazor
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        protected virtual async Task SetStringValueAsync(string value)
+        protected virtual async Task SetStringValueAsync(string? value)
         {
             bool parsingFailed;
 
@@ -132,7 +132,7 @@ namespace CarbonBlazor
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        private async Task SetValueAsync(TValue? value)
+        protected virtual async Task SetValueAsync(TValue? value)
         {
             CurrentValue = value;
             var hasChanged = !EqualityComparer<TValue>.Default.Equals(CurrentValue, Value);
@@ -141,7 +141,15 @@ namespace CarbonBlazor
                 Value = CurrentValue;
                 await ValueChanged.InvokeAsync(Value);
             }
+        }
 
+        /// <summary>
+        /// 字段标识符
+        /// </summary>
+        /// <returns></returns>
+        protected virtual FieldIdentifier CreateFieldIdentifier()
+        {
+            return FieldIdentifier;
         }
 
         /// <summary>
@@ -155,7 +163,7 @@ namespace CarbonBlazor
         #region SDLC
 
         /// <summary>
-        /// 
+        /// 设置参数
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
@@ -168,19 +176,26 @@ namespace CarbonBlazor
                 // This is the first run
                 // Could put this logic in OnInit, but its nice to avoid forcing people who override OnInit to call base.OnInit()
 
-                if (ValueExpression == null)
-                {
-                    throw new InvalidOperationException(
-                        $"{GetType()} requires a value for the 'ValueExpression' " + 
-                        $"parameter. Normally this is provided automatically when using 'bind-Value'.");
-                }
-
-                FieldIdentifier = FieldIdentifier.Create(ValueExpression);
+                //if (ValueExpression == null)
+                //{
+                //    throw new InvalidOperationException(
+                //        $"{GetType()} requires a value for the 'ValueExpression' " +
+                //        $"parameter. Normally this is provided automatically when using 'bind-Value'.");
+                //}
 
                 if (CascadedEditContext != null)
                 {
                     EditContext = CascadedEditContext;
                     EditContext.OnValidationStateChanged += _validationStateChangedHandler;
+
+                    if (ValueExpression != null)
+                    {
+                        FieldIdentifier = FieldIdentifier.Create(ValueExpression);
+                    }
+                    else
+                    {
+                        FieldIdentifier = CreateFieldIdentifier();
+                    }
                 }
 
                 _nullableUnderlyingType = Nullable.GetUnderlyingType(typeof(TValue));
@@ -200,8 +215,25 @@ namespace CarbonBlazor
             return base.SetParametersAsync(ParameterView.Empty);
         }
 
+        /// <summary>
+        /// 设置参数后
+        /// </summary>
+        protected override void OnParametersSet()
+        {
+            var hasChanged = !EqualityComparer<TValue>.Default.Equals(Value, CurrentValue);
+            if (hasChanged)
+            {
+                CurrentValue = Value;
+            }
+        }
+
         #endregion
 
+        /// <summary>
+        /// 验证状态改变
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
         private void OnValidateStateChanged(object? sender, ValidationStateChangedEventArgs eventArgs)
         {
             StateHasChanged();

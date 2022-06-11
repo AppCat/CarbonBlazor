@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace CarbonBlazor.Components
     /// <summary>
     /// 
     /// </summary>
-    public class BxInputText : BxInputBaseOf<string?>
+    public class BxInputText : BxInputComponentBaseOf<string?>
     {
         /// <summary>
         /// Gets or sets the associated <see cref="ElementReference"/>.
@@ -29,10 +30,12 @@ namespace CarbonBlazor.Components
         /// <exception cref="NotImplementedException"></exception>
         internal override RenderFragment ContentFragment() => __builder =>
         {
-            __builder.OpenElement(0, "input");
-            __builder.AddAttribute(3, "value", BindConverter.FormatValue(CurrentValue));
-            __builder.AddAttribute(4, "onchange", EventCallback.Factory.CreateBinder<string?>(this, __value => CurrentValueAsString = __value, CurrentValueAsString));
-            __builder.AddElementReferenceCapture(5, __inputReference => Element = __inputReference);
+            var sequence = 0;
+
+            __builder.OpenElement(sequence++, "input");
+            __builder.AddAttribute(sequence++, "value", BindConverter.FormatValue(CurrentValue));
+            __builder.AddAttribute(sequence++, "onchange", EventCallback.Factory.CreateBinder<string?>(this, async __value => await SetStringValueAsync(__value), CurrentValueAsString));
+            __builder.AddElementReferenceCapture(sequence++, __inputReference => Element = __inputReference);
             __builder.CloseElement();
         };
 

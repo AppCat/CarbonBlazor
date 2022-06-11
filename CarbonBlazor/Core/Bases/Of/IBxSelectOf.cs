@@ -13,9 +13,9 @@ namespace CarbonBlazor
         where TOption : class, IBxOptionOf<TKey>
     {
         /// <summary>
-        /// 渲染阶段
+        /// 是否渲染
         /// </summary>
-        BxRenderPhase RenderPhase { get; }
+        bool IsRender { get; }
 
         /// <summary>
         /// 登记选项

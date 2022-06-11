@@ -44,6 +44,11 @@ namespace CarbonBlazor
         public RenderFragment? ChildContent { get; set; }
 
         /// <summary>
+        /// 选中取消
+        /// </summary>
+        public virtual bool SelectedCancel { get; set; }
+
+        /// <summary>
         /// 最大多选
         /// </summary>
         public virtual int? MaxMultiple { get; set; }
