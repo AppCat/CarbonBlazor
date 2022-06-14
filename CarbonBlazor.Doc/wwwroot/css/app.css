@@ -22,7 +22,9 @@
     justify-content: flex-start;
 }
 
-
+body, html, #app {
+    height: 100%;
+}
 
 .component-demo-module--dropdownRow {
     margin-right: 14rem;
@@ -52,6 +54,10 @@
     position: relative;
     width: 100%;
 }
+
+    .component-demo-module--container .bx--checkbox-label {
+        color: var(--bx-text-primary,#161616);
+    }
 
 @media (min-width: 42rem) {
     .component-demo-module--container {

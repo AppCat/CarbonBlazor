@@ -26,6 +26,16 @@
             }
             __builder.AddAttribute(sequence++, nameof(BxButton.ChildContent), content);
             __builder.CloseComponent();
+
+            var frames = __builder.GetFrames();
+            foreach (var frame in frames.Array)
+            {
+                if(frame.AttributeValue is not null)
+                {
+                    var content = JsonContent.Create(frame.AttributeValue, frame.AttributeValue.GetType());
+                    Console.WriteLine(content.ReadAsStringAsync().Result);
+                }
+            }
         };
 
         var share = new Dictionary<string, Func<object>>

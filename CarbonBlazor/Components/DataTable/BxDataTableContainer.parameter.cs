@@ -143,6 +143,13 @@ namespace CarbonBlazor.Components
         [Parameter]
         public IBxComponentConfig? BatchListParaConfig { get; set; }
 
+        /// <summary>
+        /// data-table-content 配置
+        /// The data-table-content is config for the container.
+        /// </summary>
+        [Parameter]
+        public IBxComponentConfig? ContentConfig { get; set; }
+
         #endregion
     }
 }

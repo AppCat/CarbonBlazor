@@ -12,13 +12,13 @@ namespace CarbonBlazor.Components
     /// 这是一个用于 SelectionColumn 的 Blazor 组件。  
     /// This is a Blazor component for the SelectionColumn.
     /// </summary>
-    public class BxSelectionColumn : BxColumnBase
+    public class BxSelectionColumn<TModel> : BxColumnBase
     {
         /// <summary>
-        /// 行Id哈希
+        /// 模型
         /// </summary>
-        [CascadingParameter(Name = "RowIdHash")]
-        public int? RowIdHash { get; set; }
+        [CascadingParameter]
+        public ISelectionModel? Model { get; set; }
 
         /// <summary>
         /// 内容渲染
@@ -35,35 +35,40 @@ namespace CarbonBlazor.Components
                 __builder.AddConfig(ref sequence, new BxComponentConfig(ThConfig).AddClass($"bx--table-column-checkbox").AddId($"{Id}-th"));
                 __builder.OpenComponent<BxCheckbox>(sequence++);
                 __builder.AddAttribute(sequence++, nameof(BxCheckbox.Value), Table?.IsSelectedAll() ?? false);
-                __builder.AddEvent<bool>(ref sequence, nameof(BxCheckbox.ValueChanged), this, check =>
+                __builder.AddEvent<bool>(ref sequence, nameof(BxCheckbox.ValueChanged), this, async check =>
                 {
+                    if (Table == null)
+                        return;
+
                     if (check)
                     {
-                        Table?.SelectedAll();
+                        await Table.SelectedAllRowAsync();
                     }
                     else
                     {
-                        Table?.DeselectAll();
+                        await Table.DeselectAllRowAsync();
                     }
                 });
                 __builder.CloseComponent();
             }
             else if (Goal == BxColumGoal.Body)
             {
-                var rowIdHash = RowIdHash;
                 __builder.OpenElement(sequence++, "td");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(TdConfig ?? this).AddClass($"bx--table-column-checkbox").AddId($"{Id}-td"));
                 __builder.OpenComponent<BxCheckbox>(sequence++);
-                __builder.AddAttribute(sequence++, nameof(BxCheckbox.Value), Table?.IsSelected(rowIdHash) ?? false);
-                __builder.AddEvent<bool>(ref sequence, nameof(BxCheckbox.ValueChanged), this, check =>
+                __builder.AddAttribute(sequence++, nameof(BxCheckbox.Value), Model?.Selected ?? false);
+                __builder.AddEvent<bool>(ref sequence, nameof(BxCheckbox.ValueChanged), this, async check =>
                 {
+                    if (Table == null)
+                        return;
+
                     if (check)
                     {
-                        Table?.SelectedColumn(rowIdHash);
+                        await Table.SelectedRowAsync(Model);
                     }
                     else
                     {
-                        Table?.DeselectColumn(rowIdHash);
+                        await Table.DeselectRowAsync(Model);
                     }
                 });
                 __builder.CloseComponent();

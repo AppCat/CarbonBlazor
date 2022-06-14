@@ -119,11 +119,16 @@ namespace CarbonBlazor.Components
             __builder.IfAddContent(ref sequence, header, () => DescriptionTemplate != null || !string.IsNullOrWhiteSpace(Description) || TitleTemplate != null || !string.IsNullOrWhiteSpace(Title));
             __builder.AddContent(sequence++, toolbar);
 
-            __builder.AddCascadingValue(ref sequence, this, __builder =>
+            __builder.OpenElement(sequence++, "div");
+            __builder.AddConfig(ref sequence, new BxComponentConfig(ContentConfig, "bx--data-table-content", $"{Id}-table-content"));
             {
-                var sequence = 0;
-                __builder.AddContent(sequence++, ChildContent);
-            });
+                __builder.AddCascadingValue(ref sequence, this, __builder =>
+                {
+                    var sequence = 0;
+                    __builder.AddContent(sequence++, ChildContent);
+                });
+            }
+            __builder.CloseElement();
 
             __builder.CloseComponent();
         };
@@ -143,8 +148,11 @@ namespace CarbonBlazor.Components
         /// </summary>
         /// <param name="items"></param>
         /// <returns></returns>
-        internal async Task ShowBatchAsync(IEnumerable<object> items)
+        internal async Task ShowBatchAsync(IEnumerable<object>? items)
         {
+            if (items is null || !items.Any())
+                return;
+
             IsShowBatch = true;
             Items = items;
             await OnShowBatch.InvokeAsync();

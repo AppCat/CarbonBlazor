@@ -73,26 +73,25 @@ namespace CarbonBlazor.Components
         [Parameter]
         public bool IsSortable { get; set; }
 
-        /// <summary>
-        /// 指定是否可以通过表的id来选择表, ideexpression在使用时不能为空
-        /// Specify whether the table should be able to be selectedby its id, IdExpression cannot be empty when used
-        /// </summary>
-        [Parameter]
-        public bool IsCanSelected { get; set; }
-
-        /// <summary>
-        /// Id表达式
-        /// </summary>
-        [Parameter]
-        public Expression<Func<TModel, object>>? IdExpression { get; set; }
-
         #region Event
 
         /// <summary>
-        /// 选中事件
+        /// 选中变化事件
         /// </summary>
         [Parameter]
         public EventCallback<IEnumerable<TModel>> OnSelectedChange { get; set; }
+
+        /// <summary>
+        /// 打开行
+        /// </summary>
+        [Parameter]
+        public EventCallback<TModel> OnOpenRow { get; set; }
+
+        /// <summary>
+        /// 关闭行
+        /// </summary>
+        [Parameter]
+        public EventCallback<TModel> OnCloseRow { get; set; }
 
         #endregion
 

@@ -14,31 +14,36 @@ namespace CarbonBlazor
         /// <summary>
         /// 选中
         /// </summary>
-        /// <param name="selectedId"></param>
-        void SelectedColumn(int? selectedId);
+        /// <param name="model"></param>
+        Task SelectedRowAsync(object? model);
 
         /// <summary>
         /// 取消选中
         /// </summary>
-        /// <param name="selectedId"></param>
-        void DeselectColumn(int? selectedId);
+        /// <param name="model"></param>
+        Task DeselectRowAsync(object? model);
 
         /// <summary>
         /// 全选
         /// </summary>
-        void SelectedAll();
+        Task SelectedAllRowAsync();
 
         /// <summary>
         /// 取消全选
         /// </summary>
-        void DeselectAll();
+        Task DeselectAllRowAsync();
 
         /// <summary>
-        /// 是否选中
+        /// 打开
         /// </summary>
-        /// <param name="selectedId"></param>
-        /// <returns></returns>
-        bool IsSelected(int? selectedId);
+        /// <param name="model"></param>
+        Task OpenRowAsync(object? model);
+
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        /// <param name="model"></param>
+        Task CloseRowAsync(object? model);
 
         /// <summary>
         /// 全选

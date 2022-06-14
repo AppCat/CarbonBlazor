@@ -54,8 +54,6 @@ namespace CarbonBlazor.Components
 
             Calculate();
 
-            var start = DateTime.Now;
-
             __builder.OpenElement(sequence++, "div");
             __builder.AddComponent(ref sequence, this);
 
@@ -222,8 +220,7 @@ namespace CarbonBlazor.Components
 
             __builder.CloseComponent();
 
-            var end = DateTime.Now;
-            Console.WriteLine($"{this.GetType().FullName} {Id} 渲染耗时 : {(end - start).TotalMilliseconds} ms");
+
         };
 
         /// <summary>
