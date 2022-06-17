@@ -47,21 +47,16 @@ namespace CarbonBlazor.Components
                 __builder.AddAttribute(sequence++, "aria-haspopup", "true");
                 __builder.AddAttribute(sequence++, "aria-expanded", CurrentExpanded);
                 {
-                    if (Invalid)
-                    {
-                        __builder.AddContent(sequence++, new MarkupString($"<svg focusable='false' preserveAspectRatio='xMidYMid meet' style='will-change: transform;' xmlns='http://www.w3.org/2000/svg' class='bx--dropdown__invalid-icon' width='16' height='16' viewBox='0 0 16 16' aria-hidden='true'><path d='M8,1C4.2,1,1,4.2,1,8s3.2,7,7,7s7-3.1,7-7S11.9,1,8,1z M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2	c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z'></path><path d='M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8	c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z' data-icon-path='inner-path' opacity='0'></path></svg>"));
-                    }
-
                     __builder.OpenElement(sequence++, "span");
                     __builder.AddConfig(ref sequence, new BxComponentConfig(TextConfig, $"bx--list-box__label", $"{Id}-text"));
 
                     if (string.IsNullOrEmpty(SelectedKey) && !string.IsNullOrEmpty(DefaultSelectedKey) && Options.TryGetValue(DefaultSelectedKey, out BxDropdownOption? option))
                     {
-                        __builder.AddContent(sequence++, option.Value);
+                        __builder.AddContent(sequence++, option.Value ?? option.Key);
                     }
                     else if (!string.IsNullOrEmpty(SelectedKey) && Options.TryGetValue(SelectedKey, out BxDropdownOption? selectedOption))
                     {
-                        __builder.AddContent(sequence++, selectedOption.Value);
+                        __builder.AddContent(sequence++, selectedOption.Value ?? selectedOption.Key);
                     }
                     else
                     {
@@ -99,17 +94,27 @@ namespace CarbonBlazor.Components
                     .AddIfClass($"bx--dropdown--invalid", () => Invalid)
                     .AddIfClass($"bx--dropdown--open", () => CurrentExpanded)
                     .AddIfClass($"bx--list-box--expanded", () => CurrentExpanded)
+                    .AddIfClass($"bx--list-box--warning", () => Warn)
                     .AddIfClass($"bx--dropdown--disabled", () => Disabled)
                     .AddIfClass($"bx--dropdown--inline", () => Inline)
                     .AddIfClass($"bx--list-box--{Size}", () => Size != null)
                     .AddIfClass($"bx--dropdown--{Size}", () => Size != null)
-                    //.AddIfClass($"bx--list-box--up", () => Direction?.Value == BxComboBoxDirection.Top)
+                    .AddIfClass($"bx--list-box--up", () => Direction?.Value == BxListBoxDirection.Top)
                     );
                 __builder.AddAttribute(sequence++, "data-dropdown");
                 __builder.AddAttribute(sequence++, "data-value");
                 __builder.IfAddAttribute(ref sequence, "data-dropdown-type", "inline", () => Inline);
                 __builder.IfAddAttribute(ref sequence, "data-invalid", Invalid, () => Invalid);
                 {
+                    if (Invalid)
+                    {
+                        __builder.AddContent(sequence++, new MarkupString($"<svg focusable='false' preserveAspectRatio='xMidYMid meet' style='will-change: transform;' xmlns='http://www.w3.org/2000/svg' class='bx--dropdown__invalid-icon' width='16' height='16' viewBox='0 0 16 16' aria-hidden='true'><path d='M8,1C4.2,1,1,4.2,1,8s3.2,7,7,7s7-3.1,7-7S11.9,1,8,1z M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2	c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z'></path><path d='M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8	c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z' data-icon-path='inner-path' opacity='0'></path></svg>"));
+                    }
+                    else if (Warn)
+                    {
+                        __builder.AddContent(sequence++, new MarkupString($"<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' width='16' height='16' viewBox='0 0 32 32' aria-hidden='true' class='bx--list-box__invalid-icon bx--list-box__invalid-icon--warning'><path fill='none' d='M16,26a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,26Zm-1.125-5h2.25V12h-2.25Z' data-icon-path='inner-path'></path><path d='M16.002,6.1714h-.004L4.6487,27.9966,4.6506,28H27.3494l.0019-.0034ZM14.875,12h2.25v9h-2.25ZM16,26a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,26Z'></path><path d='M29,30H3a1,1,0,0,1-.8872-1.4614l13-25a1,1,0,0,1,1.7744,0l13,25A1,1,0,0,1,29,30ZM4.6507,28H27.3493l.002-.0033L16.002,6.1714h-.004L4.6487,27.9967Z'></path></svg>"));
+                    }
+
                     __builder.AddContent(sequence++, button);
                     __builder.AddContent(sequence++, BoxMenuFragment());
                 }

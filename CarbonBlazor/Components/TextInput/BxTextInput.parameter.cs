@@ -19,5 +19,12 @@ namespace CarbonBlazor.Components
         /// </summary>
         [Parameter]
         public EnumMix<BxTextInputType> Type { get; set; } = BxTextInputType.Text;
+
+        /// <summary>
+        /// input__field-outer-wrapper 配置
+        /// The input__field-outer-wrapper is config for the select.
+        /// </summary>
+        [Parameter]
+        public IBxComponentConfig? InputOuterWrapperConfig { get; set; }
     }
 }

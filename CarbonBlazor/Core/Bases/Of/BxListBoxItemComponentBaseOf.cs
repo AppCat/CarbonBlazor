@@ -86,7 +86,7 @@ namespace CarbonBlazor
         /// <param name="builder"></param>
         protected virtual void AddContent(ref int sequence, RenderTreeBuilder builder)
         {
-            builder.AddContent(sequence++, Value);
+            builder.AddContent(sequence++, Value ?? Key.ToString());
         }
 
         /// <summary>

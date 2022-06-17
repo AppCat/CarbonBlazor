@@ -12,8 +12,6 @@ namespace CarbonBlazor
     /// </summary>
     public partial class BxFormItemComponentBaseOf<TValue>
     {
-
-
         /// <summary>
         /// 提供与控件标签一起使用的文本以获得额外帮助
         /// Provide text that is used alongside the control label for additional help.

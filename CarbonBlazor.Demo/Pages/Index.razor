@@ -84,14 +84,15 @@ Welcome to your new app.
     <dr />
     <dr />
 
-    <BxTextInput TValue="string" />
+    <BxTextInput @bind-Value="_value" QuickResponse/>
 
     <dr />
     <dr />
     <dr />
     <dr />
 
-    <BxTextInput TValue="string" Type="BxTextInputType.Password" />
+
+    <BxTextInput @bind-Value="_value" Type="BxTextInputType.Password" QuickResponse/>
 
     <SurveyPrompt Title="How is Blazor working for you?" />
 
@@ -220,4 +221,5 @@ Welcome to your new app.
     private int _page;
     private int _pageSize;
     private DateTime date = DateTime.Now;
+    private string _value;
 }

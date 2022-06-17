@@ -34,7 +34,7 @@ namespace CarbonBlazor.Components
         public bool Skeleton { get; set; }
 
         /// <summary>
-        /// href链接。 如果存在，此按钮将呈现为<a>。
+        /// href链接。 如果存在，此按钮将呈现为 a。
         /// Link href. If present, this button is rendered as a.
         /// </summary>
         [Parameter]

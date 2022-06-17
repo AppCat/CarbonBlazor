@@ -4757,15 +4757,15 @@ input[data-invalid]:not(:focus), .bx--number[data-invalid] input[type=number]:no
     }
 }
 
+.bx--date-picker-input__wrapper--invalid ~ .bx--form-requirement, .bx--date-picker-input__wrapper ~ .bx--form-requirement, .bx--list-box[data-invalid] ~ .bx--form-requirement, .bx--number[data-invalid] .bx--number__input-wrapper ~ .bx--form-requirement, .bx--select-input__wrapper[data-invalid] ~ .bx--form-requirement, .bx--text-area__wrapper[data-invalid] ~ .bx--form-requirement, .bx--text-input__field-wrapper[data-invalid] ~ .bx--form-requirement, .bx--time-picker--invalid ~ .bx--form-requirement, .bx--time-picker[data-invalid] ~ .bx--form-requirement, input[data-invalid] ~ .bx--form-requirement {
+    color: var(--cds-text-error,#da1e28);
+}
+
 input[data-invalid] ~ .bx--form-requirement, .bx--number[data-invalid] .bx--number__input-wrapper ~ .bx--form-requirement, .bx--number__input-wrapper--warning ~ .bx--form-requirement, .bx--date-picker-input__wrapper ~ .bx--form-requirement, .bx--date-picker-input__wrapper--warn ~ .bx--form-requirement, .bx--date-picker-input__wrapper--invalid ~ .bx--form-requirement, .bx--time-picker--invalid ~ .bx--form-requirement, .bx--text-input__field-wrapper[data-invalid] ~ .bx--form-requirement, .bx--text-input__field-wrapper--warning ~ .bx--form-requirement, .bx--text-input__field-wrapper--warning > .bx--text-input ~ .bx--form-requirement, .bx--text-area__wrapper[data-invalid] ~ .bx--form-requirement, .bx--select-input__wrapper[data-invalid] ~ .bx--form-requirement, .bx--select--warning .bx--select-input__wrapper ~ .bx--form-requirement, .bx--time-picker[data-invalid] ~ .bx--form-requirement, .bx--list-box[data-invalid] ~ .bx--form-requirement, .bx--list-box--warning ~ .bx--form-requirement {
     display: block;
     overflow: visible;
     max-height: 12.5rem;
     font-weight: 400
-}
-
-input[data-invalid] ~ .bx--form-requirement, .bx--number[data-invalid] .bx--number__input-wrapper ~ .bx--form-requirement, .bx--date-picker-input__wrapper ~ .bx--form-requirement, .bx--date-picker-input__wrapper--invalid ~ .bx--form-requirement, .bx--time-picker--invalid ~ .bx--form-requirement, .bx--text-input__field-wrapper[data-invalid] ~ .bx--form-requirement, .bx--text-area__wrapper[data-invalid] ~ .bx--form-requirement, .bx--select-input__wrapper[data-invalid] ~ .bx--form-requirement, .bx--time-picker[data-invalid] ~ .bx--form-requirement, .bx--list-box[data-invalid] ~ .bx--form-requirement {
-    color: var(--bx-text-error,#da1e28)
 }
 
 .bx--form--fluid .bx--text-input__field-wrapper[data-invalid], .bx--form--fluid .bx--text-input__field-wrapper--warning {
@@ -4793,6 +4793,7 @@ input:not(output):not([data-invalid]):-moz-ui-invalid {
     display: none;
     overflow: hidden;
     max-height: 0;
+    color: var(--bx-text-secondary,#525252);
     margin: .25rem 0 0
 }
 
@@ -20950,12 +20951,12 @@ a.bx--side-nav__link[aria-current=page], a.bx--side-nav__link--current {
     margin-left: -1rem
 }
 
-.bx--row-padding [class*=cds--col], .bx--col-padding {
+.bx--row-padding [class*=bx--col], .bx--col-padding {
     padding-top: 1rem;
     padding-bottom: 1rem
 }
 
-.bx--grid--condensed [class*=cds--col] {
+.bx--grid--condensed [class*=bx--col] {
     padding-top: .03125rem;
     padding-bottom: .03125rem
 }
@@ -22784,16 +22785,16 @@ a.bx--side-nav__link[aria-current=page], a.bx--side-nav__link--current {
     }
 }
 
-.bx--no-gutter, .bx--row.bx--no-gutter [class*=cds--col] {
+.bx--no-gutter, .bx--row.bx--no-gutter [class*=bx--col] {
     padding-right: 0;
     padding-left: 0
 }
 
-.bx--no-gutter--start, .bx--row.bx--no-gutter--start [class*=cds--col] {
+.bx--no-gutter--start, .bx--row.bx--no-gutter--start [class*=bx--col] {
     padding-left: 0
 }
 
-.bx--no-gutter--end, .bx--row.bx--no-gutter--end [class*=cds--col] {
+.bx--no-gutter--end, .bx--row.bx--no-gutter--end [class*=bx--col] {
     padding-right: 0
 }
 

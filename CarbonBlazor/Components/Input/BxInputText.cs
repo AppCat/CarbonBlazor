@@ -33,7 +33,8 @@ namespace CarbonBlazor.Components
             var sequence = 0;
 
             __builder.OpenElement(sequence++, "input");
-            __builder.AddAttribute(sequence++, "value", BindConverter.FormatValue(CurrentValue));
+            //__builder.AddAttribute(sequence++, "value", BindConverter.FormatValue(CurrentValue));
+            __builder.AddAttribute(sequence++, "value", CurrentValueAsString);
             __builder.AddAttribute(sequence++, "onchange", EventCallback.Factory.CreateBinder<string?>(this, async __value => await SetStringValueAsync(__value), CurrentValueAsString));
             __builder.AddElementReferenceCapture(sequence++, __inputReference => Element = __inputReference);
             __builder.CloseElement();

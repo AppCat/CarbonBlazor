@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,16 +11,16 @@ using System.Threading.Tasks;
 namespace CarbonBlazor.Components
 {
     /// <summary>
-    /// 这是一个用于 Select 的 Blazor 组件。  
-    /// This is a Blazor component for the Select.
+    /// 这是一个用于 TextInput 的 Blazor 组件。  
+    /// This is a Blazor component for the TextInput.
     /// </summary>
     public partial class BxTextInput : BxInputBase<string>
     {
         /// <summary>
         /// 输入框内容
         /// </summary>
-        protected string InputValue => string.IsNullOrEmpty(Format) ? Value?.ToString() ?? string.Empty : Formatter<string>.Format(Value, Format);
-        
+        protected string InputValue => string.IsNullOrEmpty(Format) ? CurrentValueAsString ?? string.Empty : Formatter<string>.Format(CurrentValueAsString ?? string.Empty, Format);
+
         /// <summary>
         /// 显示密码
         /// </summary>
@@ -50,9 +51,19 @@ namespace CarbonBlazor.Components
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "div");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(InputWrapperConfig).AddClass($"bx--text-input__field-wrapper").AddId($"{Id}-wrapper"));
-                __builder.IfAddAttribute(ref sequence, "data-invalid", Invalid, () => Invalid);
+                __builder.AddConfig(ref sequence, new BxComponentConfig(InputWrapperConfig, $"bx--text-input__field-wrapper", $"{Id}-wrapper")
+                .AddIfClass($"bx--text-input__field-wrapper--warning", () => Warn));
+                __builder.IfAddAttribute(ref sequence, "data-invalid", "true", () => Invalid);
                 {
+                    if (Invalid)
+                    {
+                        __builder.AddContent(sequence++, new MarkupString("<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' width='16' height='16' viewBox='0 0 16 16' aria-hidden='true' class='bx--text-input__invalid-icon'><path d='M8,1C4.2,1,1,4.2,1,8s3.2,7,7,7s7-3.1,7-7S11.9,1,8,1z M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2 c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z'></path><path d='M7.5,4h1v5h-1C7.5,9,7.5,4,7.5,4z M8,12.2c-0.4,0-0.8-0.4-0.8-0.8s0.3-0.8,0.8-0.8 c0.4,0,0.8,0.4,0.8,0.8S8.4,12.2,8,12.2z' data-icon-path='inner-path' opacity='0'></path></svg>"));
+                    }
+                    else if (Warn)
+                    {
+                        __builder.AddContent(sequence++, new MarkupString("<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' width='16' height='16' viewBox='0 0 32 32' aria-hidden='true' class='bx--text-input__invalid-icon bx--text-input__invalid-icon--warning'><path fill='none' d='M16,26a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,26Zm-1.125-5h2.25V12h-2.25Z' data-icon-path='inner-path'></path><path d='M16.002,6.1714h-.004L4.6487,27.9966,4.6506,28H27.3494l.0019-.0034ZM14.875,12h2.25v9h-2.25ZM16,26a1.5,1.5,0,1,1,1.5-1.5A1.5,1.5,0,0,1,16,26Z'></path><path d='M29,30H3a1,1,0,0,1-.8872-1.4614l13-25a1,1,0,0,1,1.7744,0l13,25A1,1,0,0,1,29,30ZM4.6507,28H27.3493l.002-.0033L16.002,6.1714h-.004L4.6487,27.9967Z'></path></svg>"));
+                    }
+
                     __builder.OpenElement(sequence++, "input");
                     __builder.AddConfig(ref sequence, new BxComponentConfig(InputConfig)
                         .AddClass($"bx--text-input").AddId($"{Id}-input")
@@ -67,7 +78,11 @@ namespace CarbonBlazor.Components
                     __builder.IfAddAttribute(ref sequence, "readonly", true, () => ReadOnly);
                     __builder.IfAddAttribute(ref sequence, "value", InputValue, () => !string.IsNullOrWhiteSpace(InputValue));
                     __builder.IfAddAttribute(ref sequence, "placeholder", Placeholder, () => !string.IsNullOrWhiteSpace(Placeholder));
+                    __builder.IfAddAttribute(ref sequence, "title", Placeholder, () => !string.IsNullOrWhiteSpace(Placeholder));
                     __builder.IfAddAttribute(ref sequence, "disabled", () => Disabled);
+                    __builder.IfAddAttribute(ref sequence, "data-invalid", "true", () => Invalid);
+                    __builder.IfAddAttribute(ref sequence, "aria-invalid", "true", () => Invalid);
+                    //__builder.IfAddAttribute(ref sequence, "aria-describedby", "true", () => Invalid);
 
                     __builder.AddEvent(ref sequence, "onchange", HandleOnChangeAsync);
                     __builder.AddEvent(ref sequence, "onkeyup", HandleOnKeyupAsync);
@@ -81,7 +96,7 @@ namespace CarbonBlazor.Components
 
                     __builder.CloseElement();
 
-                    if (Type.Value == BxTextInputType.Password) 
+                    if (Type.Value == BxTextInputType.Password)
                     {
                         // Start ButtonForward
                         __builder.OpenElement(sequence++, "button");
@@ -111,12 +126,18 @@ namespace CarbonBlazor.Components
 
             __builder.OpenElement(sequence++, "div");
             __builder.AddComponent(ref sequence, this);
+            {
+                __builder.AddContent(sequence++, LabelFragment());
 
-            __builder.AddContent(sequence++, LabelFragment());
-            __builder.AddContent(sequence++, input__field_wrapper);
-            __builder.AddContent(sequence++, HelperFragment());
-            __builder.AddContent(sequence++, RequirementFragment());
-
+                __builder.OpenElement(sequence++, "div");
+                __builder.AddConfig(ref sequence, new BxComponentConfig(InputOuterWrapperConfig, $"bx--text-input__field-outer-wrapper", $"{Id}-outer-wrapper"));
+                {
+                    __builder.AddContent(sequence++, input__field_wrapper);
+                    __builder.AddContent(sequence++, HelperFragment());
+                    __builder.AddContent(sequence++, RequirementFragment());
+                }
+                __builder.CloseElement();
+            }
             __builder.CloseComponent();
         };
 
@@ -129,6 +150,14 @@ namespace CarbonBlazor.Components
         {
             ShowPassword = !ShowPassword;
             await Task.CompletedTask;
+        }
+
+        /// <inheritdoc />
+        protected override bool TryParseValueFromString(string? value, out string result, [NotNullWhen(false)] out string? validationErrorMessage)
+        {
+            result = value ?? string.Empty;
+            validationErrorMessage = null;
+            return true;
         }
     }
 }

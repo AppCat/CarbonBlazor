@@ -316,7 +316,7 @@ namespace CarbonBlazor.Components
         [Parameter] public string ParsingErrorMessage { get; set; } = "The {0} field must be a number.";
 
         /// <inheritdoc />
-        protected bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out TValue result, [NotNullWhen(false)] out string? validationErrorMessage)
+        protected override bool TryParseValueFromString(string? value, [MaybeNullWhen(false)] out TValue result, [NotNullWhen(false)] out string? validationErrorMessage)
         {
             if (BindConverter.TryConvertTo<TValue>(value, CultureInfo.InvariantCulture, out result))
             {

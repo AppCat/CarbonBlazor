@@ -25,7 +25,8 @@ namespace CarbonBlazor
             var sequence = 0;
 
             __builder.OpenElement(sequence++, "div");
-            __builder.AddConfig(ref sequence, new BxComponentConfig(HelperConfig, $"bx--form__helper-text", $"{Id}-helper"));
+            __builder.AddConfig(ref sequence, new BxComponentConfig(HelperConfig, $"bx--form__helper-text", $"{Id}-helper")
+            .AddIfClass("bx--form__helper-text--disabled", () => Disabled));
             __builder.EitherOrAddContent(ref sequence, HelperTemplate, HelperText, () => HelperTemplate != null);
             __builder.CloseElement();
         };
@@ -45,7 +46,8 @@ namespace CarbonBlazor
             var sequence = 0;
 
             __builder.OpenElement(sequence++, "div");
-            __builder.AddConfig(ref sequence, new BxComponentConfig(RequirementConfig, $"bx--form-requirement", $"{Id}-requirement"));
+            __builder.AddConfig(ref sequence, new BxComponentConfig(RequirementConfig, $"bx--form-requirement", $"{Id}-requirement")
+            .AddIfClass("bx--form-requirement--disabled", () => Disabled));
 
             if (Invalid)
             {

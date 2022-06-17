@@ -25,7 +25,8 @@ namespace CarbonBlazor
             var sequence = 0;
 
             __builder.OpenElement(sequence++, "label");
-            __builder.AddConfig(ref sequence, new BxComponentConfig(LabelTextConfig, $"bx--label", $"{Id}-label"));
+            __builder.AddConfig(ref sequence, new BxComponentConfig(LabelTextConfig, $"bx--label", $"{Id}-label")
+            .AddIfClass("bx--label--disabled", () => Disabled));
             __builder.AddAttribute(sequence++, "for", InputId());
             __builder.EitherOrAddContent(ref sequence, LabelTemplate, HideLabel ? string.Empty : LabelText, () => LabelTemplate != null);
             __builder.CloseElement();

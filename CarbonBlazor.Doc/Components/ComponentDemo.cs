@@ -27,13 +27,13 @@ namespace CarbonBlazor.Doc.Components
         /// 变体型
         /// </summary>
         [Parameter]
-        public Dictionary<string, (Type type, string value, RenderFragment? renderFragment)>? Variants { get; set; }
+        public Dictionary<string, Variant>? Variants { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [Parameter]
-        public Func<Type, Dictionary<string, RenderFragment>>? Knob { get; set; }
+        public Func<Variant, Dictionary<string, Knob>>? OnKnobs { get; set; }
 
         /// <summary>
         /// 当前主题
@@ -80,25 +80,32 @@ namespace CarbonBlazor.Doc.Components
                     // Theme selector End
 
                     // Variant selector Start
-                    builder.OpenComponent<BxDropdown>(sequence++);
-                    builder.AddAttribute(sequence++, nameof(BxDropdown.Size), new EnumMix<BxSize>(BxSize.Lg));
-                    builder.AddAttribute(sequence++, nameof(BxDropdown.LabelText), "Variant selector");
-                    builder.AddAttribute(sequence++, nameof(BxDropdown.Class), "component-demo-module--variantDropdown");
-                    builder.AddAttribute(sequence++, nameof(BxDropdown.SelectedKey), BindConverter.FormatValue(CurrentVariant));
-                    builder.AddAttribute(sequence++, nameof(BxDropdown.SelectedKeyChanged), EventCallback.Factory.Create<string>(this, __value => CurrentVariant = __value));
-                    builder.AddAttribute(sequence++, nameof(BxDropdown.ChildContent), (RenderFragment)(__builder =>
+                    if(Variants != null && Variants.Count == 1)
                     {
-                        var sequence = 0;
-
-                        foreach (var variant in Variants ?? new Dictionary<string, (Type type, string value, RenderFragment? renderFragment)>())
+                        CurrentVariant = Variants.FirstOrDefault().Key;
+                    }
+                    else
+                    {
+                        builder.OpenComponent<BxDropdown>(sequence++);
+                        builder.AddAttribute(sequence++, nameof(BxDropdown.Size), new EnumMix<BxSize>(BxSize.Lg));
+                        builder.AddAttribute(sequence++, nameof(BxDropdown.LabelText), "Variant selector");
+                        builder.AddAttribute(sequence++, nameof(BxDropdown.Class), "component-demo-module--variantDropdown");
+                        builder.AddAttribute(sequence++, nameof(BxDropdown.SelectedKey), BindConverter.FormatValue(CurrentVariant));
+                        builder.AddAttribute(sequence++, nameof(BxDropdown.SelectedKeyChanged), EventCallback.Factory.Create<string>(this, __value => CurrentVariant = __value));
+                        builder.AddAttribute(sequence++, nameof(BxDropdown.ChildContent), (RenderFragment)(__builder =>
                         {
-                            __builder.OpenComponent<BxDropdownOption>(sequence++);
-                            __builder.AddAttribute(sequence++, nameof(BxDropdownOption.Key), variant.Key);
-                            __builder.AddAttribute(sequence++, nameof(BxDropdownOption.Value), variant.Value.Item2);
-                            __builder.CloseComponent();
-                        }
-                    }));
-                    builder.CloseComponent();
+                            var sequence = 0;
+
+                            foreach (var variant in Variants ?? new Dictionary<string, Variant>())
+                            {
+                                __builder.OpenComponent<BxDropdownOption>(sequence++);
+                                __builder.AddAttribute(sequence++, nameof(BxDropdownOption.Key), variant.Key);
+                                __builder.AddAttribute(sequence++, nameof(BxDropdownOption.Value), variant.Value.Details);
+                                __builder.CloseComponent();
+                            }
+                        }));
+                        builder.CloseComponent();
+                    }
                     // Variant selector End
                 }
                 builder.CloseElement();
@@ -110,26 +117,49 @@ namespace CarbonBlazor.Doc.Components
                     // container Start
                     builder.OpenElement(ref sequence, "div", "component-demo-module--container");
                     {
-                        if (!string.IsNullOrEmpty(CurrentVariant) && (Variants?.Any() ?? false) && Variants.TryGetValue(CurrentVariant, out (Type type, string value, RenderFragment? renderFragment) variant))
+                        if (!string.IsNullOrEmpty(CurrentVariant) && (Variants?.Any() ?? false) && Variants.TryGetValue(CurrentVariant, out Variant? variant) && variant is not null)
                         {
-                            var propertys = Knob?.Invoke(variant.type) ?? new Dictionary<string, RenderFragment>();
+                            var propertys = OnKnobs?.Invoke(variant) ?? new Dictionary<string, Knob>();
 
-                            // preview Start
+                            // preview container Start
                             builder.OpenElement(ref sequence, "div", string.IsNullOrEmpty(CurrentTheme) ? "component-demo-module--preview-container" : $"component-demo-module--preview-container {CurrentTheme}");
                             {
-                                if(variant.renderFragment != null)
+                                if(variant.Content != null)
                                 {
-                                    builder.AddContent(sequence++, variant.renderFragment);
+                                    builder.AddContent(sequence++, variant.Content);
                                 }
                             }
                             builder.CloseElement();
-                            // preview End
+                            // preview container End
 
-                            // container Start
+                            // codeRow Start
+                            builder.OpenElement(ref sequence, "div", "code-module--row component-demo-module--codeRow");
+                            {
+                                builder.OpenElement(ref sequence, "div", "code-module--container");
+                                {
+                                    builder.OpenElement(ref sequence, "div", "component-demo-module--editor-container");
+                                    builder.AddAttribute(sequence++, "style", "overflow-x:auto;white-space:pre;min-height: 200px;");
+                                    {
+                                        builder.OpenElement(ref sequence, "pre");
+                                        {
+                                            builder.OpenElement(ref sequence, "code", "language-razor");
+                                            builder.AddContent(sequence++, "<BxCheckbox Disabled Checked></BxCheckbox>");
+                                            builder.CloseElement();
+                                        }
+                                        builder.CloseElement();
+                                    }
+                                    builder.CloseElement();
+                                }
+                                builder.CloseElement();
+                            }
+                            builder.CloseElement();
+                            // codeRow End
+
+                            // knob container Start
                             builder.OpenElement(ref sequence, "form", "bx--form component-demo-module--knob-container");
                             {
                                 builder.OpenElement(ref sequence, "div", "component-demo-module--knob-title");
-                                builder.AddContent(sequence++, variant.type.Name);
+                                builder.AddContent(sequence++, variant.Nmae ?? variant.Type.Name);
                                 builder.CloseElement();
 
                                 // container Start
@@ -143,7 +173,7 @@ namespace CarbonBlazor.Doc.Components
                                             builder.AddContent(sequence++, property.Key);
                                             builder.CloseElement();
 
-                                            builder.AddContent(sequence++, property.Value);
+                                            builder.AddContent(sequence++, property.Value.Content);
                                         }
                                         builder.CloseElement();
                                     }
@@ -152,7 +182,11 @@ namespace CarbonBlazor.Doc.Components
                                 // container End
                             }
                             builder.CloseElement();
-                            // container End
+                            // knob container End
+
+                            // zamboni Start
+                            builder.AddContent(sequence++, new MarkupString("<span class='component-demo-module--zamboni'></span>"));
+                            // zamboni End
                         }
                     }
                     builder.CloseElement();

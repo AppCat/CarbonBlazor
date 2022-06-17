@@ -12,7 +12,7 @@ namespace CarbonBlazor.Components
     /// <summary>
     /// input base
     /// </summary>
-    public abstract partial class BxInputBase<TValue> : BxFormItemComponentBase<TValue>
+    public abstract partial class BxInputBase<TValue> : BxFormItemComponentBaseOf<TValue>
     {
         /// <summary>
         /// 输入框
@@ -52,21 +52,8 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         protected virtual async Task HandleOnChangeAsync(ChangeEventArgs args)
         {
-            var value = args.Value != null ? args.Value.ToString() : string.Empty;
-            //if (Max != null && value.Length > Max)
-            //{
-            //    value = new string(value.Take((int)Max).ToArray());
-            //}
-            if (BindConverter.TryConvertTo(value, CultureInfo.CurrentCulture, out TValue? parsedValue))
-            {
-                if (Value?.Equals(parsedValue) ?? false)
-                    return;
-                Value = parsedValue;
-                if (OnValueChange.HasDelegate)
-                {
-                    await OnValueChange.InvokeAsync(Value);
-                }
-            }
+            var value = args.Value?.ToString();
+            await SetStringValueAsync(value);
         }
 
         #region SDLC

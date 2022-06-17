@@ -31,6 +31,12 @@ namespace CarbonBlazor
         [Parameter]
         public string? Placeholder { get; set; }
 
+        /// <summary>
+        /// 方向
+        /// </summary>
+        [Parameter]
+        public EnumMix<BxListBoxDirection>? Direction { get; set; }
+
         #region Event
 
         /// <summary>
