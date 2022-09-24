@@ -65,7 +65,7 @@ namespace CarbonBlazor.Components
                 __builder.OpenElement(sequence++, "p");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(HeaderLabelConfig)
                     .AddClass($"bx--modal-header__label bx--type-delta")
-                    .AddId(labelledby));
+                    .SetId(labelledby));
 
                 if (LabelTemplate != null)
                 {
@@ -86,7 +86,7 @@ namespace CarbonBlazor.Components
                 __builder.OpenElement(sequence++, "p");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(HeaderHeadingConfig)
                     .AddClass($"bx--modal-header__heading bx--type-delta")
-                    .AddId(describedby));
+                    .SetId(describedby));
 
                 if (HeadingTemplate != null)
                 {
@@ -110,7 +110,7 @@ namespace CarbonBlazor.Components
                 __builder.OpenElement(sequence++, "button");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(CloseConfig)
                     .AddClass($"bx--modal-close")
-                    .AddId($"{Id}-modal-close"));
+                    .SetId($"{Id}-modal-close"));
                 __builder.AddEvent(ref sequence, "onclick", HandleOnClickCloseAsync, true, true);
                 //__builder.AddAttribute(sequence++, "data-modal-close");
                 __builder.AddAttribute(sequence++, "data-modal-primary-focus");
@@ -128,7 +128,7 @@ namespace CarbonBlazor.Components
                 __builder.OpenElement(sequence++, "div");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(HeaderConfig)
                     .AddClass($"bx--modal-header")
-                    .AddId($"{Id}-modal-header"));
+                    .SetId($"{Id}-modal-header"));
 
                 __builder.AddContent(sequence++, label);
                 __builder.AddContent(sequence++, heading);
@@ -144,7 +144,7 @@ namespace CarbonBlazor.Components
                 __builder.OpenElement(sequence++, "div");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(ContentConfig)
                     .AddClass($"bx--modal-content")
-                    .AddId($"{Id}-content"));
+                    .SetId($"{Id}-content"));
                 __builder.AddAttribute(sequence++, "aria-labelledby", labelledby);
                 __builder.IfAddAttribute(ref sequence, "tabindex", 0, () => HasScrollingContent);
 
@@ -187,7 +187,7 @@ namespace CarbonBlazor.Components
                 __builder.OpenElement(sequence++, "div");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(FooterConfig)
                     .AddClass($"bx--modal-footer bx--btn-set")
-                    .AddId($"{Id}-modal-footer"));
+                    .SetId($"{Id}-modal-footer"));
 
                 if (FooterTemplate != null)
                 {
@@ -211,7 +211,7 @@ namespace CarbonBlazor.Components
                 __builder.OpenElement(sequence++, "div");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(ContainerConfig)
                     .AddClass($"bx--modal-container")
-                    .AddId($"{Id}-modal-container")
+                    .SetId($"{Id}-modal-container")
                     .AddIfClass($"bx--modal-container--{Size}", () => Size != null));
                 __builder.AddAttribute(sequence++, "role", "dialog");
                 __builder.AddAttribute(sequence++, "aria-modal", "true");

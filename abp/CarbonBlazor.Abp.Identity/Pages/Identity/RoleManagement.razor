@@ -1,0 +1,82 @@
+﻿@page "/identity/roles"
+@attribute [Authorize(IdentityPermissions.Roles.Default)]
+@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.Identity.Localization
+@using Volo.Abp.AspNetCore.Components.Web
+@using CarbonBlazor.Abp.Components.ObjectExtending
+@using CarbonBlazor.Abp.PermissionManagement.Components
+
+@inherits CarbonBlazorCrudPageBase<IIdentityRoleAppService, IdentityRoleDto, Guid, GetIdentityRolesInput, IdentityRoleCreateDto, IdentityRoleUpdateDto>
+
+<BxDataTableContainer Title="@L["Roles"]">
+    <ToolbarContentTemplate>
+@*        @if (Toolbar != null)
+        {
+
+        }*@
+        <BxButton OnClick="OpenCreateModalAsync">
+            @L["NewRole"]
+            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--btn__icon" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M17 15L17 7 15 7 15 15 7 15 7 17 15 17 15 25 17 25 17 17 25 17 25 15 17 15z"></path></svg>
+        </BxButton>
+    </ToolbarContentTemplate>
+    <ChildContent>
+        <BxDataTable TModel="IdentityRoleDto" DataSource="@Entities" OnSelectedChange=@(datas => Console.WriteLine(datas.Count()))>
+            <BxColumn @bind-Field="context.Name" Title="@L["RoleName"]" />
+            <BxColumn @bind-Field="context.IsDefault" Title="@L["DisplayName:IsDefault"]" />
+            <BxColumn @bind-Field="context.IsPublic" Title="@L["DisplayName:IsPublic"]" />
+            <BxActionColumn Title="@L["Actions"]">
+                <BxOverflowMenu Flipped>
+                    @*@foreach (var action in EntityActions)
+                    {
+                        <BxOverflowMenuOption Text="@action.Text" OnClick="@(() => Console.WriteLine("Rename app"))" />
+                    }*@
+                    @if (HasManagePermissionsPermission)
+                    {
+                        var name = context.Name;
+                        <BxOverflowMenuOption Text="@L["Permissions"]" OnClick="@(() => PermissionManagementModal.OpenAsync(PermissionProviderName, name))" />
+                    }
+                    @if (HasUpdatePermission)
+                    {
+                        <BxOverflowMenuOption Text="@L["Edit"]" OnClick="@(() => OpenEditModalAsync(context))" />
+                    }
+                    @if (HasDeletePermission && !context.IsStatic)
+                    {
+                        <BxOverflowMenuOption IsDelete Text="@L["Delete"]" OnClick="@(() => DeleteEntityAsync(context))" />
+                    }
+                </BxOverflowMenu>
+            </BxActionColumn>
+        </BxDataTable>
+        <BxPagination Page="@CurrentPage" PageSize="@PageSize" TotalItems="@TotalCount" />
+    </ChildContent>
+</BxDataTableContainer>
+
+@if (HasCreatePermission)
+{
+    <BxModal @ref="CreateModal" Heading="@L["NewRole"]">
+        <ContentTemplate>
+            <BxForm TModel="IdentityRoleCreateDto" Auto Model="@NewEntity" Context="formContext"/>
+        </ContentTemplate>
+        <FooterTemplate>
+            <BxButton Kind="BxButtonKind.Secondary" Content="@L["Cancel"]" OnClick="CloseCreateModalAsync" />
+            <BxButton Type="BxButtonType.Submit" Content="提交" OnClick="CreateEntityAsync" />
+        </FooterTemplate>
+    </BxModal>
+}
+
+@if (HasUpdatePermission)
+{
+    <BxModal @ref="EditModal" Heading="@L["Edit"]">
+        <ContentTemplate>
+            <BxForm TModel="IdentityRoleUpdateDto" Auto Model="@EditingEntity" Context="formContext"/>
+        </ContentTemplate>
+        <FooterTemplate>
+            <BxButton Kind="BxButtonKind.Secondary" Content="@L["Cancel"]" OnClick="CloseEditModalAsync" />
+            <BxButton Type="BxButtonType.Submit" Content="提交" OnClick="UpdateEntityAsync" />
+        </FooterTemplate>
+    </BxModal>
+}
+
+@if(HasManagePermissionsPermission)
+{
+    <PermissionManagementModal @ref="PermissionManagementModal" />
+}

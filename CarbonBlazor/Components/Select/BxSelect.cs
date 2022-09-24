@@ -44,7 +44,7 @@ namespace CarbonBlazor.Components
 
                 __builder.OpenElement(sequence++, "select");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(InputConfig).AddClass($"bx--select-input")
-                    .AddId($"{Id}-select")
+                    .SetId($"{Id}-select")
                     .AddIfClass(() => $"bx--select-input--{Size}", () => Size != null));
                 __builder.IfAddAttribute(ref sequence, "data-invalid", Invalid, () => Invalid);
 
@@ -98,7 +98,7 @@ namespace CarbonBlazor.Components
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "div");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(InputWrapperConfig).AddClass($"bx--select-input__wrapper").AddId($"{Id}-input__wrapper"));
+                __builder.AddConfig(ref sequence, new BxComponentConfig(InputWrapperConfig).AddClass($"bx--select-input__wrapper").SetId($"{Id}-input__wrapper"));
                 __builder.IfAddAttribute(ref sequence, "data-invalid", Invalid, () => Invalid);
                 {
                     __builder.AddContent(sequence++, select);

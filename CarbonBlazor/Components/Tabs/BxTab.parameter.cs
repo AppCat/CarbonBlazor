@@ -20,6 +20,13 @@ namespace CarbonBlazor.Components
         public RenderFragment? ChildContent { get; set; }
 
         /// <summary>
+        /// 交互式
+        /// Interactive
+        /// </summary>
+        [Parameter]
+        public bool Interactive { get; set; }
+
+        /// <summary>
         /// tab-content 配置
         /// The tab-content is config for the ProgressBar.
         /// </summary>

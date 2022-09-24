@@ -31,6 +31,7 @@ namespace CarbonBlazor.Components
             {
                 __builder.AddContent(sequence++, TitleFragment());
                 __builder.AddContent(sequence++, SubtitleFragment());
+                __builder.AddContent(sequence++, ProgressFragment());
 
                 __builder.OpenElement(sequence++, "div");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(CaptionConfig, $"bx--{Type}-notification__caption", $"{Id}-caption"));

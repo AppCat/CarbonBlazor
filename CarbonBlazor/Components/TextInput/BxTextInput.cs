@@ -66,7 +66,7 @@ namespace CarbonBlazor.Components
 
                     __builder.OpenElement(sequence++, "input");
                     __builder.AddConfig(ref sequence, new BxComponentConfig(InputConfig)
-                        .AddClass($"bx--text-input").AddId($"{Id}-input")
+                        .AddClass($"bx--text-input").SetId($"{Id}-input")
                         .AddIfClass($"bx--text-input--invalid", () => Invalid)
                         .AddIfClass($"bx--text-input--warning", () => Warn)
                         .AddIfClass($"bx--text-input--light", () => Light)
@@ -103,7 +103,7 @@ namespace CarbonBlazor.Components
                         __builder.AddEvent(ref sequence, "onclick", HandleOnClickPasswordAsync, true);
                         __builder.AddConfig(ref sequence, new BxComponentConfig()
                             .AddClass($"bx--btn bx--text-input--password__visibility__toggle bx--tooltip__trigger bx--tooltip--a11y bx--tooltip--bottom bx--tooltip--align-center")
-                            .AddId($"{Id}-button--password"));
+                            .SetId($"{Id}-button--password"));
                         __builder.AddContent(sequence++, new MarkupString($"<span class='bx--assistive-text'>{(ShowPassword ? "Show password" : "Hide password")}</span>"));
 
                         if (ShowPassword)

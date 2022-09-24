@@ -21,8 +21,8 @@ namespace CarbonBlazor.Extensions
             // Service
             services.AddSingleton<BxModalService>();
 
-            // JS
-            services.AddSingleton<ElementHelpJS>();
+            //// JS
+            //services.AddSingleton<ElementHelpJS>();
 
             return services;
         }

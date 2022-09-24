@@ -86,10 +86,10 @@ namespace CarbonBlazor.Components
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "thead");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(TheadConfig).AddId($"{Id}-thead"));
+                __builder.AddConfig(ref sequence, new BxComponentConfig(TheadConfig).SetId($"{Id}-thead"));
                 {
                     __builder.OpenElement(sequence++, "tr");
-                    __builder.AddConfig(ref sequence, new BxComponentConfig(TrConfig).AddId($"{Id}-tr-thead"));
+                    __builder.AddConfig(ref sequence, new BxComponentConfig(TrConfig).SetId($"{Id}-tr-thead"));
 
                     __builder.AddContent(sequence++, (RenderFragment<TModel>)(context => __builder =>
                     {
@@ -150,7 +150,7 @@ namespace CarbonBlazor.Components
                 {
                     var sequence = 0;
                     __builder.OpenElement(sequence++, "tbody");
-                    __builder.AddConfig(ref sequence, new BxComponentConfig(TbodyConfig).AddId($"{Id}-tbody"));
+                    __builder.AddConfig(ref sequence, new BxComponentConfig(TbodyConfig).SetId($"{Id}-tbody"));
 
                     if (ChildContent != null && DataSource != null && DataSource.Any())
                     {
@@ -162,7 +162,7 @@ namespace CarbonBlazor.Components
                             row++;
 
                             __builder.OpenElement(sequence++, "tr");
-                            __builder.AddConfig(ref sequence, new BxComponentConfig(TrConfig).AddId($"{Id}-tr-{row}")
+                            __builder.AddConfig(ref sequence, new BxComponentConfig(TrConfig).SetId($"{Id}-tr-{row}")
                             .AddIfClass($"bx--data-table--selected", () => data is ISelectionModel selection && selection.Selected)
                             .AddIfClass($"bx--parent-row", () => data is IExpansionModel)
                             .AddIfClass($"bx--expandable-row", () => data is IExpansionModel expansion && expansion.Expanded));

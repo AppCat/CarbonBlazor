@@ -1,0 +1,47 @@
+﻿@page "/"
+@namespace CarbonBlazor.Abp.Demo.Blazor.Server.Pages
+@using System.Globalization
+@using CarbonBlazor.Abp.Components.Server.BasicTheme.Bundling
+@using CarbonBlazor.Abp.Components.Web.BasicTheme.Themes.Basic
+@using Volo.Abp.Localization
+@{
+    Layout = null;
+    var rtl = CultureHelper.IsRtl ? "rtl" : string.Empty;
+}
+
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentCulture.Name" dir="@rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarbonBlazor.Abp.Demo.Blazor.Server</title>
+
+    <link href="css/app.css" rel="stylesheet" />
+
+    <!-- CarbonBlazor -->
+    @*    <link href="_content/CarbonBlazor/components/style.css" rel="stylesheet" />
+    <link href="_content/CarbonBlazor/components/extend.css" rel="stylesheet" />
+    <script src="_content/CarbonBlazor/carbonblazor.js"></script>*@
+
+    <base href="~/" />
+
+    <abp-style-bundle name="@BlazorBasicThemeBundles.Styles.Global" />
+</head>
+<body class="abp-application-layout bg-light @rtl">
+    @*<component type="typeof(CarbonBlazor.Abp.Demo.App)" render-mode="Server" />*@
+    <component type="typeof(App)" render-mode="Server" />
+
+    @*    <div id="blazor-error-ui">
+    <environment include="Staging,Production">
+    An error has occurred. This application may no longer respond until reloaded.
+    </environment>
+    <environment include="Development">
+    An unhandled exception has occurred. See browser dev tools for details.
+    </environment>
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+    </div>*@
+
+    <abp-script-bundle name="@BlazorBasicThemeBundles.Scripts.Global" />
+</body>
+</html>

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Version>0.0.2-alpha</Version>
+		<Authors>BanXian; AppCat</Authors>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\CarbonBlazor\CarbonBlazor.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Volo.Abp.AspNetCore.Components.Web" Version="5.3.2" />
+		<PackageReference Include="Volo.Abp.Authorization" Version="5.3.2" />
+		<PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="5.3.2" />
+	</ItemGroup>
+</Project>

@@ -55,6 +55,13 @@ namespace CarbonBlazor.Components
         [Parameter]
         public bool Open { get; set; }
 
+        /// <summary>
+        /// 图标模板。
+        /// Specify the content of the icon.
+        /// </summary>
+        [Parameter]
+        public RenderFragment? IconTemplate { get; set; }
+
         #region Event
 
         /// <summary>

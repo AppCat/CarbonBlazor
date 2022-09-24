@@ -27,7 +27,6 @@ namespace CarbonBlazor.Components
         /// 内容渲染
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         internal override RenderFragment ContentFragment() => __builder =>
         {
             var sequence = 0;

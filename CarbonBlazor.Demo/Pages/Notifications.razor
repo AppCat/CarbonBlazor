@@ -1,17 +1,17 @@
 ﻿@page "/Notifications"
 
-<BxToastNotification Title="Notification title" Subtitle="Subtitle text goes here" Caption="00:00:00 AM" OnCloseButtonClick="@(() => Console.WriteLine("关闭"))"/>
-<BxToastNotification Title="Notification title" Subtitle="Subtitle text goes here" Caption="00:00:00 AM" OnCloseButtonClick="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.Error"/>
-<BxToastNotification Title="Notification title" Subtitle="Subtitle text goes here" Caption="00:00:00 AM" OnCloseButtonClick="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.InfoSquare"/>
-<BxToastNotification Title="Notification title" Subtitle="Subtitle text goes here" Caption="00:00:00 AM" OnCloseButtonClick="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.Success"/>
-<BxToastNotification Title="Notification title" Subtitle="Subtitle text goes here" Caption="00:00:00 AM" OnCloseButtonClick="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.Warning"/>
-<BxToastNotification Title="Notification title" Subtitle="Subtitle text goes here" Caption="00:00:00 AM" OnCloseButtonClick="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.WarningAlt"/>
+@*<BxToastNotification Title="Notification title" Subtitle="Subtitle text goes here" Caption="00:00:00 AM" OnClose="@(() => Console.WriteLine("关闭"))"/>
+<BxToastNotification Title="Notification title" Subtitle="Subtitle text goes here" Caption="00:00:00 AM" OnClose="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.Error"/>
+<BxToastNotification Title="Notification title" Subtitle="Subtitle text goes here" Caption="00:00:00 AM" OnClose="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.InfoSquare"/>
+<BxToastNotification Title="Notification title" Subtitle="Subtitle text goes here" Caption="00:00:00 AM" OnClose="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.Success"/>
+<BxToastNotification Title="Notification title" Subtitle="Subtitle text goes here" Caption="00:00:00 AM" OnClose="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.Warning"/>
+<BxToastNotification Title="Notification title" Subtitle="Subtitle text goes here" Caption="00:00:00 AM" OnClose="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.WarningAlt"/>
 
 <br/>
 
-<BxInlineNotification Title="Notification title" Subtitle="Subtitle text goes here" OnCloseButtonClick="@(() => Console.WriteLine("关闭"))"/>
-<BxInlineNotification Title="Notification title" Subtitle="Subtitle text goes here" OnCloseButtonClick="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.Error"/>
-<BxInlineNotification Title="Notification title" Subtitle="Subtitle text goes here" OnCloseButtonClick="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.InfoSquare"/>
-<BxInlineNotification Title="Notification title" Subtitle="Subtitle text goes here" OnCloseButtonClick="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.Success"/>
-<BxInlineNotification Title="Notification title" Subtitle="Subtitle text goes here" OnCloseButtonClick="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.Warning"/>
-<BxInlineNotification Title="Notification title" Subtitle="Subtitle text goes here" OnCloseButtonClick="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.WarningAlt"/>
+<BxInlineNotification Title="Notification title" Subtitle="Subtitle text goes here" OnClose="@(() => Console.WriteLine("关闭"))" Style="position: absolute; background-color: var(--bx-support-error-inverse,#fa4d56); height: 3px; width: 83%; top: 0px;" />
+<BxInlineNotification Title="Notification title" Subtitle="Subtitle text goes here" OnClose="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.Error"/>
+<BxInlineNotification Title="Notification title" Subtitle="Subtitle text goes here" OnClose="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.InfoSquare"/>
+<BxInlineNotification Title="Notification title" Subtitle="Subtitle text goes here" OnClose="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.Success"/>
+<BxInlineNotification Title="Notification title" Subtitle="Subtitle text goes here" OnClose="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.Warning"/>*@
+<BxInlineNotification Title="Notification title" Subtitle="Subtitle text goes here" OnClose="@(() => Console.WriteLine("关闭"))" Kind="BxNotificationKind.WarningAlt" IsDelayClose Delay="5000"/>

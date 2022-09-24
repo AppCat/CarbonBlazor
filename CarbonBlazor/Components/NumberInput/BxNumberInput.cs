@@ -64,12 +64,12 @@ namespace CarbonBlazor.Components
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "div");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(ControlsConfig).AddClass($"bx--number__controls").AddId($"{Id}-number-controls"));
+                __builder.AddConfig(ref sequence, new BxComponentConfig(ControlsConfig).AddClass($"bx--number__controls").SetId($"{Id}-number-controls"));
                 {
                     if(Step != null)
                     {
                         __builder.OpenElement(sequence++, "button");
-                        __builder.AddConfig(ref sequence, new BxComponentConfig(ControlBtnConfig).AddClass($"bx--number__control-btn down-icon").AddId($"{Id}-number-controls-btn"));
+                        __builder.AddConfig(ref sequence, new BxComponentConfig(ControlBtnConfig).AddClass($"bx--number__control-btn down-icon").SetId($"{Id}-number-controls-btn"));
                         __builder.AddAttribute(sequence++, "tabindex", "-1");
                         __builder.AddAttribute(sequence++, "type", "button");
                         __builder.IfAddAttribute(ref sequence, "title", DecrementTitle, () => !string.IsNullOrEmpty(DecrementTitle));
@@ -81,7 +81,7 @@ namespace CarbonBlazor.Components
                         __builder.AddContent(sequence++, new MarkupString("<div class='bx--number__rule-divider'></div>"));
 
                         __builder.OpenElement(sequence++, "button");
-                        __builder.AddConfig(ref sequence, new BxComponentConfig(ControlBtnConfig).AddClass($"bx--number__control-btn up-icon").AddId($"{Id}-number-controls-btn"));
+                        __builder.AddConfig(ref sequence, new BxComponentConfig(ControlBtnConfig).AddClass($"bx--number__control-btn up-icon").SetId($"{Id}-number-controls-btn"));
                         __builder.AddAttribute(sequence++, "tabindex", "-1");
                         __builder.AddAttribute(sequence++, "type", "button");
                         __builder.IfAddAttribute(ref sequence, "title", IncrementTitle, () => !string.IsNullOrEmpty(IncrementTitle));
@@ -102,7 +102,7 @@ namespace CarbonBlazor.Components
 
                __builder.OpenElement(sequence++, "input");
                __builder.AddConfig(ref sequence, new BxComponentConfig(InputConfig)
-                   .AddClass($"bx--text-input").AddId($"{Id}-input")
+                   .AddClass($"bx--text-input").SetId($"{Id}-input")
                    .AddIfClass(() => $"bx--text-input--{Size}", () => Size != null))
                ;
 
@@ -143,7 +143,7 @@ namespace CarbonBlazor.Components
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "div");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(InputWrapperConfig).AddClass($"bx--number__input-wrapper").AddId($"{Id}-input-wrapper"));
+                __builder.AddConfig(ref sequence, new BxComponentConfig(InputWrapperConfig).AddClass($"bx--number__input-wrapper").SetId($"{Id}-input-wrapper"));
 
                 __builder.AddContent(sequence++, input);
 
@@ -167,7 +167,7 @@ namespace CarbonBlazor.Components
 
                 __builder.OpenElement(sequence++, "div");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(NumberConfig).AddClass($"bx--number")
-                    .AddId($"{Id}-input-wrapper")
+                    .SetId($"{Id}-input-wrapper")
                     .AddIfClass($"bx--dropdown--invalid", () => Invalid));
                 __builder.IfAddAttribute(ref sequence, "data-invalid", Invalid, () => Invalid);
                 __builder.AddContent(sequence++, LabelFragment());

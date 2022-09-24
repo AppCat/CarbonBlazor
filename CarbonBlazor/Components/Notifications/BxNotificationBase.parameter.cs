@@ -36,10 +36,10 @@ namespace CarbonBlazor.Components
         public EnumMix<BxNotificationKind>? Kind { get; set; } = BxNotificationKind.Info;
 
         /// <summary>
-        /// 点击关闭事件
+        /// 关闭事件
         /// </summary>
         [Parameter]
-        public EventCallback<MouseEventArgs> OnCloseClick { get; set; }
+        public EventCallback OnClose { get; set; }
 
         /// <summary>
         /// 通知的标题。
@@ -55,35 +55,61 @@ namespace CarbonBlazor.Components
         [Parameter]
         public string? Subtitle { get; set; }
 
+        /// <summary>
+        /// 是否延时关闭
+        /// </summary>
+        [Parameter]
+        public bool IsDelayClose { get; set; }
+
+        /// <summary>
+        /// 延时
+        /// 默认500
+        /// </summary>
+        [Parameter]
+        public int Delay { get; set; } = 500;
+
+        /// <summary>
+        /// 延时
+        /// </summary>
+        [Parameter]
+        public TimeSpan? DelayTimeSpan { get; set; }
+
         #region Config
 
         /// <summary>
         /// notification__details 配置
-        /// The notification__details is config for the ProgressBar.
+        /// The notification__details is config for the Notification.
         /// </summary>
         [Parameter]
         public IBxComponentConfig? DetailsConfig { get; set; }
 
         /// <summary>
         /// notification__close-button 配置
-        /// The notification__close-button is config for the ProgressBar.
+        /// The notification__close-button is config for the Notification.
         /// </summary>
         [Parameter]
         public IBxComponentConfig? CloseButtonConfig { get; set; }
 
         /// <summary>
         /// notification__title 配置
-        /// The notification__title is config for the ProgressBar.
+        /// The notification__title is config for the Notification.
         /// </summary>
         [Parameter]
         public IBxComponentConfig? TitleConfig { get; set; }
 
         /// <summary>
         /// notification__subtitle 配置
-        /// The notification__subtitle is config for the ProgressBar.
+        /// The notification__subtitle is config for the Notification.
         /// </summary>
         [Parameter]
         public IBxComponentConfig? SubtitleConfig { get; set; }
+
+        /// <summary>
+        /// progress 配置
+        /// The progress config.
+        /// </summary>
+        [Parameter]
+        public IBxComponentConfig? ProgressConfig { get; set; }
 
         #endregion
     }

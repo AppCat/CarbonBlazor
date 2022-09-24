@@ -1,0 +1,50 @@
+﻿@using Microsoft.Extensions.Localization
+@using Volo.Abp.PermissionManagement.Localization
+@inherits Volo.Abp.AspNetCore.Components.AbpComponentBase
+
+<BxModal @ref="_modal" OnClose="ClosingModalAsync" Size="BxModalSize.Lg" Heading=@($"{L["Permissions"].ToString()} - {_entityDisplayName}")>
+    <ContentTemplate>
+        <BxCheckbox @bind-Checked="@GrantAll" LabelText="@L["SelectAllInAllTabs"]" />
+        @if (_groups != null)
+        {
+            var contentConfig = new BxComponentConfig()
+            .AddStyle("height", "300px")
+            .AddStyle("overflow-y", "scroll")
+            ;
+
+            <BxTabs DefaultSelectedKey="@_defaultSelectedGroupName">
+                @foreach (var group in _groups)
+                {
+                    @if (group.Permissions.Any(x => x.IsGranted))
+                    {
+                        <BxTab Interactive Key="@GetNormalizedGroupName(group.Name)" Value=@($"{group.DisplayName} ({group.Permissions.Count(x => x.IsGranted)})") ContentConfig="contentConfig">
+                            <BxCheckbox Checked="@(group.Permissions.All(x => x.IsGranted))" CheckedChanged="@(b => GroupGrantAllChanged(b, group))" LabelText="@L["SelectAllInThisTab"]" />
+                            <hr />
+                            @foreach (var permission in group.Permissions)
+                            {
+                                var head = permission.ParentName != null;
+                                <BxCheckbox Style=@(head ? "margin: 0px 0px 0px 19px" : "") Disabled="@(IsDisabledPermission(permission))" Checked="@permission.IsGranted" CheckedChanged="@(b => PermissionChanged(b, group, permission))" LabelText="@GetShownName(permission)" />
+                            }
+                        </BxTab>
+                    }
+                    else
+                    {
+                        <BxTab Interactive Key="@GetNormalizedGroupName(group.Name)" Value=@($"{group.DisplayName} ({group.Permissions.Count(x => x.IsGranted)})") ContentConfig="contentConfig">
+                            <BxCheckbox Checked="@(group.Permissions.All(x => x.IsGranted))" CheckedChanged="@(b => GroupGrantAllChanged(b, group))" LabelText="@L["SelectAllInThisTab"]" />
+                            <hr />
+                            @foreach (var permission in group.Permissions)
+                            {
+                                var head = permission.ParentName != null;
+                                <BxCheckbox Style=@(head ? "margin: 0px 0px 0px 19px" : "") Disabled="@(IsDisabledPermission(permission))" Checked="@permission.IsGranted" CheckedChanged="@(b => PermissionChanged(b, group, permission))" LabelText="@GetShownName(permission)" />
+                            }
+                        </BxTab>
+                    }
+                }
+            </BxTabs>
+        }
+    </ContentTemplate>
+    <FooterTemplate>
+        <BxButton Kind="BxButtonKind.Secondary" Content="@L["Cancel"]" OnClick="CloseModalAsync" />
+        <BxButton Kind="BxButtonKind.Primary" Content="@L["Save"]" OnClick="SaveAsync" />
+    </FooterTemplate>
+</BxModal>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using Microsoft.JSInterop;
 
 namespace CarbonBlazor.Components
 {
@@ -73,7 +74,14 @@ namespace CarbonBlazor.Components
                 __builder.AddEvent(ref sequence, "onclick", HandleOnClickAsync);
                 __builder.AddEvent(ref sequence, "onfocus", HandleOnFocusAsync);
                 __builder.AddEvent(ref sequence, "onkeydown", HandleOnKeyDownAsync);
-                __builder.AddContent(sequence++, new MarkupString("<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' aria-label='' width='16' height='16' viewBox='0 0 32 32' aria-hidden='true' class='bx--overflow-menu__icon'><circle cx='16' cy='8' r='2'></circle><circle cx='16' cy='16' r='2'></circle><circle cx='16' cy='24' r='2'></circle></svg>"));
+                if(IconTemplate == null)
+                {
+                    __builder.AddContent(sequence++, new MarkupString("<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' aria-label='' width='16' height='16' viewBox='0 0 32 32' aria-hidden='true' class='bx--overflow-menu__icon'><circle cx='16' cy='8' r='2'></circle><circle cx='16' cy='16' r='2'></circle><circle cx='16' cy='24' r='2'></circle></svg>"));
+                }
+                else
+                {
+                    __builder.AddContent(sequence++, IconTemplate);
+                }
                 //__builder.AddCascadingValue<BxOverflowMenuGoal>(ref sequence, BxOverflowMenuGoal.Read, __builder =>
                 //{
                 //    var sequence = 0;
@@ -200,15 +208,15 @@ namespace CarbonBlazor.Components
         /// <returns></returns>
         protected async Task PositionAsync()
         {
-            if (ElementHelp != null && Open)
+            if (Open)
             {
                 var wrapperWidth = 160;
-                var childElementCount = await ElementHelp.FindElementPropertyByIdAsync<decimal>($"{Id}-options", "childElementCount");
 
-                var offsetLeft = await ElementHelp.FindElementPropertyByIdAsync<decimal>(Id, "offsetLeft");
-                var offsetTop = await ElementHelp.FindElementPropertyByIdAsync<decimal>(Id, "offsetTop");
-                var offsetHeight = await ElementHelp.FindElementPropertyByIdAsync<decimal>(Id, "offsetHeight");
-                var offsetWidth = await ElementHelp.FindElementPropertyByIdAsync<decimal>(Id, "offsetWidth");
+                var childElementCount = await JSRuntime!.FindElementPropertyByIdAsync<decimal>($"{Id}-options", "childElementCount");
+                var offsetLeft = await JSRuntime!.FindElementPropertyByIdAsync<decimal>(Id, "offsetLeft");
+                var offsetTop = await JSRuntime!.FindElementPropertyByIdAsync<decimal>(Id, "offsetTop");
+                var offsetHeight = await JSRuntime!.FindElementPropertyByIdAsync<decimal>(Id, "offsetHeight");
+                var offsetWidth = await JSRuntime!.FindElementPropertyByIdAsync<decimal>(Id, "offsetWidth");
 
                 if (Direction?.Value == BxOverflowMenuDirection.Bottom && Flipped)
                 {

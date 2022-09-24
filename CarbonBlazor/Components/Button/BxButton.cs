@@ -43,6 +43,7 @@ namespace CarbonBlazor.Components
             if (!string.IsNullOrWhiteSpace(Href))
             {
                 __builder.OpenElement(sequence++, "a");
+                __builder.AddAttribute(sequence++, "href", Href);
             }
             else
             {

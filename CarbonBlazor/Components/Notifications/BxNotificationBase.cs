@@ -1,8 +1,11 @@
 ﻿using CarbonBlazor.Extensions;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +21,31 @@ namespace CarbonBlazor.Components
         /// 通知类型
         /// </summary>
         protected abstract string Type { get; }
+
+        /// <summary>
+        /// 当前延迟
+        /// </summary>
+        protected TimeSpan CurrentDelay { get; set; }
+
+        /// <summary>
+        /// 目标时间
+        /// </summary>
+        protected DateTime Terminus { get; set; }
+
+        /// <summary>
+        /// 计时Task
+        /// </summary>
+        protected Task? TimeTask { get; set; }
+
+        /// <summary>
+        /// 计时Task 取消源
+        /// </summary>
+        protected CancellationTokenSource? TokenSource { get; set; }
+
+        /// <summary>
+        /// 第一次渲染后
+        /// </summary>
+        protected bool FirstRenderAfter { get; set; }
 
         /// <summary>
         /// 设置映射
@@ -102,7 +130,7 @@ namespace CarbonBlazor.Components
             __builder.AddConfig(ref sequence, new BxComponentConfig(CloseButtonConfig, $"bx--{Type}-notification__close-button", $"{Id}-close-button"));
             __builder.AddAttribute(sequence++, "type", "button");
             __builder.AddAttribute(sequence++, "tabindex", "-1");
-            __builder.AddEvent(ref sequence, "onclick", OnCloseClick);
+            __builder.AddEvent(ref sequence, "onclick", HandleOnClickAsync);
 
             __builder.AddContent(sequence++, new MarkupString($"<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' width='16' height='16' viewBox='0 0 32 32' aria-hidden='true' class='bx--{Type}-notification__close-icon'><path d='M24 9.4L22.6 8 16 14.6 9.4 8 8 9.4 14.6 16 8 22.6 9.4 24 16 17.4 22.6 24 24 22.6 17.4 16 24 9.4z'></path></svg>"));
 
@@ -134,5 +162,139 @@ namespace CarbonBlazor.Components
             __builder.AddContent(sequence++, Subtitle);
             __builder.CloseElement();
         };
+
+        /// <summary>
+        /// 进度条渲染
+        /// </summary>
+        /// <returns></returns>
+        protected virtual RenderFragment ProgressFragment() => __builder =>
+        {
+            if (!IsDelayClose)
+                return;
+
+            var delay = CurrentDelay.TotalMilliseconds;
+
+            var sequence = 0;
+            __builder.OpenElement(sequence++, "div");
+            __builder.AddConfig(ref sequence, new BxComponentConfig(ProgressConfig, $"bx--{Type}-notification__progress", $"{Id}-progress")
+                .AddStyle("position", "absolute")
+                .AddStyle("background-color", "var(--bx-support-error-inverse,#fa4d56)")
+                .AddStyle("transition", $"width {((double)delay + (double)delay / 30) / 1000}s")
+                .AddStyle("height", "3px")
+                .AddStyle("width", "1%")
+                //.AddIfStyle("WIDTH", "100%", () => FirstRenderAfter)
+                .AddStyle("top", "0px"));
+            __builder.CloseElement();
+        };
+
+        /// <summary>
+        /// 运行
+        /// </summary>
+        protected virtual async Task Run()
+        {
+            if (!IsDelayClose)
+                return;
+
+            await InvokeStateHasChangedAsync();
+            Terminus = DateTime.Now.Add(CurrentDelay);
+            TokenSource = new CancellationTokenSource(CurrentDelay);
+            var totalMilliseconds = CurrentDelay.TotalMilliseconds;
+            TimeTask = Task.Run(async () =>
+            {
+                while (DateTime.Now < Terminus && !TokenSource.IsCancellationRequested)
+                {
+                    await Task.Delay(1);
+                }
+
+                if (!TokenSource.IsCancellationRequested)
+                {
+                    await InvokeStateHasChangedAsync();
+                    await OnClose.InvokeAsync();
+                    await Cancel();
+                }
+            }, TokenSource.Token);
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// 处理 OnClick
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        protected virtual async Task HandleOnClickAsync(MouseEventArgs args)
+        {
+            await OnClose.InvokeAsync();
+        }
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <returns></returns>
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+            CurrentDelay = DelayTimeSpan ?? TimeSpan.FromMilliseconds(Delay);
+            await Run();
+        }
+
+        /// <summary>
+        /// 渲染完成
+        /// </summary>
+        /// <param name="firstRender"></param>
+        /// <returns></returns>
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            if(firstRender && IsDelayClose)
+            {
+                FirstRenderAfter = true;
+                StateHasChanged();
+                var delay = CurrentDelay.TotalMilliseconds;
+                await Task.Run(async () =>
+                {
+                    await Task.Delay(10);
+                    await JSRuntime!.SetStyleByIdAsync($"{Id}-progress", "width", "100%");
+                });
+            }
+        }
+
+        /// <summary>
+        /// 呈现渲染
+        /// </summary>
+        /// <returns></returns>
+        protected override bool ShouldRender()
+        {
+            var render = base.ShouldRender();
+
+            return render;
+        }
+
+        /// <summary>
+        /// 取消
+        /// </summary>
+        protected virtual async Task Cancel()
+        {
+            if (TokenSource == null || TokenSource.IsCancellationRequested)
+                return;
+
+            TokenSource?.Cancel();
+            TokenSource?.Dispose();
+            if (TimeTask?.IsCompleted ?? false)
+            {
+                TimeTask?.Dispose();
+            }
+            Terminus = DateTime.MinValue;
+            await InvokeStateHasChangedAsync();
+        }
+
+        /// <summary>
+        /// 释放
+        /// </summary>
+        /// <returns></returns>
+        public override async ValueTask DisposeAsync()
+        {
+            await base.DisposeAsync();
+            await Cancel();
+        }
     }
 }

@@ -64,7 +64,6 @@ namespace CarbonBlazor
         public StyleMapper Add(string name, string value)
         {
             AddGetIf(name, () => value, () => true);
-
             return this;
         }
 
@@ -77,8 +76,7 @@ namespace CarbonBlazor
         public StyleMapper AddGet(string name, Func<string> value)
         {
             AddGetIf(name, value, () => true);
-
-            return this;
+            return this;    
         }
 
         /// <summary>

@@ -88,11 +88,19 @@ namespace CarbonBlazor
         /// </summary>
         public BxComponentConfig(IBxComponentConfig? config)
         {
-            if(config != null)
+            if (config != null)
             {
-                Style = config.Style;
-                Attributes = config.Attributes;
-                Class = config.Class;
+                if (config is BxComponentConfig bcc)
+                {
+                    Style = bcc.AsStyle;
+                    Class = bcc.AsClass;
+                }
+                else
+                {
+                    Style = config.Style;
+                    Class = config.Class;
+                }
+                Attributes = config.Attributes ?? new Dictionary<string, object>();
             }
         }
 
@@ -103,13 +111,21 @@ namespace CarbonBlazor
         {
             if (config != null)
             {
-                Style = config.Style;
-                Attributes = config.Attributes;
-                Class = config.Class;
+                if(config is BxComponentConfig bcc)
+                {
+                    Style = bcc.AsStyle;
+                    Class = bcc.AsClass;
+                }
+                else
+                {
+                    Style = config.Style;
+                    Class = config.Class;
+                }
+                Attributes = config.Attributes ?? new Dictionary<string, object>();
             }
 
             AddClass(fixedClass);
-            AddId(id);
+            SetId(id);
         }
 
         /// <summary>
@@ -118,7 +134,7 @@ namespace CarbonBlazor
         public BxComponentConfig(string fixedClass, string id)
         {
             AddClass(fixedClass);
-            AddId(id);
+            SetId(id);
         }
 
         /// <summary>
@@ -126,7 +142,7 @@ namespace CarbonBlazor
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public BxComponentConfig AddId(string id)
+        public BxComponentConfig SetId(string id)
         {
             Id = id;
             return this;
@@ -137,10 +153,18 @@ namespace CarbonBlazor
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
+        /// <param name="cover"></param>
         /// <returns></returns>
-        public BxComponentConfig AddStyle(string name, string value)
+        public BxComponentConfig AddStyle(string name, string value, bool cover = true)
         {
-            StyleMapper.Add(name, value);
+            if (cover)
+            {
+                StyleMapper.AddGetOrUpdateIf(name, () => value, () => true);
+            }
+            else
+            {
+                StyleMapper.AddGet(name, () => value);
+            }
             return this;
         }
 
@@ -149,10 +173,18 @@ namespace CarbonBlazor
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
+        /// <param name="cover"></param>
         /// <returns></returns>
-        public BxComponentConfig AddStyle(string name, Func<string> value)
+        public BxComponentConfig AddStyle(string name, Func<string> value, bool cover = true)
         {
-            StyleMapper.AddGet(name, value);
+            if (cover)
+            {
+                StyleMapper.AddGetOrUpdateIf(name, value, () => true);
+            }
+            else
+            {
+                StyleMapper.AddGet(name, value);
+            }
             return this;
         }
 
@@ -162,10 +194,18 @@ namespace CarbonBlazor
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <param name="allow"></param>
+        /// <param name="cover"></param>
         /// <returns></returns>
-        public BxComponentConfig AddIfStyle(string name, string value, Func<bool> allow)
+        public BxComponentConfig AddIfStyle(string name, string value, Func<bool> allow, bool cover = true)
         {
-            StyleMapper.AddIf(name, value, allow);
+            if (cover)
+            {
+                StyleMapper.AddGetOrUpdateIf(name, () => value, allow);
+            }
+            else
+            {
+                StyleMapper.AddIf(name, value, allow);
+            }
             return this;
         }
 
@@ -175,10 +215,18 @@ namespace CarbonBlazor
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <param name="allow"></param>
+        /// <param name="cover"></param>
         /// <returns></returns>
-        public BxComponentConfig AddIfStyle(string name, Func<string> value, Func<bool> allow)
+        public BxComponentConfig AddIfStyle(string name, Func<string> value, Func<bool> allow, bool cover = true)
         {
-            StyleMapper.AddGetIf(name, value, allow);
+            if (cover)
+            {
+                StyleMapper.AddGetOrUpdateIf(name, value, allow);
+            }
+            else
+            {
+                StyleMapper.AddGetIf(name, value, allow);
+            }
             return this;
         }
 

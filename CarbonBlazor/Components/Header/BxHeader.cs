@@ -41,6 +41,9 @@ namespace CarbonBlazor.Components
         {
             RenderFragment menu_toggle = __builder =>
             {
+                if (SideNavTemplate == null)
+                    return;
+
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "button");
@@ -100,6 +103,9 @@ namespace CarbonBlazor.Components
 
             RenderFragment global = __builder =>
             {
+                if (GlobalBarTemplate == null)
+                    return;
+
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "div");
@@ -112,6 +118,9 @@ namespace CarbonBlazor.Components
 
             RenderFragment sidenav = __builder =>
             {
+                if (SideNavTemplate == null)
+                    return;
+
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "nav");
@@ -126,6 +135,9 @@ namespace CarbonBlazor.Components
 
             RenderFragment overlay = __builder =>
             {
+                if (!IsOpenMenu)
+                    return;
+
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "div");
@@ -147,10 +159,7 @@ namespace CarbonBlazor.Components
             __builder.AddContent(sequence++, header__name);
             __builder.AddContent(sequence++, nav);
             __builder.AddContent(sequence++, global);
-            if (IsOpenMenu)
-            {
-                __builder.AddContent(sequence++, overlay);
-            }
+            __builder.AddContent(sequence++, overlay);
             __builder.AddContent(sequence++, sidenav);
             __builder.AddContent(sequence++, ChildContent);
 

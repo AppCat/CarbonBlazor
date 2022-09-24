@@ -1,0 +1,16 @@
+<Project>
+	<PropertyGroup>
+		<LangVersion>alpha</LangVersion>
+		<Version>0.0.1-alpha</Version>
+		<Authors>BanXian; AppCat</Authors>
+		<NoWarn>$(NoWarn);CS1591</NoWarn>
+		<AbpProjectType>app</AbpProjectType>
+	</PropertyGroup>
+
+	<Target Name="NoWarnOnRazorViewImportedTypeConflicts" BeforeTargets="RazorCoreCompile">
+		<PropertyGroup>
+			<NoWarn>$(NoWarn);0436</NoWarn>
+		</PropertyGroup>
+	</Target>
+
+</Project>

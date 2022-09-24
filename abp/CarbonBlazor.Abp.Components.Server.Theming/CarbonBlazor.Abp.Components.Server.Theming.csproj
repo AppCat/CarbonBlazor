@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Version>0.0.2-alpha</Version>
+		<Authors>BanXian; AppCat</Authors>
+		<OutputType>Library</OutputType>
+		<NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+		<IsPackable>true</IsPackable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Volo.Abp.AspNetCore.Components.Server" Version="5.3.2" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Bundling" Version="5.3.2" />
+		<PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Packages" Version="5.3.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\CarbonBlazor.Abp.Components.Web.Theming\CarbonBlazor.Abp.Components.Web.Theming.csproj" />
+	</ItemGroup>
+
+</Project>

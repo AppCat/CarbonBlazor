@@ -31,6 +31,7 @@ namespace CarbonBlazor.Components
 
             __builder.AddContent(sequence++, DetailsFragment());
             __builder.AddContent(sequence++, CloseButtonFragment()); 
+            __builder.AddContent(sequence++, ProgressFragment());
 
             __builder.CloseComponent();
         };

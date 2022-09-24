@@ -31,8 +31,8 @@ namespace CarbonBlazor.Components
                 __builder.OpenElement(sequence++, "bx-radio-button-group");
                 __builder.AddEvent<string>(ref sequence, "bx-radio-button-group-changed", this, e => Console.WriteLine(e));
             }
-            __builder.AddComponent(ref sequence, this);
-            __builder.AddContent(sequence++, ChildContent);
+            __builder.AddComponent(ref sequence, this); 
+            __builder.AddContent(sequence++, ChildContent); 
 
             __builder.CloseComponent();
         };

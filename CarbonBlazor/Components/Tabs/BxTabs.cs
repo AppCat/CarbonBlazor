@@ -28,7 +28,7 @@ namespace CarbonBlazor.Components
                 ;
         }
 
-        /// <summary>
+        /// <summary>   
         /// 内容渲染
         /// </summary>
         /// <returns></returns>
@@ -52,6 +52,16 @@ namespace CarbonBlazor.Components
             {
                 var sequence = 0;
 
+                // 还不知道怎么实现
+                __builder.OpenElement(sequence++, "button");
+                __builder.AddAria(ref sequence, "hidden", "true");
+                __builder.AddAria(ref sequence, "label", "Scroll left");
+                __builder.AddAttribute(sequence++, "type", "button");
+                __builder.AddConfig(ref sequence, new BxComponentConfig(null, "bx--tab--overflow-nav-button bx--tab--overflow-nav-button--previous bx--tab--overflow-nav-button--hidden", $"{Id}-list-scroll-left"));
+                __builder.AddContent(sequence++, new MarkupString("<svg focusable=\"false\" preserveAspectRatio=\"xMidYMid meet\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M5 8L10 3 10.7 3.7 6.4 8 10.7 12.3 10 13z\"></path></svg>"));
+                __builder.CloseElement();
+
+
                 __builder.OpenElement(sequence++, "div");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(TabListConfig, "bx--tab--list", $"{Id}-list"));
                 __builder.AddAttribute(sequence++, "role", "tablist");
@@ -60,10 +70,30 @@ namespace CarbonBlazor.Components
 
                 __builder.CloseElement();
 
-                //__builder.AddContent(sequence++, new MarkupString("<button aria-hidden='false' aria-label='Scroll right' class='bx--tab--overflow-nav-button bx--tab--overflow-nav-button--next' type='button'><svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' width='16' height='16' viewBox='0 0 16 16' aria-hidden='true'><path d='M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z'></path></svg></button>"));
+                // 还不知道怎么实现
+                __builder.OpenElement(sequence++, "button");
+                __builder.AddAria(ref sequence, "hidden", "true");
+                __builder.AddAria(ref sequence, "label", "Scroll right");
+                __builder.AddAttribute(sequence++, "type", "button");
+                __builder.AddConfig(ref sequence, new BxComponentConfig(null, "bx--tab--overflow-nav-button bx--tab--overflow-nav-button--next bx--tab--overflow-nav-button--hidden", $"{Id}-list-scroll-right"));
+                __builder.AddContent(sequence++, new MarkupString("<svg focusable=\"false\" preserveAspectRatio=\"xMidYMid meet\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"currentColor\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M11 8L6 13 5.3 12.3 9.6 8 5.3 3.7 6 3z\"></path></svg>"));
+                __builder.CloseElement();
             });
 
             __builder.AddCascadingValue(ref sequence, BxTabsGoal.Content, ChildContent);
         };
+
+        /// <summary>
+        /// 关闭选项卡
+        /// </summary>
+        /// <param name="tab"></param>
+        /// <returns></returns>
+        internal async Task OnCloseTabAsync(BxTab tab)
+        {
+            if (OnCloseTab.HasDelegate && !Disabled)
+            {
+                await OnCloseTab.InvokeAsync(tab);
+            }
+        }
     }
 }

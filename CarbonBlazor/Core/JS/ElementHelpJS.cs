@@ -10,28 +10,28 @@ namespace CarbonBlazor
     /// <summary>
     /// 元素帮助JS
     /// </summary>
-    public class ElementHelpJS
+    public static class ElementHelpJS
     {
-        protected readonly Lazy<Task<IJSObjectReference>> _moduleTask;
+        private static Func<IJSRuntime, ValueTask<IJSObjectReference>> _moduleTask;
 
         /// <summary>
         /// 元素帮助JS
         /// </summary>
-        /// <param name="jsRuntime"></param>
-        public ElementHelpJS(IJSRuntime jsRuntime)
+        static ElementHelpJS()
         {
-            _moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/CarbonBlazor/js/elementHelp.js").AsTask());
+            _moduleTask = jsRuntime => jsRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/CarbonBlazor/js/elementHelp.js");
         }
 
         /// <summary>
         /// 查找元素属性
         /// </summary>
+        /// <param name="jsRuntime"></param>
         /// <param name="id"></param>
         /// <param name="propertys"></param>
         /// <returns></returns>
-        public async Task<TValue?> FindElementPropertyByIdAsync<TValue>(string id, params string[] propertys)
+        public static async Task<TValue?> FindElementPropertyByIdAsync<TValue>(this IJSRuntime jsRuntime, string id, params string[] propertys)
         {
-            var module = await _moduleTask.Value;
+            var module = await _moduleTask.Invoke(jsRuntime);
             var result = await module.InvokeAsync<object>("findElementPropertyById", id, propertys);
             if (result == null)
             {
@@ -47,25 +47,29 @@ namespace CarbonBlazor
         /// <summary>
         /// 设置样式
         /// </summary>
+        /// <param name="jsRuntime"></param>
         /// <param name="id"></param>
         /// <param name="property"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public async Task SetStyleByIdAsync(string id, string property, string value)
+        public static async Task SetStyleByIdAsync(this IJSRuntime jsRuntime, string id, string property, string value)
         {
-            var module = await _moduleTask.Value;
-            await module.InvokeVoidAsync("setStyleByIdAsync", id, property, value);
+            //var module = await _moduleTask.Invoke(jsRuntime);
+            //await module.InvokeVoidAsync("setStyleByIdAsync", id, property, value);
+
+            await jsRuntime.InvokeVoidAsync("setStyleByIdAsync", id, property, value);
         }
 
         /// <summary>
         /// 查找样式
         /// </summary>
+        /// <param name="jsRuntime"></param>
         /// <param name="id"></param>
         /// <param name="property"></param>
         /// <returns></returns>
-        public async Task<string?> FindComputedStyleByIdAsync(string id, string property)
+        public static async Task<string?> FindComputedStyleByIdAsync(this IJSRuntime jsRuntime, string id, string property)
         {
-            var module = await _moduleTask.Value;
+            var module = await _moduleTask.Invoke(jsRuntime);
             var result = await module.InvokeAsync<string>("findComputedStyleById", id, property);
             return result == "_null_" ? null : result;
         }
@@ -73,12 +77,13 @@ namespace CarbonBlazor
         /// <summary>
         /// 查找多个样式
         /// </summary>
+        /// <param name="jsRuntime"></param>
         /// <param name="id"></param>
         /// <param name="propertys"></param>
         /// <returns></returns>
-        public async Task<string[]?> FindComputedStylesByIdAsync(string id, params string[] propertys)
+        public static async Task<string[]?> FindComputedStylesByIdAsync(this IJSRuntime jsRuntime, string id, params string[] propertys)
         {
-            var module = await _moduleTask.Value;
+            var module = await _moduleTask.Invoke(jsRuntime);
             var result = await module.InvokeAsync<string[]>("findComputedStylesById", id, propertys);
             return result.Length != propertys.Length ? null : result;
         }

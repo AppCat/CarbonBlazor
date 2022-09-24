@@ -89,16 +89,6 @@ namespace CarbonBlazor
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> Attributes { get; set; } = new Dictionary<string, object>();
 
-        #region JS
-
-        /// <summary>
-        /// 元素帮助
-        /// </summary>
-        [Inject]
-        protected ElementHelpJS? ElementHelp { get; set; }
-
-        #endregion
-
         #endregion
 
         /// <summary>

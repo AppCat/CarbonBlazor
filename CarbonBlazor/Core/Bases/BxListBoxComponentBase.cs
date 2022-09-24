@@ -39,7 +39,7 @@ namespace CarbonBlazor
                 __builder.AddAttribute(sequence++, "role", "listbox");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(BoxMenuConfig)
                     .AddClass($"bx--list-box__menu")
-                    .AddId($"{Id}-box__menu"));
+                    .SetId($"{Id}-box__menu"));
 
                 __builder.AddContent(sequence++, ChildContent);
 

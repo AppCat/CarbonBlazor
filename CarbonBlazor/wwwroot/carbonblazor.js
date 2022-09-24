@@ -12,7 +12,7 @@ document.addEventListener("click", function (event) {
                 className: d.className.toString()
             });
         }
-        DotNet.invokeMethod("CarbonBlazor", "HandleDocumentClick", paths);
+        DotNet.invokeMethodAsync("CarbonBlazor", "HandleDocumentClick", paths);
     } catch (e) {
     }
 });
@@ -20,7 +20,7 @@ document.addEventListener("click", function (event) {
 // 用于需要 尺寸变化的 组件
 window.addEventListener("resize", function (event) {
     try {
-        DotNet.invokeMethod("CarbonBlazor", "HandleWindowResizeChange", {
+        DotNet.invokeMethodAsync("CarbonBlazor", "HandleWindowResizeChange", {
             clientWidth: document.documentElement.clientWidth,
             clientHeight: document.documentElement.clientHeight,
             innerHeight: window.innerHeight,

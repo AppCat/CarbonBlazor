@@ -41,7 +41,7 @@ namespace CarbonBlazor.Components
             {
                 __builder.OpenElement(sequence++, "th");
                 __builder.AddAttribute(sequence++, "scope", "col");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(ThConfig).AddId($"{Id}-th"));
+                __builder.AddConfig(ref sequence, new BxComponentConfig(ThConfig).SetId($"{Id}-th"));
 
                 __builder.OpenElement(sequence++, "span");
                 __builder.AddAttribute(sequence++, "class", $"bx--table-header-label");
@@ -52,7 +52,7 @@ namespace CarbonBlazor.Components
             else if (Goal == BxColumGoal.Body)
             {
                 __builder.OpenElement(sequence++, "td");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(TdConfig ?? this).AddId($"{Id}-td"));
+                __builder.AddConfig(ref sequence, new BxComponentConfig(TdConfig ?? this).SetId($"{Id}-td"));
                 __builder.EitherOrAddContent(ref sequence, ChildContent, (string.IsNullOrEmpty(Format) ? (Field?.ToString() ?? string.Empty) : Formatter<TField>.Format(Field, Format)), () => ChildContent != null);
             }
 

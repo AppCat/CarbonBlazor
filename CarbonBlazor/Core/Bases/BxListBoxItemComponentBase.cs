@@ -52,7 +52,7 @@ namespace CarbonBlazor
                 __builder.OpenElement(sequence++, "div");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(MenuItemOptionConfig)
                     .AddClass($"bx--list-box__menu-item__option")
-                    .AddId($"{Id}-menu-item__option"));
+                    .SetId($"{Id}-menu-item__option"));
                 __builder.AddAttribute(sequence++, "tabindex", 0);
                 if (ValueTemplate != null)
                 {

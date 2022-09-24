@@ -77,6 +77,29 @@ namespace CarbonBlazor.Doc.Pages
             return variants;
         }
 
+        ///// <summary>
+        ///// 获取 Konbs
+        ///// </summary>
+        ///// <param name="variant"></param>
+        ///// <returns></returns>
+        //protected override Dictionary<string, IList<Knob>> GetKnobs(Variant variant)
+        //{
+        //    var modifiersContent = (RenderFragment)(__builder =>
+        //    {
+        //        var sequence = 0;
+        //        __builder.AddContent(sequence++, CreateBoolKnob("disabled", _disabled, __value => _disabled = __value).Content);
+        //        __builder.AddContent(sequence++, CreateBoolKnob("isExpressive", _isExpressive, __value => _isExpressive = __value).Content);
+        //        __builder.AddContent(sequence++, CreateBoolKnob("loading", _loading, __value => _loading = __value).Content);
+        //    });
+
+        //    return new Dictionary<string, IList<Knob>>
+        //    {
+        //        { "Modifiers", new List<Knob>{ new Knob { AttributeName = "Modifiers", Content = modifiersContent },  } },
+        //        { "Kind", CreateEnumKnob(_kind, __value => _kind = __value, new[]{ BxButtonKind.DangerGhost, BxButtonKind.DangerTertiary  }) },
+        //        { "Size", CreateEnumKnob(_size, __value => _size = __value, new[]{ BxButtonSize.Small, BxButtonSize.Field }) }
+        //    };
+        //}
+
         /// <summary>
         /// 获取 Konbs
         /// </summary>
@@ -84,20 +107,7 @@ namespace CarbonBlazor.Doc.Pages
         /// <returns></returns>
         protected override Dictionary<string, Knob> GetKnobs(Variant variant)
         {
-            var modifiersContent = (RenderFragment)(__builder =>
-            {
-                var sequence = 0;
-                __builder.AddContent(sequence++, CreateBoolKnob("disabled", _disabled, __value => _disabled = __value).Content);
-                __builder.AddContent(sequence++, CreateBoolKnob("isExpressive", _isExpressive, __value => _isExpressive = __value).Content);
-                __builder.AddContent(sequence++, CreateBoolKnob("loading", _loading, __value => _loading = __value).Content);
-            });
-
-            return new Dictionary<string, Knob>
-            {
-                { "Modifiers", new Knob{ Content = modifiersContent } },
-                { "Kind", CreateEnumKnob(_kind, __value => _kind = __value, new[]{ BxButtonKind.DangerGhost, BxButtonKind.DangerTertiary  }) },
-                { "Size", CreateEnumKnob(_size, __value => _size = __value, new[]{ BxButtonSize.Small, BxButtonSize.Field }) }
-            };
+            return new Dictionary<string, Knob>();
         }
     }
 }

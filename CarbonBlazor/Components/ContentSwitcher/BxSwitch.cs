@@ -39,6 +39,8 @@ namespace CarbonBlazor.Components
             __builder.UseElement(ref sequence, "button", this,
             __builder =>
             {
+                var sequence = 0;
+
                 __builder.AddAttribute(sequence++, "type", "button");
                 __builder.AddAttribute(sequence++, "role", "tab");
                 __builder.AddAttribute(sequence++, "tabindex", Selected ? "0" : "-1");
@@ -47,6 +49,8 @@ namespace CarbonBlazor.Components
             },
             __builder =>
             {
+                var sequence = 0;
+
                 __builder.OpenElement(sequence++, "span");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(LabelConfig, "bx--content-switcher__label", $"{Id}-label"));
                 if (ValueTemplate != null)

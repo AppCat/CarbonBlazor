@@ -1,0 +1,23 @@
+﻿@{
+    var elementId = MenuItem.ElementId ?? "MenuItem_" + MenuItem.Name.Replace(".", "_");
+    var cssClass = string.IsNullOrEmpty(MenuItem.CssClass) ? string.Empty : MenuItem.CssClass;
+    var url = MenuItem.Url == null ? "#" : MenuItem.Url.TrimStart('/', '~');
+}
+
+@if (MenuItem.IsLeaf)
+{
+    if (MenuItem.Url != null)
+    {
+        <BxHeaderMenuItem Id="@elementId" Disabled="@MenuItem.IsDisabled" Title="@MenuItem.DisplayName" Href="@url" />
+    }
+}
+else
+{
+    <BxHeaderMenuItem Disabled="@MenuItem.IsDisabled">
+        @foreach (var childMenuItem in MenuItem.Items)
+        {
+            @*var url = childMenuItem.Url == null ? "#" : childMenuItem.Url.TrimStart('/', '~');*@
+            <BxHeaderMenuItem Disabled="@childMenuItem.IsDisabled" Title="@childMenuItem.DisplayName" Href="@childMenuItem.Url" />
+        }
+    </BxHeaderMenuItem>
+}

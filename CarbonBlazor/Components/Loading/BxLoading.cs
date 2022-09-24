@@ -41,7 +41,7 @@ namespace CarbonBlazor.Components
                 __builder.OpenElement(sequence++, "div");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(LoadingConfig)
                     .AddClass($"bx--loading")
-                    .AddId($"{Id}-loading")
+                    .SetId($"{Id}-loading")
                     .AddIfClass($"bx--loading--small", () => Small)
                     .AddIfClass($"bx--loading--stop", () => Stop));
                 __builder.AddAttribute(sequence++, "data-loading");

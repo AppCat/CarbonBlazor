@@ -36,6 +36,11 @@ namespace CarbonBlazor.Components
         protected bool IsMouseup { get; set; } = false;
 
         /// <summary>
+        /// 当前延迟
+        /// </summary>
+        private TimeSpan _currentDelay;
+
+        /// <summary>
         /// 内容渲染
         /// </summary>
         /// <returns></returns>
@@ -123,10 +128,12 @@ namespace CarbonBlazor.Components
                 __builder.OpenElement(sequence++, "dvi");
                 __builder.AddConfig(ref sequence, new BxComponentConfig("bx--progress-bar__track", $"{Id}-progress-bar-track").AddStyle("background-color", "transparent"));
                 {
+                    var delay = _currentDelay.TotalMilliseconds;
+
                     __builder.OpenElement(sequence++, "dvi");
                     __builder.AddConfig(ref sequence, new BxComponentConfig("bx--progress-bar__bar", $"{Id}-progress-bar-bar")
                         .AddStyle("transform", "scaleX(1)")
-                        .AddIfStyle("transition", $"width {((double)Delay + (double)Delay / 30) / 1000}s", () => !IsMouseup)       
+                        .AddIfStyle("transition", $"width {((double)delay + (double)delay / 30) / 1000}s", () => !IsMouseup)
                         .AddIfStyle("background-color", "var(--cds-button-secondary,#393939)", () => Kind == null || Kind.Value != BxButtonKind.Secondary)
                         .AddStyle("width", "5%")
                         .AddIfStyle("WIDTH", $"100%", () => !IsMouseup && TokenSource != null));
@@ -174,12 +181,21 @@ namespace CarbonBlazor.Components
         /// 处理鼠标移走
         /// </summary>
         /// <param name="args"></param>
-        protected async Task HandleOnMouseoutAsync(FocusEventArgs args)
+        protected async Task HandleOnMouseoutAsync(MouseEventArgs args)
         {
             await Cancel();
         }
 
         #endregion
+
+        /// <summary>
+        /// 设置参数
+        /// </summary>
+        protected override void OnParametersSet()
+        {
+            _currentDelay = DelayTimeSpan ?? TimeSpan.FromMilliseconds(Delay);
+            base.OnParametersSet();
+        }
 
         /// <summary>
         /// 运行
@@ -189,12 +205,12 @@ namespace CarbonBlazor.Components
         {
             if (Loading)
                 return;
+
             IsMouseup = false;
             await InvokeStateHasChangedAsync();
-            var delay = DelayTimeSpan ?? TimeSpan.FromMilliseconds(Delay);
-            Terminus = DateTime.Now.Add(delay);
-            TokenSource = new CancellationTokenSource(delay);
-            var totalMilliseconds = delay.TotalMilliseconds;
+            Terminus = DateTime.Now.Add(_currentDelay);
+            TokenSource = new CancellationTokenSource(_currentDelay);
+            var totalMilliseconds = _currentDelay.TotalMilliseconds;
             TimeTask?.Dispose();
             TimeTask = Task.Run(async () =>
             {
@@ -207,6 +223,7 @@ namespace CarbonBlazor.Components
                     await InvokeStateHasChangedAsync();
                     await Click(args);
                     await Cancel();
+                    await InvokeStateHasChangedAsync();
                 }
             }, TokenSource.Token);
             await Task.CompletedTask;
@@ -217,13 +234,26 @@ namespace CarbonBlazor.Components
         /// </summary>
         protected virtual async Task Cancel()
         {
-            if (Loading)
-                return;
             IsMouseup = true;
+
+            if (Loading || TokenSource == null || TokenSource.IsCancellationRequested)
+                return;
+
             TokenSource?.Cancel();
+            TokenSource?.Dispose();
             TokenSource = null;
             Terminus = DateTime.MinValue;
             await InvokeStateHasChangedAsync();
+        }
+
+        /// <summary>
+        /// 释放
+        /// </summary>
+        /// <returns></returns>
+        public override async ValueTask DisposeAsync()
+        {
+            await base.DisposeAsync();
+            await Cancel();
         }
     }
 }

@@ -1,0 +1,121 @@
+﻿@page "/identity/users"
+@attribute [Authorize(IdentityPermissions.Users.Default)]
+@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.AspNetCore.Components.Web
+@using Volo.Abp.Identity.Localization
+@using CarbonBlazor.Abp.Components.ObjectExtending
+@using CarbonBlazor.Abp.PermissionManagement.Components
+@*@inject AbpBlazorMessageLocalizerHelper<IdentityResource> LH*@
+
+@inherits CarbonBlazorCrudPageBase<IIdentityUserAppService, IdentityUserDto, Guid, GetIdentityUsersInput, IdentityUserCreateDto, IdentityUserUpdateDto>
+
+<BxDataTableContainer Title="@L["Users"]">
+    <ToolbarContentTemplate>
+        <BxSearch Placeholder="@L["Search"]" Size="BxSize.Lg" Value="@GetListInput.Filter" ValueChanged="@OnSearchTextChanged" />
+        <BxButton OnClick="OpenCreateModalAsync">
+            @L["NewUser"]
+            <svg focusable="false" preserveAspectRatio="xMidYMid meet" style="will-change: transform;" xmlns="http://www.w3.org/2000/svg" class="bx--btn__icon" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M17 15L17 7 15 7 15 15 7 15 7 17 15 17 15 25 17 25 17 17 25 17 25 15 17 15z"></path></svg>
+        </BxButton>
+    </ToolbarContentTemplate>
+    <ChildContent>
+        <BxDataTable TModel="IdentityUserDto" DataSource="@Entities" OnSelectedChange=@(datas => Console.WriteLine(datas.Count()))>
+            <BxColumn @bind-Field="context.Name" Title="@L["UserName"]" />
+            <BxColumn @bind-Field="context.Email" Title="@L["EmailAddress"]" />
+            <BxColumn @bind-Field="context.PhoneNumber" Title="@L["PhoneNumber"]" />
+            <BxActionColumn Title="@L["Actions"]">
+                <BxOverflowMenu Flipped>
+                    @if (HasManagePermissionsPermission)
+                    {
+
+                    }
+                    @if (HasUpdatePermission)
+                    {
+                        <BxOverflowMenuOption Text="@L["Edit"]" OnClick="@(() => OpenEditModalAsync(context))" />
+                    }
+                    @if (HasDeletePermission && context.IsDeleted)
+                    {
+                        <BxOverflowMenuOption IsDelete Text="@L["Delete"]" OnClick="@(() => DeleteEntityAsync(context))" />
+                    }
+                </BxOverflowMenu>
+            </BxActionColumn>
+        </BxDataTable>
+        <BxPagination Page="@CurrentPage" PageSize="@PageSize" TotalItems="@TotalCount" />
+    </ChildContent>
+</BxDataTableContainer>
+
+@if (HasCreatePermission)
+{
+    <BxModal @ref="CreateModal" Heading="@L["NewRole"]">
+        <ContentTemplate>
+            @*<BxForm TModel="IdentityUserCreateDto" Auto Model="@NewEntity" Context="formContext" />*@
+            <BxTabs DefaultSelectedKey="UserInformations">
+                <BxTab Interactive Key="UserInformations" Value="@L["UserInformations"]">
+                    <BxForm TModel="IdentityUserCreateDto" Model="@NewEntity" Context="formContext">
+                        <BxTextInput @bind-Value="NewEntity.UserName" LabelText="@L["DisplayName:UserName"]" />
+                        <BxTextInput @bind-Value="NewEntity.Name" LabelText="@L["DisplayName:Name"]" />
+                        <BxTextInput @bind-Value="NewEntity.Surname" LabelText="@L["DisplayName:Surname"]" />
+                        <BxTextInput Type="BxTextInputType.Password" @bind-Value="NewEntity.Password" LabelText="@L["DisplayName:Password"]" />
+                        <BxTextInput @bind-Value="NewEntity.Email" LabelText="@L["DisplayName:Email"]" />
+                        <BxTextInput @bind-Value="NewEntity.PhoneNumber" LabelText="@L["DisplayName:PhoneNumber"]" />
+                        <BxCheckbox @bind-Value="NewEntity.IsActive" LabelText="@L["DisplayName:IsActive"]" />
+                        <BxCheckbox @bind-Value="NewEntity.LockoutEnabled" LabelText="@L["DisplayName:LockoutEnabled"]" />
+                    </BxForm>
+                </BxTab>
+                <BxTab Interactive Key="Roles" Value="@L["Roles"]">
+                    @if (NewUserRoles != null)
+                    {
+                        @foreach (var role in NewUserRoles)
+                        {
+                            <BxCheckbox @bind-Checked="@role.IsAssigned" LabelText="@role.Name" />
+                        }
+                    }
+                </BxTab>
+            </BxTabs>
+        </ContentTemplate>
+        <FooterTemplate>
+            <BxButton Kind="BxButtonKind.Secondary" Content="@L["Cancel"]" OnClick="CloseCreateModalAsync" />
+            <BxButton Type="BxButtonType.Submit" Content="提交" OnClick="CreateEntityAsync" />
+        </FooterTemplate>
+    </BxModal>
+}
+
+@if (HasUpdatePermission)
+{
+    <BxModal @ref="EditModal" Heading="@L["Edit"]">
+        <ContentTemplate>
+            <BxTabs DefaultSelectedKey="UserInformations">
+                <BxTab Interactive Key="UserInformations" Value="@L["UserInformations"]">
+                    <BxForm TModel="IdentityUserUpdateDto" Model="@EditingEntity" Context="formContext">
+                        <BxTextInput @bind-Value="EditingEntity.UserName" LabelText="@L["DisplayName:UserName"]" />
+                        <BxTextInput @bind-Value="EditingEntity.Name" LabelText="@L["DisplayName:Name"]" />
+                        <BxTextInput @bind-Value="EditingEntity.Surname" LabelText="@L["DisplayName:Surname"]" />
+                        <BxTextInput Type="BxTextInputType.Password" @bind-Value="NewEntity.Password" LabelText="@L["DisplayName:Password"]" />
+                        <BxTextInput @bind-Value="EditingEntity.Email" LabelText="@L["DisplayName:Email"]" />
+                        <BxTextInput @bind-Value="EditingEntity.PhoneNumber" LabelText="@L["DisplayName:PhoneNumber"]" />
+                        <BxCheckbox @bind-Value="EditingEntity.IsActive" LabelText="@L["DisplayName:IsActive"]" />
+                        <BxCheckbox @bind-Value="EditingEntity.LockoutEnabled" LabelText="@L["DisplayName:LockoutEnabled"]" />
+                    </BxForm>
+
+                </BxTab>
+                <BxTab Interactive Key="Roles" Value="@L["Roles"]">
+                    @if (EditUserRoles != null)
+                    {
+                        @foreach (var role in EditUserRoles)
+                        {
+                            <BxCheckbox @bind-Checked="@role.IsAssigned" LabelText="@role.Name" />
+                        }
+                    }
+                </BxTab>
+            </BxTabs>
+        </ContentTemplate>
+        <FooterTemplate>
+            <BxButton Kind="BxButtonKind.Secondary" Content="@L["Cancel"]" OnClick="CloseEditModalAsync" />
+            <BxButton Type="BxButtonType.Submit" Content="提交" OnClick="UpdateEntityAsync" />
+        </FooterTemplate>
+    </BxModal>
+}
+
+@if (HasManagePermissionsPermission)
+{
+    <PermissionManagementModal @ref="PermissionManagementModal" />
+}

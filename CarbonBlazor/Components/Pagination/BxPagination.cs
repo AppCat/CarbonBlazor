@@ -62,11 +62,11 @@ namespace CarbonBlazor.Components
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "div");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(PaginationLeftConfig).AddClass($"bx--pagination__left").AddId($"{Id}-label-pagination__left"));
+                __builder.AddConfig(ref sequence, new BxComponentConfig(PaginationLeftConfig).AddClass($"bx--pagination__left").SetId($"{Id}-label-pagination__left"));
                 {
                     // Start Label
                     __builder.OpenElement(sequence++, "label");
-                    __builder.AddConfig(ref sequence, new BxComponentConfig(PaginationTextConfig).AddClass($"bx--pagination__text").AddId($"{Id}-pagination__text"));
+                    __builder.AddConfig(ref sequence, new BxComponentConfig(PaginationTextConfig).AddClass($"bx--pagination__text").SetId($"{Id}-pagination__text"));
                     __builder.AddContent(sequence++, string.IsNullOrWhiteSpace(ItemsPerPageText) ? "Items per page:" : ItemsPerPageText);
                     __builder.CloseElement();
                     // End Label
@@ -113,7 +113,7 @@ namespace CarbonBlazor.Components
 
                     // Start Span
                     __builder.OpenElement(sequence++, "span");
-                    __builder.AddConfig(ref sequence, new BxComponentConfig(PaginationTextConfig).AddClass($"bx--pagination__text").AddId($"{Id}-pagination__text"));
+                    __builder.AddConfig(ref sequence, new BxComponentConfig(PaginationTextConfig).AddClass($"bx--pagination__text").SetId($"{Id}-pagination__text"));
 
                     if (PagesUnknown)
                     {
@@ -137,7 +137,7 @@ namespace CarbonBlazor.Components
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "div");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(PaginationPightConfig).AddClass($"bx--pagination__right").AddId($"{Id}-pagination__right"));
+                __builder.AddConfig(ref sequence, new BxComponentConfig(PaginationPightConfig).AddClass($"bx--pagination__right").SetId($"{Id}-pagination__right"));
                 {
                     // Start Select
                     __builder.OpenComponent<BxSelect>(sequence++);
@@ -171,7 +171,7 @@ namespace CarbonBlazor.Components
 
                     // Start PaginationText
                     __builder.OpenElement(sequence++, "span");
-                    __builder.AddConfig(ref sequence, new BxComponentConfig(PaginationTextConfig).AddClass($"bx--pagination__text").AddId($"{Id}-pagination__text"));
+                    __builder.AddConfig(ref sequence, new BxComponentConfig(PaginationTextConfig).AddClass($"bx--pagination__text").SetId($"{Id}-pagination__text"));
 
                     if (PagesUnknown)
                     {

@@ -70,7 +70,7 @@ namespace CarbonBlazor.Components
                     __builder.AddConfig(ref sequence, new BxComponentConfig(IconConfig)
                         .AddClass($"bx--list-box__menu-icon")
                         .AddIfClass($"bx--list-box__menu-icon--open", () => CurrentExpanded)
-                        .AddId($"{Id}-icon"));
+                        .SetId($"{Id}-icon"));
                     if (!CurrentExpanded)
                     {
                         __builder.AddContent(sequence++, new MarkupString($"<svg focusable='false' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg' fill='currentColor' name='chevron--down' aria-label='Open menu' width='16' height='16' viewBox='0 0 16 16' role='img'><path d='M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z'></path><title>Open menu</title></svg>"));

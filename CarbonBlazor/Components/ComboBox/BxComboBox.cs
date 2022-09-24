@@ -48,7 +48,7 @@ namespace CarbonBlazor.Components
                 __builder.AddAttribute(sequence++, "aria-label", "Clear selected item");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(SelectionConfig)
                     .AddClass($"bx--list-box__selection")
-                    .AddId($"{Id}-box__selection"));
+                    .SetId($"{Id}-box__selection"));
                 __builder.AddAttribute(sequence++, "type", "button");
                 __builder.AddAttribute(sequence++, "role", "button");
                 __builder.AddAttribute(sequence++, "tabindex", 0);
@@ -68,7 +68,7 @@ namespace CarbonBlazor.Components
                 __builder.AddAttribute(sequence++, "title", Expanded ? "Open" : "Close");
                 __builder.AddConfig(ref sequence, new BxComponentConfig(MenuIconConfig)
                     .AddClass($"bx--list-box__menu-icon")
-                    .AddId($"{Id}-menu-icon")
+                    .SetId($"{Id}-menu-icon")
                     .AddIfClass($"bx--list-box__menu-icon--open", () => Expanded));
                 __builder.AddAttribute(sequence++, "type", "button");
                 __builder.AddEvent(ref sequence, "onclick", HandleOnClickMenuIconAsync, true, true);
@@ -95,14 +95,14 @@ namespace CarbonBlazor.Components
                     .AddIfClass($"bx--list-box--expanded", () => Expanded)
                     .AddIfClass($"bx--list-box--disabled", () => Disabled)
                     .AddIfClass($"bx--list-box--up", () => Direction?.Value == BxComboBoxDirection.Top)
-                    .AddId($"{Id}-combo-box"));
+                    .SetId($"{Id}-combo-box"));
                 __builder.IfAddAttribute(ref sequence, "data-invalid", Invalid, () => Invalid);
                 {
                     // box__field
                     __builder.OpenElement(sequence++, "div");
                     __builder.AddConfig(ref sequence, new BxComponentConfig(ListBoxConfig)
                         .AddClass($"bx--list-box__field")
-                        .AddId($"{Id}-list-box__field"));
+                        .SetId($"{Id}-list-box__field"));
                     __builder.AddAttribute(sequence++, "aria-expanded", Expanded);
                     __builder.AddAttribute(sequence++, "aria-label", Expanded ? "close menu" : "open menu");
                     __builder.AddAttribute(sequence++, "aria-haspopup", "listbox");
@@ -111,7 +111,7 @@ namespace CarbonBlazor.Components
                         __builder.AddConfig(ref sequence, new BxComponentConfig(InputConfig)
                             .AddClass($"bx--text-input")
                             .AddIfClass($"bx--text-input--empty", () => string.IsNullOrEmpty(Value))
-                            .AddId($"{Id}-input"));
+                            .SetId($"{Id}-input"));
                         __builder.AddAttribute(sequence++, "aria-expanded", Expanded);
                         __builder.AddAttribute(sequence++, "autocomplete", "off");
                         __builder.AddAttribute(sequence++, "aria-autocomplete", "list");
@@ -154,7 +154,7 @@ namespace CarbonBlazor.Components
                         __builder.AddAttribute(sequence++, "role", "listbox");
                         __builder.AddConfig(ref sequence, new BxComponentConfig(BoxMenuConfig)
                             .AddClass($"bx--list-box__menu")
-                            .AddId($"{Id}-box__menu"));
+                            .SetId($"{Id}-box__menu"));
 
                         __builder.AddContent(sequence++, ChildContent);
 
@@ -169,7 +169,7 @@ namespace CarbonBlazor.Components
                 var sequence = 0;
 
                 __builder.OpenElement(sequence++, "div");
-                __builder.AddConfig(ref sequence, new BxComponentConfig(InputWrapperConfig).AddClass($"bx--list-box__wrapper").AddId($"{Id}-input__wrapper").AddStyle("width", "100%"));
+                __builder.AddConfig(ref sequence, new BxComponentConfig(InputWrapperConfig).AddClass($"bx--list-box__wrapper").SetId($"{Id}-input__wrapper").AddStyle("width", "100%"));
                 __builder.IfAddAttribute(ref sequence, "data-invalid", Invalid, () => Invalid);
                 {
                     __builder.AddContent(sequence++, LabelFragment());
